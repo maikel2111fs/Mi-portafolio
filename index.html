@@ -3,117 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Desarrollador | Agencia Web & Servers</title>
+    <title>Maik Desarrollador | Agencia Pro 360°</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #0d1117; color: #e6edf3; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
-        .glass-card { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+        .glass-card { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; }
         .blue-gradient { background: linear-gradient(135deg, #1f6feb 0%, #0d419d 100%); }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #8a6d3b 100%); }
-        .card-hover:hover { border-color: #58a6ff; transform: translateY(-5px); transition: all 0.3s ease; }
+        .card-hover:hover { border-color: #58a6ff; transform: translateY(-8px); box-shadow: 0 10px 30px -10px rgba(31, 111, 235, 0.3); }
+        .text-glow { text-shadow: 0 0 15px rgba(31, 111, 235, 0.5); }
     </style>
 </head>
 <body>
 
-    <nav class="max-w-7xl mx-auto p-6 flex justify-between items-center">
-        <div class="text-2xl font-black tracking-tight uppercase"><span class="text-blue-500">Maik</span> <span class="text-white">Desarrollador</span></div>
-        <div class="flex items-center gap-4 text-sm font-bold">
-            <span class="text-gray-400 hidden md:block"><i class="fab fa-discord text-blue-400"></i> AddMaik</span>
-            <a href="#cita" class="bg-blue-600 px-5 py-2 rounded-full text-white hover:bg-blue-700 transition">Agendar Servicio</a>
+    <nav class="max-w-7xl mx-auto p-6 flex justify-between items-center sticky top-0 z-50 bg-[#0d1117]/90 backdrop-blur-md">
+        <div class="text-2xl font-black tracking-tighter uppercase">
+            <span class="text-blue-500">Maik</span> <span class="text-white">Desarrollador</span>
+        </div>
+        <div class="flex items-center gap-6">
+            <span class="text-gray-400 text-sm font-bold hidden md:block"><i class="fab fa-discord text-blue-400 mr-1"></i> AddMaik</span>
+            <a href="#cita" class="bg-blue-600 px-6 py-2 rounded-full text-sm font-bold hover:scale-105 transition shadow-lg shadow-blue-500/20 text-white">Agendar Cita</a>
         </div>
     </nav>
 
-    <header class="max-w-4xl mx-auto text-center py-16 px-6">
-        <h1 class="text-5xl font-extrabold text-white mb-4">Tu Socio en <span class="text-blue-500">Desarrollo & Configuración</span></h1>
-        <p class="text-gray-400 text-lg uppercase tracking-widest">Webs • Portafolios • BoxPvP • Mods • Diseño</p>
+    <header class="max-w-5xl mx-auto text-center py-20 px-6">
+        <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter text-glow">
+            Servicios <span class="text-blue-500">Premium</span> para Creadores
+        </h1>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            Especialista en Configuración de Minecraft (BoxPvP, Mods), Diseño Gráfico y Desarrollo de Portafolios Web Profesionales.
+        </p>
     </header>
 
-    <section class="max-w-[1400px] mx-auto pb-24 px-6">
+    <section class="max-w-[1440px] mx-auto pb-24 px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <div class="glass-card p-6 rounded-2xl card-hover">
                 <div>
-                    <h3 class="text-xs font-bold text-blue-400 mb-2 uppercase">Optimización</h3>
-                    <h2 class="text-xl font-black text-white">PIEDRA</h2>
-                    <div class="text-3xl font-black text-white my-4">$10,00</div>
-                    <ul class="text-left space-y-3 mb-6 text-xs text-gray-400">
-                        <li><i class="fas fa-bolt text-blue-500 mr-2"></i> Fix de Lag & Errores</li>
-                        <li><i class="fas fa-tools text-blue-500 mr-2"></i> Configuración de Plugins</li>
+                    <h3 class="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest text-center">Nivel 1</h3>
+                    <h2 class="text-2xl font-black text-white text-center mb-4">PIEDRA</h2>
+                    <div class="text-3xl font-black text-blue-500 text-center my-4">$10,00</div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 border-t border-gray-800 pt-6">
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Optimización de Lag</li>
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Fix de Errores de Consola</li>
                     </ul>
                 </div>
-                <a href="#cita" class="block py-2 bg-gray-800 rounded-lg text-center font-bold text-xs hover:bg-gray-700 transition">Elegir</a>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl card-hover">
-                <div>
-                    <h3 class="text-xs font-bold text-blue-400 mb-2 uppercase">Minecraft Mods</h3>
-                    <h2 class="text-xl font-black text-white">HIERRO</h2>
-                    <div class="text-3xl font-black text-white my-4">$22,00</div>
-                    <ul class="text-left space-y-3 mb-6 text-xs text-gray-400">
-                        <li><i class="fas fa-cubes text-blue-500 mr-2"></i> Setup de Mods Completo</li>
-                        <li><i class="fas fa-server text-blue-500 mr-2"></i> Optimización Forge/Fabric</li>
-                    </ul>
-                </div>
-                <a href="#cita" class="block py-2 bg-gray-800 rounded-lg text-center font-bold text-xs hover:bg-gray-700 transition">Elegir</a>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl card-hover border-blue-500/50 border shadow-lg">
-                <div>
-                    <h3 class="text-xs font-bold text-blue-400 mb-2 uppercase">Gaming Pro</h3>
-                    <h2 class="text-xl font-black text-white">DIAMANTE</h2>
-                    <div class="text-3xl font-black text-white my-4">$34,00</div>
-                    <ul class="text-left space-y-3 mb-6 text-xs text-gray-400">
-                        <li><i class="fas fa-fist-raised text-blue-400 mr-2"></i> **Setup BoxPvP Especializado**</li>
-                        <li><i class="fas fa-gem text-blue-400 mr-2"></i> Economía, Rangos & Kits</li>
-                    </ul>
-                </div>
-                <a href="#cita" class="block py-2 blue-gradient rounded-lg text-center font-bold text-xs">Elegir</a>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl card-hover border-green-500/30 border">
-                <div>
-                    <h3 class="text-xs font-bold text-green-500 mb-2 uppercase">Web & Portafolios</h3>
-                    <h2 class="text-xl font-black text-white">ESMERALDA</h2>
-                    <div class="text-3xl font-black text-white my-4">$46,00</div>
-                    <ul class="text-left space-y-3 mb-6 text-xs text-gray-400">
-                        <li><i class="fas fa-globe text-green-500 mr-2"></i> **Creación de Portafolio Web**</li>
-                        <li><i class="fas fa-code text-green-500 mr-2"></i> Landing Page Profesional</li>
-                    </ul>
-                </div>
-                <a href="#cita" class="block py-2 bg-green-900/40 rounded-lg text-center font-bold text-xs hover:bg-green-800 transition">Elegir</a>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl card-hover">
-                <div>
-                    <h3 class="text-xs font-bold text-purple-400 mb-2 uppercase">Diseño de Marca</h3>
-                    <h2 class="text-xl font-black text-white">OBSIDIANA</h2>
-                    <div class="text-3xl font-black text-white my-4">$58,00</div>
-                    <ul class="text-left space-y-3 mb-6 text-xs text-gray-400">
-                        <li><i class="fas fa-paint-brush text-purple-400 mr-2"></i> **Banner + Logo Personalizado**</li>
-                        <li><i class="fas fa-palette text-purple-400 mr-2"></i> Identidad Visual Completa</li>
-                    </ul>
-                </div>
-                <a href="#cita" class="block py-2 bg-gray-800 rounded-lg text-center font-bold text-xs hover:bg-gray-700 transition">Elegir</a>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl card-hover">
-                <div>
-                    <h3 class="text-xs font-bold text-red-400 mb-2 uppercase">Monetización</h3>
-                    <h2 class="text-xl font-black text-white">NETHERITE</h2>
-                    <div class="text-3xl font-black text-white my-4">$70,00</div>
-                    <ul class="text-left space-y-3 mb-6 text-xs text-gray-400">
-                        <li><i class="fas fa-shopping-cart text-red-400 mr-2"></i> **Configuración Tienda Tebex**</li>
-                        <li><i class="fas fa-credit-card text-red-400 mr-2"></i> Pasarelas de Pago & Web</li>
-                    </ul>
-                </div>
-                <a href="#cita" class="block py-2 bg-gray-800 rounded-lg text-center font-bold text-xs hover:bg-gray-700 transition">Elegir</a>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl card-hover">
-                <div>
-                    <h3 class="text-xs font-bold text-yellow-400 mb-2 uppercase">Streamer / Content</h3>
-                    <h2 class="text-xl font-black text-white">ESTRELLA</h2>
-                    <div class="text-3xl font-black text-white my-4">$82,00</div>
-                    <ul class="text-left space-y-3 mb-6 text-xs text-gray-400">
-                        <li><i class="fas fa-video
+                <a href="#cita" class="block py-3 bg-gray-800 rounded-xl text-center font-bold text-xs hover:bg-gray-700
