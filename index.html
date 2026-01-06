@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Desarrollador | Agencia Pro 360°</title>
+    <title>Maik Desarrollador | Agencia Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -11,112 +11,129 @@
         .glass-card { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); height: 100%; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; }
         .blue-gradient { background: linear-gradient(135deg, #1f6feb 0%, #0d419d 100%); }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #8a6d3b 100%); }
-        .card-hover:hover { border-color: #58a6ff; transform: translateY(-10px); box-shadow: 0 20px 40px -15px rgba(31, 111, 235, 0.3); }
-        .badge-new { background: #238636; color: white; font-size: 10px; padding: 2px 8px; rounded-full; margin-left: 5px; font-weight: bold; }
+        .card-hover:hover { border-color: #58a6ff; transform: translateY(-10px); box-shadow: 0 20px 40px -15px rgba(31, 111, 235, 0.4); }
+        .text-glow { text-shadow: 0 0 15px rgba(31, 111, 235, 0.5); }
     </style>
 </head>
 <body>
 
     <nav class="max-w-7xl mx-auto p-6 flex justify-between items-center sticky top-0 z-50 bg-[#0d1117]/90 backdrop-blur-md border-b border-gray-800">
-        <div class="text-2xl font-black tracking-tighter uppercase">
-            <span class="text-blue-500">Maik</span> <span class="text-white">Desarrollador</span>
-        </div>
+        <div class="text-2xl font-black tracking-tighter uppercase"><span class="text-blue-500">Maik</span> <span class="text-white">Desarrollador</span></div>
         <div class="flex items-center gap-6">
-            <a href="#planes" class="text-sm font-bold hover:text-blue-400 transition hidden md:block uppercase tracking-widest">Planes</a>
-            <a href="#cita" class="bg-blue-600 px-8 py-3 rounded-full text-sm font-black hover:scale-105 transition shadow-lg shadow-blue-500/20 text-white uppercase">Agendar Cita Ahora</a>
+            <span class="text-gray-400 text-sm font-bold hidden md:block"><i class="fab fa-discord text-blue-400 mr-1"></i> AddMaik</span>
+            <a href="#cita-formulario" class="bg-blue-600 px-6 py-2 rounded-full text-sm font-black hover:scale-105 transition shadow-lg shadow-blue-500/20 text-white">Agendar Cita</a>
         </div>
     </nav>
 
-    <header class="max-w-4xl mx-auto text-center py-24 px-6">
-        <h1 class="text-6xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none">
-            Soluciones de <br><span class="text-blue-500 italic">Alto Impacto</span>
+    <header class="max-w-5xl mx-auto text-center py-20 px-6">
+        <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter text-glow">
+            Servicios <span class="text-blue-500 italic">Premium</span>
         </h1>
-        <p class="text-gray-400 text-xl leading-relaxed">
-            Desde la optimización de servidores hasta el desarrollo web profesional. 
-            <span class="text-white font-bold text-blue-400">Elige un plan y escala tu proyecto al siguiente nivel.</span>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+            No solo configuro, transformo tu proyecto. Cada plan está diseñado para ofrecerte una solución técnica completa, desde la optimización interna hasta tu presencia web profesional.
         </p>
     </header>
 
-    <section id="planes" class="max-w-[1440px] mx-auto pb-32 px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section class="max-w-[1440px] mx-auto pb-24 px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <div class="glass-card p-8 rounded-3xl card-hover">
+            <div class="glass-card p-8 rounded-3xl card-hover border-gray-700">
                 <div>
-                    <h3 class="text-blue-500 font-black text-xs tracking-widest mb-2 uppercase">Nivel Inicial</h3>
+                    <h3 class="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest italic">Nivel 1: Rendimiento</h3>
                     <h2 class="text-3xl font-black text-white mb-4">PIEDRA</h2>
-                    <div class="text-4xl font-black text-white mb-8">$10,00</div>
-                    <p class="text-gray-500 text-sm mb-6 italic">Perfecto para corregir problemas críticos de rendimiento.</p>
+                    <div class="text-4xl font-black text-blue-500 mb-6">$10,00</div>
+                    <p class="text-gray-400 text-sm mb-6">El cimiento de cualquier proyecto exitoso. Limpiamos el ruido técnico.</p>
                     <ul class="space-y-4 text-sm text-gray-300 border-t border-gray-800 pt-6">
-                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Optimización de Lag (Spigot/Paper)</li>
-                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Limpieza de Errores de Consola</li>
+                        <li><i class="fas fa-bolt text-blue-500 mr-2"></i> **Optimización de Lag:** Ajustes en spigot.yml, paper.yml y purpur.</li>
+                        <li><i class="fas fa-bug text-blue-500 mr-2"></i> **Fix de Consola:** Eliminamos errores de plugins y dependencias.</li>
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Configuración de 5 Plugins Base.</li>
                     </ul>
                 </div>
-                <a href="#cita" class="mt-10 block py-4 bg-gray-800 rounded-2xl text-center font-black text-xs hover:bg-gray-700 transition uppercase tracking-widest">Elegir Plan</a>
+                <a href="#cita-formulario" class="mt-8 block py-3 bg-gray-800 rounded-xl text-center font-bold text-xs uppercase hover:bg-gray-700 transition">Elegir Plan</a>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl card-hover">
+            <div class="glass-card p-8 rounded-3xl border-2 border-blue-600 card-hover relative shadow-2xl">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] px-4 py-1 rounded-full font-black">MÁS POPULAR</div>
                 <div>
-                    <h3 class="text-gray-400 font-black text-xs tracking-widest mb-2 uppercase text-center">Nivel 2</h3>
-                    <h2 class="text-3xl font-black text-white mb-4 text-center">HIERRO</h2>
-                    <div class="text-4xl font-black text-blue-500 text-center mb-8">$22,00</div>
-                    <ul class="space-y-4 text-sm text-gray-400 border-t border-gray-800 pt-6">
-                        <li class="text-blue-500/60 font-bold"><i class="fas fa-plus-circle mr-2"></i> Incluye Plan Piedra</li>
-                        <li class="text-white font-bold"><i class="fas fa-star text-yellow-500 mr-2"></i> Setup de Mods Forge/Fabric <span class="badge-new">NUEVO</span></li>
+                    <h3 class="text-xs font-bold text-blue-400 mb-2 uppercase tracking-widest italic">Nivel 3: Game Design</h3>
+                    <h2 class="text-3xl font-black text-white mb-4">DIAMANTE</h2>
+                    <div class="text-4xl font-black text-white mb-6">$34,00</div>
+                    <p class="text-gray-400 text-sm mb-6">Especializado en jugabilidad competitiva y sistemas de economía.</p>
+                    <ul class="space-y-4 text-sm text-gray-300 border-t border-gray-800 pt-6">
+                        <li class="text-blue-400 text-xs font-bold uppercase tracking-tighter italic">Todo lo de Hierro +</li>
+                        <li><i class="fas fa-fist-raised text-blue-500 mr-2"></i> **Setup BoxPvP Pro:** Minas, zonas de combate y protección.</li>
+                        <li><i class="fas fa-gem text-blue-500 mr-2"></i> **Economía Real:** Balancé de precios, tiendas y trades.</li>
+                        <li><i class="fas fa-crown text-blue-500 mr-2"></i> **Rangos & Kits:** Configuración de permisos profesional.</li>
                     </ul>
                 </div>
-                <a href="#cita" class="mt-10 block py-4 bg-gray-800 rounded-2xl text-center font-black text-xs hover:bg-gray-700 transition uppercase tracking-widest">Elegir Plan</a>
+                <a href="#cita-formulario" class="mt-8 block py-3 blue-gradient rounded-xl text-center font-black text-xs text-white uppercase shadow-lg">Elegir Plan</a>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl border-2 border-blue-600 card-hover shadow-2xl shadow-blue-500/10">
+            <div class="glass-card p-8 rounded-3xl card-hover border-green-500/30">
                 <div>
-                    <h3 class="text-blue-400 font-black text-xs tracking-widest mb-2 uppercase text-center">Nivel Experto</h3>
-                    <h2 class="text-3xl font-black text-white mb-4 text-center">DIAMANTE</h2>
-                    <div class="text-4xl font-black text-white text-center mb-8">$34,00</div>
-                    <ul class="space-y-4 text-sm text-gray-400 border-t border-gray-800 pt-6">
-                        <li class="text-blue-500/60 font-bold"><i class="fas fa-plus-circle mr-2"></i> Incluye Plan Hierro</li>
-                        <li class="text-white font-bold"><i class="fas fa-star text-yellow-500 mr-2"></i> Setup BoxPvP Especializado <span class="badge-new">NUEVO</span></li>
+                    <h3 class="text-xs font-bold text-green-500 mb-2 uppercase tracking-widest italic">Nivel 4: Web Presence</h3>
+                    <h2 class="text-3xl font-black text-white mb-4">ESMERALDA</h2>
+                    <div class="text-4xl font-black text-green-500 mb-6">$46,00</div>
+                    <p class="text-gray-400 text-sm mb-6">Tu carta de presentación al mundo. Profesionalismo puro.</p>
+                    <ul class="space-y-4 text-sm text-gray-300 border-t border-gray-800 pt-6">
+                        <li class="text-green-500 text-xs font-bold uppercase tracking-tighter italic">Todo lo de Diamante +</li>
+                        <li><i class="fas fa-globe text-green-500 mr-2"></i> **Portafolio Personalizado:** Una web moderna como esta.</li>
+                        <li><i class="fas fa-mobile-alt text-green-500 mr-2"></i> **Responsive Design:** Se ve perfecto en celulares.</li>
+                        <li><i class="fas fa-code text-green-500 mr-2"></i> **Código Limpio:** SEO optimizado para aparecer en Google.</li>
                     </ul>
                 </div>
-                <a href="#cita" class="mt-10 block py-4 blue-gradient rounded-2xl text-center font-black text-xs text-white uppercase tracking-widest shadow-lg">Elegir Plan</a>
+                <a href="#cita-formulario" class="mt-8 block py-3 bg-green-900/40 rounded-xl text-center font-bold text-xs uppercase hover:bg-green-800 transition">Elegir Plan</a>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl card-hover border-green-500/20">
+            <div class="glass-card p-8 rounded-3xl border-2 border-yellow-500 card-hover shadow-2xl">
                 <div>
-                    <h3 class="text-green-500 font-black text-xs tracking-widest mb-2 uppercase text-center">Nivel Web</h3>
-                    <h2 class="text-3xl font-black text-white mb-4 text-center">ESMERALDA</h2>
-                    <div class="text-4xl font-black text-green-500 text-center mb-8">$46,00</div>
-                    <ul class="space-y-4 text-sm text-gray-400 border-t border-gray-800 pt-6">
-                        <li class="text-green-500/60 font-bold"><i class="fas fa-plus-circle mr-2"></i> Incluye Plan Diamante</li>
-                        <li class="text-white font-bold"><i class="fas fa-star text-yellow-500 mr-2"></i> Desarrollo Portafolio Web <span class="badge-new">NUEVO</span></li>
+                    <div class="text-center mb-2"><i class="fas fa-crown text-yellow-500 text-2xl"></i></div>
+                    <h3 class="text-xs font-bold text-yellow-500 mb-1 uppercase text-center tracking-widest">Nivel Final</h3>
+                    <h2 class="text-3xl font-black text-white text-center mb-4">SUPREMO</h2>
+                    <div class="text-4xl font-black text-yellow-500 text-center mb-6">$100,00</div>
+                    <p class="text-gray-400 text-sm text-center mb-6 italic italic">La solución total para grandes comunidades y creadores.</p>
+                    <ul class="space-y-4 text-xs text-gray-300 border-t border-gray-800 pt-6">
+                        <li class="text-yellow-500 font-black uppercase text-center tracking-widest border-b border-yellow-500/20 pb-2">TODOS LOS BENEFICIOS ANTERIORES</li>
+                        <li><i class="fas fa-star text-yellow-500 mr-2"></i> **Tienda Tebex/Buycraft:** Monetización directa configurada.</li>
+                        <li><i class="fas fa-palette text-yellow-500 mr-2"></i> **Identidad Visual:** Logo, banner y marca para redes.</li>
+                        <li><i class="fas fa-headset text-yellow-500 mr-2"></i> **Soporte VIP 24/7:** Atención prioritaria ante cualquier crisis.</li>
                     </ul>
                 </div>
-                <a href="#cita" class="mt-10 block py-4 bg-green-900/30 border border-green-500/30 rounded-2xl text-center font-black text-xs hover:bg-green-800 transition uppercase tracking-widest">Elegir Plan</a>
+                <a href="#cita-formulario" class="mt-8 block py-4 gold-gradient rounded-xl text-center font-black text-sm text-white uppercase shadow-xl">Contratar Agencia</a>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl card-hover">
-                <div>
-                    <h3 class="text-purple-400 font-black text-xs tracking-widest mb-2 uppercase">Nivel Branding</h3>
-                    <h2 class="text-3xl font-black text-white mb-4">OBSIDIANA</h2>
-                    <div class="text-4xl font-black text-white mb-8">$58,00</div>
-                    <ul class="space-y-4 text-sm text-gray-400 border-t border-gray-800 pt-6">
-                        <li class="text-purple-500/60 font-bold"><i class="fas fa-plus-circle mr-2"></i> Incluye Plan Esmeralda</li>
-                        <li class="text-white font-bold"><i class="fas fa-star text-yellow-500 mr-2"></i> Diseño de Banner + Logo Pro <span class="badge-new">NUEVO</span></li>
-                    </ul>
+        </div>
+    </section>
+
+    <section id="cita-formulario" class="max-w-4xl mx-auto py-24 px-6">
+        <div class="glass-card p-12 rounded-[2.5rem] border-2 border-blue-500/20 shadow-2xl">
+            <h2 class="text-4xl font-black text-white text-center mb-4 italic">¿Hacemos algo <span class="text-blue-500">Legendario</span>?</h2>
+            <p class="text-center text-gray-400 mb-10 uppercase tracking-widest text-sm font-bold">Reserva tu cita con Maik hoy mismo</p>
+            
+            <form action="https://formsubmit.co/chimbayuliana@gmail.com" method="POST" class="space-y-6">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://maikel2111fs.github.io/Mi-portafolio/">
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input type="text" name="nombre" placeholder="Nombre de tu Marca/Usuario" class="bg-gray-900 border border-gray-700 rounded-2xl p-5 text-white outline-none focus:border-blue-500 transition shadow-inner" required>
+                    <input type="text" name="discord" placeholder="Discord (Ej: AddMaik)" class="bg-gray-900 border border-gray-700 rounded-2xl p-5 text-white outline-none focus:border-blue-500 transition shadow-inner" required>
                 </div>
-                <a href="#cita" class="mt-10 block py-4 bg-gray-800 rounded-2xl text-center font-black text-xs hover:bg-gray-700 transition uppercase tracking-widest">Elegir Plan</a>
-            </div>
 
-            <div class="glass-card p-8 rounded-3xl card-hover border-red-500/20">
-                <div>
-                    <h3 class="text-red-500 font-black text-xs tracking-widest mb-2 uppercase">Nivel Monetización</h3>
-                    <h2 class="text-3xl font-black text-white mb-4">NETHERITE</h2>
-                    <div class="text-4xl font-black text-red-500 mb-8">$70,00</div>
-                    <ul class="space-y-4 text-sm text-gray-400 border-t border-gray-800 pt-6">
-                        <li class="text-red-500/60 font-bold"><i class="fas fa-plus-circle mr-2"></i> Incluye Plan Obsidiana</li>
-                        <li class="text-white font-bold"><i class="fas fa-star text-yellow-500 mr-2"></i> Configuración Tienda Tebex <span class="badge-new">NUEVO</span></li>
-                    </ul>
-                </div>
-                <a href="#cita" class="mt-10 block py-4 bg-red-900/20 rounded-2xl text-center font-black text-xs hover:bg-red-800 transition uppercase tracking-widest">Elegir Plan</a>
-            </div>
+                <select name="plan" class="w-full bg-gray-900 border border-gray-700 rounded-2xl p-5 text-white outline-none cursor-pointer focus:border-blue-500 appearance-none">
+                    <option value="Piedra">Plan Piedra - Optimización ($10)</option>
+                    <option value="Diamante">Plan Diamante - BoxPvP/Sistemas ($34)</option>
+                    <option value="Esmeralda">Plan Esmeralda - Web/Portafolio ($46)</option>
+                    <option value="Supremo">Plan Supremo - Agencia Completa ($100)</option>
+                </select>
 
-            <div class="glass-card
+                <textarea name="mensaje" rows="5" placeholder="¿Qué tienes en mente? Cuéntame sobre tu servidor o la web que necesitas..." class="w-full bg-gray-900 border border-gray-700 rounded-2xl p-5 text-white outline-none focus:border-blue-500 transition shadow-inner" required></textarea>
+
+                <button type="submit" class="w-full py-5 blue-gradient text-white font-black rounded-2xl text-lg hover:scale-[1.01] active:scale-95 transition transform shadow-xl shadow-blue-500/20 uppercase tracking-tighter">
+                    Enviar Solicitud y Agendar Cita
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="text-center py-16 border-t border-gray-800 text-gray-500">
+        <p class="text-xs uppercase tracking-[0.5em
