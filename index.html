@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Desarrollador | Portafolio</title>
+    <title>Maik Desarrollador | Portafolio Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #0d1117; color: #e6edf3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0d1117; color: #e6edf3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
         .glass-card { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         .blue-gradient { background: linear-gradient(135deg, #1f6feb 0%, #0d419d 100%); }
         .card-hover:hover { border-color: #58a6ff; transform: translateY(-5px); transition: all 0.3s ease; }
+        input, textarea, select { background-color: #010409 !important; border: 1px solid #30363d !important; color: white !important; }
+        input:focus, textarea:focus { border-color: #1f6feb !important; outline: none; }
     </style>
 </head>
 <body>
@@ -19,21 +21,14 @@
         <div class="text-2xl font-black tracking-tight">
             <span class="text-blue-500">Maik</span> <span class="text-white">Desarrollador</span>
         </div>
-        <div>
-            <a href="https://discord.gg/TU_LINK" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-bold transition">
-                <i class="fab fa-discord mr-2"></i>Contratar
+        <div class="flex items-center gap-6">
+            <span class="text-gray-400 text-sm hidden md:block"><i class="fab fa-discord mr-1 text-blue-400"></i> AddMaik</span>
+            <a href="#cita" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-bold transition">
+                Agendar Cita
             </a>
         </div>
     </nav>
 
-    <header class="max-w-4xl mx-auto text-center py-16 px-6">
-        <h1 class="text-5xl font-extrabold text-white mb-6">Soluciones en <span class="text-blue-500">Desarrollo & Configuración</span></h1>
-        <p class="text-gray-400 text-lg">
-            Especialista en optimización de infraestructuras, desarrollo de software a medida y seguridad avanzada. Llevo tus proyectos al siguiente nivel de rendimiento.
-        </p>
-    </header>
-
-    <section class="max-w-6xl mx-auto pb-24 px-6">
-        <div class="grid md:grid-cols-3 gap-8">
-            
-            <div class="glass-card p-8 rounded-2xl card-hover text-center">
+    <header class="max-w-4xl mx-auto text-center py-20 px-6">
+        <h1 class="text-6xl font-extrabold text-white mb-6 tracking-tight">Soluciones en <span class="text-blue-500">Desarrollo & Configuración</span></h1>
+        <p class="text-gray
