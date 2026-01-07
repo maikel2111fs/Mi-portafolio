@@ -3,39 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEVELOPER | Elite Services</title>
+    <title>MAIK DEVELOPER | Servicios de Minecraft Profesionales</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; filter: brightness(0.15) contrast(1.2); }
-        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; scroll-behavior: smooth; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
+        .video-bg { position: fixed; inset: 0; z-index: -2; object-fit: cover; filter: brightness(0.1); }
+        .section-container { padding: 80px 20px; max-width: 1400px; margin: 0 auto; }
         
-        .maik-logo { width: 110px; height: 110px; background: #facc15; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 55px; color: #000; font-weight: 900; margin-bottom: 25px; box-shadow: 0 0 50px rgba(250,204,21,0.5); border: 4px solid #fff; }
-        .presentation-box { max-width: 900px; background: rgba(255,255,255,0.03); padding: 40px; border-radius: 40px; border: 1px solid rgba(250,204,21,0.3); margin-bottom: 50px; backdrop-filter: blur(15px); }
+        /* Estilo Maik */
+        .maik-logo { width: 100px; height: 100px; background: #facc15; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #000; font-weight: 900; margin: 0 auto 20px; box-shadow: 0 0 40px rgba(250,204,21,0.3); border: 4px solid #fff; }
+        .main-title { font-size: 4rem; font-weight: 900; text-transform: uppercase; letter-spacing: -2px; line-height: 0.9; }
         
-        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; width: 100%; max-width: 1300px; }
-        .nav-card { background: rgba(15,15,15,0.9); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 30px; cursor: pointer; transition: 0.4s; text-align: center; }
-        .nav-card:hover { border-color: #facc15; transform: translateY(-10px); }
+        .nav-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
+        .tab-btn { background: #111; padding: 15px 30px; border-radius: 20px; font-weight: 800; border: 1px solid #222; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 13px; color: #fff; }
+        .tab-btn:hover, .tab-btn.active { background: #facc15; color: #000; border-color: #fff; }
 
-        .modal-full { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.99); z-index: 1000; overflow-y: auto; padding: 60px 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 1600px; margin: 0 auto; }
-        .product-card { background: #0a0a0a; border: 2px solid #1a1a1a; padding: 30px; border-radius: 35px; transition: 0.3s; height: 100%; display: flex; flex-direction: column; }
-        .product-card:hover { border-color: #facc15; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .card { background: linear-gradient(145deg, #0a0a0a, #111); border: 1px solid #222; padding: 35px; border-radius: 40px; transition: 0.4s; display: flex; flex-direction: column; }
+        .card:hover { border-color: #facc15; transform: scale(1.02); }
+        .price { font-size: 45px; font-weight: 900; color: #facc15; font-style: italic; margin-bottom: 20px; border-bottom: 2px solid #222; padding-bottom: 10px; }
         
-        .price-tag { font-size: 40px; font-weight: 900; color: #facc15; margin: 10px 0; font-style: italic; }
-        .feat-list { list-style: none; font-size: 11px; font-weight: 700; color: #777; text-transform: uppercase; margin-bottom: 20px; flex-grow: 1; }
-        .feat-list li { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #111; padding-bottom: 2px; }
-        
-        .btn-pay { background: #facc15; color: #000; width: 100%; padding: 18px; border-radius: 15px; font-weight: 900; cursor: pointer; border: none; text-transform: uppercase; }
-        .wa-button { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 65px; height: 65px; border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 5000; text-decoration: none; }
-        
-        #orderForm, #finalMessage { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; align-items: center; justify-content: center; text-align: center; overflow-y: auto; padding: 20px; }
-        .form-box { background: #050505; border: 2px solid #facc15; padding: 40px; border-radius: 40px; max-width: 500px; width: 100%; }
-        .input-maik { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; font-weight: bold; }
-        .terms-text { font-size: 10px; color: #666; text-align: left; margin-bottom: 20px; line-height: 1.4; border-top: 1px solid #222; padding-top: 10px; }
+        .feat-item { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px; line-height: 1.3; }
+        .feat-item i { color: #facc15; margin-top: 2px; }
+
+        .btn-buy { background: #facc15; color: #000; width: 100%; padding: 18px; border-radius: 15px; font-weight: 900; text-transform: uppercase; cursor: pointer; border: none; margin-top: auto; }
+        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; z-index: 9999; box-shadow: 0 10px 30px rgba(37,211,102,0.4); text-decoration: none; }
+
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
+        .form-box { background: #050505; border: 2px solid #facc15; padding: 40px; border-radius: 40px; width: 100%; max-width: 500px; text-align: center; }
+        .maik-input { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -44,127 +43,156 @@
         <source src="https://assets.mixkit.co/videos/preview/mixkit-stars-in-the-night-sky-background-9922-large.mp4" type="video/mp4">
     </video>
 
-    <a href="https://wa.me/593987749885" target="_blank" class="wa-button"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://wa.me/593987749885" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
 
-    <div class="hero">
+    <header class="section-container text-center">
         <div class="maik-logo">M</div>
-        <h1 class="text-6xl font-black italic mb-4 uppercase">MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
-        
-        <div class="presentation-box text-gray-300">
-            <h2 class="text-2xl font-black text-yellow-400 mb-4 uppercase italic">Desarrollador Profesional de Ecuador 🇪🇨</h2>
-            <p>Soy <b>Maik</b>. Experto en setups de Minecraft y diseño gráfico para servidores. Mis trabajos incluyen desde optimización técnica hasta <b>Logos y Tiendas Tebex</b>. Calidad garantizada 24/7.</p>
+        <h1 class="main-title">MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
+        <div class="max-w-2xl mx-auto mt-6 bg-zinc-900/40 p-8 rounded-[40px] border border-white/5 backdrop-blur-md">
+            <h2 class="text-xl font-bold text-yellow-400 uppercase italic mb-2">Ecuadorian Professional Configurator 🇪🇨</h2>
+            <p class="text-gray-400 text-sm">Experticia técnica en infraestructura de servidores. Cada plan es escalable y diseñado para alto rendimiento. **Logos y Tiendas Web** incluidos en planes de gama alta.</p>
         </div>
+    </header>
 
-        <div class="nav-grid">
-            <div class="nav-card" onclick="openModal('boxpvp')"><i class="fas fa-skull"></i><b>BOXPVP (12)</b></div>
-            <div class="nav-card" onclick="openModal('survival')"><i class="fas fa-tree"></i><b>SURVIVAL (12)</b></div>
-            <div class="nav-card" onclick="openModal('lobby')"><i class="fas fa-door-open"></i><b>LOBBIES (12)</b></div>
-            <div class="nav-card" onclick="openModal('opti')"><i class="fas fa-bolt"></i><b>OPTIMIZACIÓN</b></div>
-            <div class="nav-card" onclick="openModal('promo')" style="border-color: #ff0055;"><i class="fas fa-fire" style="color: #ff0055;"></i><b>PROMOS (10)</b></div>
+    <section class="section-container">
+        <h3 class="text-3xl font-black uppercase italic mb-8 border-l-4 border-yellow-400 pl-4 text-white">01. Configuraciones Detalladas</h3>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="loadContent('boxpvp', this)">BoxPvP Custom</button>
+            <button class="tab-btn" onclick="loadContent('survival', this)">Survival Pro</button>
+            <button class="tab-btn" onclick="loadContent('lobby', this)">Lobbies Elite</button>
         </div>
-    </div>
+        <div id="mainGrid" class="product-grid"></div>
+    </section>
 
-    <div id="modalProducts" class="modal-full">
-        <button class="fixed top-5 right-5 bg-yellow-400 text-black px-8 py-2 rounded-xl font-black z-[1100]" onclick="closeModal()">CERRAR</button>
-        <div class="max-w-7xl mx-auto">
-            <h2 id="modalTitle" class="text-5xl font-black text-center text-yellow-400 mb-12 uppercase italic">CATÁLOGO</h2>
-            <div id="productContainer" class="product-grid"></div>
-        </div>
-    </div>
+    <section class="section-container">
+        <h3 class="text-3xl font-black uppercase italic mb-8 border-l-4 border-pink-500 pl-4 text-pink-500">02. Promociones Mezcladas (Combos)</h3>
+        <div id="promoGrid" class="product-grid"></div>
+    </section>
 
-    <div id="orderForm">
+    <section class="section-container">
+        <h3 class="text-3xl font-black uppercase italic mb-8 border-l-4 border-blue-500 pl-4 text-blue-500">03. Ingeniería de Optimización</h3>
+        <div id="optiGrid" class="product-grid"></div>
+    </section>
+
+    <div id="orderOverlay" class="overlay">
         <div class="form-box">
-            <h3 class="text-2xl font-black text-yellow-400 mb-6 uppercase italic">Detalles del Pedido</h3>
-            <p id="planSelected" class="text-white font-bold mb-4"></p>
-            <input type="text" id="custName" placeholder="Tu Nombre" class="input-maik">
-            <input type="text" id="custDiscord" placeholder="Discord User" class="input-maik">
-            <div class="terms-text">
-                <b>CONDICIONES:</b><br>
-                1. No hay reembolsos tras entrega.<br>
-                2. Los logos y tiendas Tebex se entregan según el plan elegido.<br>
-                3. Prohibida la reventa de la base técnica.
+            <h3 id="formTitle" class="text-2xl font-black text-yellow-400 mb-6 uppercase">Confirmar Pedido</h3>
+            <input type="text" id="custName" placeholder="Tu Nombre" class="maik-input">
+            <input type="text" id="custDiscord" placeholder="Usuario de Discord" class="maik-input">
+            <div class="text-[10px] text-gray-500 text-left mb-6 uppercase leading-tight">
+                * No hay reembolsos. Pago 100% seguro.<br>
+                * Soporte 24/7 vía Discord/WhatsApp.
             </div>
-            <select id="metodo" class="input-maik text-yellow-400">
-                <option value="https://www.paypal.me/gancinomaikel">PayPal</option>
+            <select id="payOption" class="maik-input text-yellow-400">
+                <option value="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=gancinomaikel@gmail.com&currency_code=USD&item_name=">PayPal (Seguro)</option>
                 <option value="https://wa.me/593987749885?text=Deseo%20pagar%20por%20Binance">Binance USDT</option>
-                <option value="https://wa.me/593987749885?text=Deseo%20pagar%20por%20Banco">Banco (Ecuador)</option>
+                <option value="https://wa.me/593987749885?text=Deseo%20pagar%20por%20Transferencia">Banco (Ecuador)</option>
             </select>
-            <button class="btn-pay" onclick="finalizarHaciaPago()">Confirmar y Pagar</button>
-            <p class="mt-4 text-gray-500 text-xs cursor-pointer uppercase font-bold" onclick="document.getElementById('orderForm').style.display='none'">CANCELAR</p>
+            <button class="btn-buy" onclick="completeStep()">Ir al Pago</button>
+            <p class="mt-4 text-xs text-red-500 cursor-pointer font-bold" onclick="document.getElementById('orderOverlay').style.display='none'">CANCELAR</p>
         </div>
     </div>
 
-    <div id="finalMessage">
-        <div class="p-10">
-            <i class="fas fa-check-circle text-8xl text-yellow-400 mb-6"></i>
-            <h2 class="text-5xl font-black italic text-yellow-400 mb-2 uppercase">¡PLAN COMPRADO!</h2>
-            <p class="text-xl font-bold text-white uppercase">Te pondremos en contacto en minutos</p>
-            <button class="mt-10 btn-pay w-48" onclick="location.reload()">INICIO</button>
+    <div id="successOverlay" class="overlay">
+        <div class="text-center">
+            <i class="fas fa-check-circle text-9xl text-yellow-400 mb-6"></i>
+            <h2 class="text-6xl font-black italic text-yellow-400 uppercase">¡GRACIAS!</h2>
+            <p class="text-xl font-bold text-white uppercase mt-4">Pago procesado. Maik te contactará ahora.</p>
+            <button class="mt-10 btn-buy w-64" onclick="location.reload()">Regresar</button>
         </div>
     </div>
 
     <script>
-        const data = {
-            boxpvp: ["Minas Base", "KOTH Automático", "Cristales Custom", "Rankup System", "Armaduras Especiales", "NPCs Intercambio", "Cajas Llaves", "Dungeons", "Combat Tag", "Items Skills", "Tienda GUI", "Top Killers", "LOGO DEL SERVIDOR", "TIENDA TEBEX CONFIG"],
-            survival: ["Protecciones", "Clanes", "Economía", "Subastas", "Misiones", "Mundo Recursos", "Skills mcMMO", "Trabajos", "Mascotas", "Mercado Global", "LOGO DEL SERVIDOR", "TIENDA TEBEX CONFIG"],
-            lobby: ["Selector Servidores", "NPCs", "Parkour", "Cosméticos", "Efectos Entrada", "Gadgets", "Música Fondo", "Tablist Decorado", "Scoreboard", "Amigos System", "LOGO DEL SERVIDOR", "TIENDA TEBEX CONFIG"],
-            opti: ["Opti Kernel", "20 TPS Estables", "Reducción Lag RAM", "Config Spigot/Paper", "Chunk Loading Fix", "Limpieza Entidades", "Anti-DDoS Básico", "Pre-gen Mapa", "Patch Crasheos", "Optimización SQL"]
+        const library = {
+            boxpvp: ["Mina Madera Básico", "Mina Carbón Detallada", "Mina Hierro Balanceada", "Mina Oro NBT", "Mina Diamante Hard", "Mina Esmeralda VIP", "Mina Obsidiana Final", "KOTH Automático 24/7", "Cristales de Fuerza Custom", "Rankup con Requisitos", "Armaduras con Atributos", "Trade System Pro", "Cajas de Recompensa Animadas", "Dungeons con Bosses AI", "Combat Tag Anti-Log", "Sistema de Celdas Housing", "Items con Habilidades Activas", "Top Killers Holográfico", "Anti-Dupe Engine", "Config Shulkers", "Balance de Daño Real", "Sistema de Clanes", "DISEÑO DE LOGO SERVIDOR", "TEBEX STORE FULL SETUP"],
+            survival: ["Claims de Tierra", "Economía Global", "Subastas en Menú", "Misiones Diarias", "Mundo Recursos Reset", "Skills de Niveles", "Trabajos Pro", "Mascotas Evolutivas", "Mercado de Jugadores", "Dungeons RPG", "Mythic Items Custom", "Sistema de Matrimonio", "Banco de XP", "Menú de Warps", "Sistema de Votos", "Mundo End Especial", "BattlePass", "Chat Formateado", "Anti-Xray Pro", "Elevadores Mecánicos", "Sistema de Amigos", "Protección Cofres", "DISEÑO DE LOGO SERVIDOR", "TEBEX STORE FULL SETUP"],
+            lobby: ["Selector Animado", "NPCs Interactivos", "Parkour Cronometrado", "Cosméticos VIP", "Partículas al Caminar", "Gadgets Diversión", "Música Noteblock", "Protección Total Mapa", "Actionbar Welcome", "Tablist con Iconos", "Scoreboard Global Sync", "Skins Restorer", "Amigos y Party", "Toggle Players", "Staff Fly", "Portales 3D Animados", "Chat Global", "BossBar Anuncios", "Jump Pads", "Cinemáticas", "Hologramas Guía", "Soporte Multi-versión", "DISEÑO DE LOGO SERVIDOR", "TEBEX STORE FULL SETUP"]
         };
 
-        function openModal(type) {
-            const container = document.getElementById('productContainer');
-            container.innerHTML = '';
-            let planes = [];
+        function loadContent(cat, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const grid = document.getElementById('mainGrid'); grid.innerHTML = '';
 
-            if(type === 'opti') {
-                document.getElementById('modalTitle').innerText = "OPTIMIZACIÓN";
-                planes = [{n: "Opti Básica", p: 5, f: 4}, {n: "Opti Pro", p: 10, f: 7}, {n: "Opti Elite", p: 15, f: 10}];
-            } else if(type === 'promo') {
-                document.getElementById('modalTitle').innerText = "PROMOS (MIX)";
-                for(let i=1; i<=10; i++) planes.push({n: `MEGAPACK #${i}`, p: 5+(i*5), f: 5+(i*2), s: Math.floor(Math.random()*5)+1, isPromo: true});
-            } else {
-                document.getElementById('modalTitle').innerText = "12 PLANES " + type.toUpperCase();
-                for(let i=1; i<=12; i++) planes.push({n: `${type.toUpperCase()} PLAN #${i}`, p: 5+(i*5), f: i*2});
-            }
-
-            planes.forEach(item => {
-                let pool = item.isPromo ? [...data.boxpvp, ...data.survival] : data[type] || data.boxpvp;
-                let finalFeats = pool.slice(0, item.f);
-                
-                // Agregar Logo y Tebex a planes caros (ej: del plan 8 en adelante o precios > 40)
-                if(!item.isPromo && type !== 'opti' && item.p >= 45) {
-                    if(!finalFeats.includes("LOGO DEL SERVIDOR")) finalFeats.push("DISEÑO DE LOGO PROFESIONAL");
-                    if(!finalFeats.includes("TIENDA TEBEX CONFIG")) finalFeats.push("CONFIGURACIÓN TIENDA TEBEX");
+            for(let i=1; i<=12; i++) {
+                let p = 5 + (i*5);
+                let myFeats = library[cat].slice(0, 2 + i);
+                if(i >= 9) {
+                    if(!myFeats.includes("DISEÑO DE LOGO SERVIDOR")) myFeats.push("DISEÑO DE LOGO SERVIDOR");
+                    if(!myFeats.includes("TEBEX STORE FULL SETUP")) myFeats.push("TEBEX STORE FULL SETUP");
                 }
-
-                container.innerHTML += `
-                    <div class="product-card">
-                        <h4 class="text-lg font-black uppercase text-white">${item.n}</h4>
-                        <div class="price-tag">$${item.p}.00</div>
-                        ${item.s ? `<div class="text-red-500 text-[10px] font-bold mb-2 uppercase">STOCK: ${item.s}</div>` : ''}
-                        <ul class="feat-list">
-                            ${finalFeats.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
+                grid.innerHTML += `
+                    <div class="card">
+                        <div class="price">$${p}.00</div>
+                        <h4 class="text-lg font-black uppercase mb-4 text-white">${cat} Plan #${i}</h4>
+                        <ul class="flex-grow">
+                            ${myFeats.map(f => `<li class="feat-item"><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
                         </ul>
-                        <button class="btn-pay" onclick="abrirFormulario('${item.n}', ${item.p})">ADQUIRIR</button>
+                        <button class="btn-buy" onclick="openOrder('${cat} P.${i}', ${p})">Adquirir</button>
+                    </div>`;
+            }
+        }
+
+        function loadPromos() {
+            const grid = document.getElementById('promoGrid');
+            for(let i=1; i<=10; i++) {
+                let p = 15 + (i*10);
+                grid.innerHTML += `
+                    <div class="card border-pink-500/30">
+                        <div class="price text-pink-500">$${p}.00</div>
+                        <h4 class="text-lg font-black uppercase mb-4">Mega Promo #${i}</h4>
+                        <ul class="flex-grow">
+                            <li class="feat-item"><i class="fas fa-star"></i> Mix Modalidad + Lobby</li>
+                            <li class="feat-item"><i class="fas fa-star"></i> Optimización Inicial Incluida</li>
+                            <li class="feat-item"><i class="fas fa-star"></i> Configuración Discord Staff</li>
+                            <li class="feat-item"><i class="fas fa-star"></i> Permisos LuckPerms Full</li>
+                        </ul>
+                        <button class="btn-buy" style="background:#ec4899; color:#fff" onclick="openOrder('Promo ${i}', ${p})">COMPRAR COMBO</button>
+                    </div>`;
+            }
+        }
+
+        function loadOpti() {
+            const grid = document.getElementById('optiGrid');
+            const opts = [
+                {n: "Opti Básica", p: 5, d: ["Limpieza yml", "Ajuste de Chunks", "Culling entities"]},
+                {n: "Opti Pro", p: 10, d: ["JVM Flags", "Anti-Lag Crítico", "Plugin Profiling", "Spark Tech"]},
+                {n: "Opti Elite", p: 15, d: ["20 TPS Locked", "Kernel Pufferfish", "Pre-gen Maps", "MySQL Integration"]}
+            ];
+            opts.forEach(o => {
+                grid.innerHTML += `
+                    <div class="card border-blue-500/30">
+                        <div class="price text-blue-500">$${o.p}.00</div>
+                        <h4 class="text-lg font-black uppercase mb-4 text-white">${o.n}</h4>
+                        <ul class="flex-grow">
+                            ${o.d.map(x => `<li class="feat-item"><i class="fas fa-bolt"></i> ${x}</li>`).join('')}
+                        </ul>
+                        <button class="btn-buy" style="background:#3b82f6; color:#fff" onclick="openOrder('${o.n}', ${o.p})">OPTIMIZAR AHORA</button>
                     </div>`;
             });
-            document.getElementById('modalProducts').style.display = 'block';
         }
 
-        function abrirFormulario(n, p) {
-            document.getElementById('planSelected').innerText = n + " ($" + p + ")";
-            document.getElementById('orderForm').style.display = 'flex';
+        function openOrder(name, price) {
+            document.getElementById('formTitle').innerText = name + " ($" + price + ")";
+            document.getElementById('orderOverlay').style.display = 'flex';
         }
 
-        function finalizarHaciaPago() {
-            if(!document.getElementById('custName').value) return alert("Por favor, ingresa tu nombre.");
-            window.open(document.getElementById('metodo').value, '_blank');
-            document.getElementById('orderForm').style.display = 'none';
-            document.getElementById('modalProducts').style.display = 'none';
-            document.getElementById('finalMessage').style.display = 'flex';
+        function completeStep() {
+            const n = document.getElementById('custName').value;
+            const d = document.getElementById('custDiscord').value;
+            if(!n || !d) return alert("Completa tus datos");
+            
+            let url = document.getElementById('payOption').value;
+            if(url.includes("paypal")) {
+                url += encodeURIComponent(document.getElementById('formTitle').innerText + " - Cliente: " + d);
+            }
+            window.open(url, '_blank');
+            document.getElementById('orderOverlay').style.display = 'none';
+            document.getElementById('successOverlay').style.display = 'flex';
         }
 
-        function closeModal() { document.getElementById('modalProducts').style.display = 'none'; }
+        loadContent('boxpvp', document.querySelector('.tab-btn'));
+        loadPromos(); loadOpti();
     </script>
 </body>
 </html>
