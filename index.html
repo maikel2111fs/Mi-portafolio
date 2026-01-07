@@ -17,7 +17,7 @@
         .nav-buttons { position: fixed; bottom: 30px; right: 30px; display: none; flex-direction: column; gap: 12px; z-index: 8000; }
         .btn-nav { background: #facc15; color: #000; padding: 15px 25px; border-radius: 15px; font-weight: 900; cursor: pointer; border: 2px solid #fff; text-transform: uppercase; font-size: 11px; text-align: center; }
 
-        /* OVERLAY MENÚ (FONDO NEGRO SÓLIDO) */
+        /* OVERLAY MENÚ */
         .full-overlay { position: fixed; inset: 0; background: #000; z-index: 9500; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
         .full-overlay.active { display: flex; }
         .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; max-width: 1000px; }
@@ -35,6 +35,9 @@
         .main-menu-btn { background: #facc15; color: #000; padding: 20px 50px; border-radius: 20px; font-weight: 900; font-size: 24px; cursor: pointer; border: 4px solid #fff; text-transform: uppercase; text-align: center; }
         .form-input { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; }
         
+        /* INFO CARDS */
+        .info-card { background: rgba(255,255,255,0.03); border: 1px solid #222; padding: 20px; border-radius: 20px; margin-top: 10px; }
+
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @media (max-width: 768px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
@@ -46,78 +49,109 @@
     <a href="https://wa.me/593987749885" target="_blank" class="ws-float"><i class="fab fa-whatsapp"></i></a>
 
     <div id="navGroup" class="nav-buttons">
-        <div class="btn-nav" onclick="toggleMenu()">VER SECCIONES</div>
+        <div class="btn-nav" onclick="toggleMenu()">MENÚ</div>
         <div class="btn-nav" style="background: #fff;" onclick="goHome()">INICIO</div>
     </div>
 
     <div id="home" class="h-screen flex flex-col items-center justify-center text-center px-4">
-        <div class="border-2 border-yellow-400 p-4 mb-6 rounded-xl bg-yellow-400/5">
-            <p class="text-xs font-black text-yellow-500 tracking-[0.3em]">EST. 2026</p>
+        <div class="border-2 border-yellow-400 p-4 mb-6 rounded-xl">
+            <p class="text-xs font-black text-yellow-500 tracking-[0.3em]">LICENCIA PROFESIONAL ACTIVA</p>
         </div>
         <h1 class="text-8xl md:text-9xl font-black italic uppercase leading-none">MAIK <span class="text-yellow-400">DEV</span></h1>
-        <p class="mt-6 text-gray-500 font-bold uppercase tracking-[0.4em] text-sm">Professional Game Developer & Designer</p>
+        <p class="mt-6 text-gray-500 font-bold uppercase tracking-[0.4em] text-sm">Professional Game Developer & High Performance Systems</p>
         <div class="mt-14 main-menu-btn" onclick="toggleMenu()">ENTRAR AL CATÁLOGO</div>
     </div>
 
     <div id="fullMenu" class="full-overlay">
         <div class="absolute top-10 right-10 text-5xl cursor-pointer text-yellow-400" onclick="closeOverlay()">×</div>
-        <h2 class="text-4xl font-black text-white uppercase mb-12 italic tracking-tighter">MENÚ DE <span class="text-yellow-400">SERVICIOS</span></h2>
+        <h2 class="text-3xl font-black text-white uppercase mb-12 italic">SERVICIOS <span class="text-yellow-400">DISPONIBLES</span></h2>
         <div class="menu-grid">
-            <div class="menu-card" onclick="openSection('boxpvp')"><i class="fas fa-box text-yellow-400 mb-2 text-3xl"></i><p class="text-[10px] font-black">BOXPVP</p></div>
-            <div class="menu-card" onclick="openSection('survival')"><i class="fas fa-tree text-green-500 mb-2 text-3xl"></i><p class="text-[10px] font-black">SURVIVAL</p></div>
-            <div class="menu-card" onclick="openSection('lobby')"><i class="fas fa-door-open text-blue-500 mb-2 text-3xl"></i><p class="text-[10px] font-black">LOBBY</p></div>
-            <div class="menu-card" onclick="openSection('opti')"><i class="fas fa-bolt text-orange-400 mb-2 text-3xl"></i><p class="text-[10px] font-black">OPTIMIZACIÓN</p></div>
-            <div class="menu-card" onclick="openSection('soporte')"><i class="fas fa-headset text-red-500 mb-2 text-3xl"></i><p class="text-[10px] font-black">SOPORTE</p></div>
-            <div class="menu-card" onclick="openSection('diseno')"><i class="fas fa-paint-brush text-purple-500 mb-2 text-3xl"></i><p class="text-[10px] font-black">DISEÑO</p></div>
-            <div class="menu-card" onclick="openSection('promo')"><i class="fas fa-fire text-pink-500 mb-2 text-3xl"></i><p class="text-[10px] font-black">PROMOS</p></div>
-            <div class="menu-card" onclick="openSection('otros')"><i class="fas fa-ticket-alt text-white mb-2 text-3xl"></i><p class="text-[10px] font-black">TICKET</p></div>
+            <div class="menu-card" onclick="openSection('boxpvp')"><i class="fas fa-box text-yellow-400 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">BoxPvP</p></div>
+            <div class="menu-card" onclick="openSection('survival')"><i class="fas fa-tree text-green-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Survival</p></div>
+            <div class="menu-card" onclick="openSection('lobby')"><i class="fas fa-door-open text-blue-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Lobby</p></div>
+            <div class="menu-card" onclick="openSection('opti')"><i class="fas fa-bolt text-orange-400 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Optimización</p></div>
+            <div class="menu-card" onclick="openSection('soporte')"><i class="fas fa-headset text-red-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Soporte</p></div>
+            <div class="menu-card" onclick="openSection('diseno')"><i class="fas fa-paint-brush text-purple-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Diseño</p></div>
+            <div class="menu-card" onclick="openSection('promo')"><i class="fas fa-fire text-pink-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Promos</p></div>
+            <div class="menu-card" onclick="openSection('otros')"><i class="fas fa-ticket-alt text-white mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Ticket</p></div>
+        </div>
+        <div class="mt-8 flex gap-4">
+            <div class="text-[10px] font-bold text-gray-500"><i class="fas fa-shield-alt text-yellow-500"></i> LICENCIA INCLUIDA</div>
+            <div class="text-[10px] font-bold text-gray-500"><i class="fas fa-lock text-yellow-500"></i> PAGO SEGURO</div>
         </div>
     </div>
 
-    <section id="sec-boxpvp" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-yellow-400 italic">BOXPVP SYSTEMS</h2><div class="plan-grid" id="grid-boxpvp"></div></section>
-    <section id="sec-survival" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-green-500 italic">SURVIVAL SYSTEMS</h2><div class="plan-grid" id="grid-survival"></div></section>
-    <section id="sec-lobby" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-blue-500 italic">LOBBY & PROXY</h2><div class="plan-grid" id="grid-lobby"></div></section>
-    <section id="sec-soporte" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-red-500 italic">TECHNICAL SUPPORT</h2><div class="plan-grid" id="grid-soporte"></div></section>
-    <section id="sec-diseno" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-purple-500 italic">GRAPHIC DESIGN</h2><div class="plan-grid" id="grid-diseno"></div></section>
-    <section id="sec-promo" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-pink-500 italic uppercase">Promociones 12 Packs</h2><div class="plan-grid" id="grid-promo"></div></section>
+    <section id="sec-boxpvp" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-yellow-400 italic">BOXPVP PLANS</h2><div class="plan-grid" id="grid-boxpvp"></div></section>
+    <section id="sec-survival" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-green-500 italic">SURVIVAL PLANS</h2><div class="plan-grid" id="grid-survival"></div></section>
+    <section id="sec-lobby" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-blue-500 italic">LOBBY PLANS</h2><div class="plan-grid" id="grid-lobby"></div></section>
+    <section id="sec-soporte" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-red-500 italic">SUPPORT PLANS</h2><div class="plan-grid" id="grid-soporte"></div></section>
+    <section id="sec-diseno" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-purple-500 italic">DESIGN PLANS</h2><div class="plan-grid" id="grid-diseno"></div></section>
+    <section id="sec-promo" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-pink-500 italic">PROMO PACKS</h2><div class="plan-grid" id="grid-promo"></div></section>
 
     <section id="sec-opti" class="section-container">
-        <h2 class="text-5xl font-black text-center mb-16 text-orange-400 italic">OPTIMIZACIÓN</h2>
+        <h2 class="text-5xl font-black text-center mb-16 text-orange-400 italic uppercase">Optimización Premium</h2>
         <div class="plan-grid">
             <div class="plan-card">
                 <div class="price-tag text-orange-300">$5</div><h4 class="font-black text-white mt-4 uppercase">Básica</h4>
-                <div class="feature"><i class="fas fa-check"></i> Paper/Spigot Optm.</div><div class="feature"><i class="fas fa-check"></i> Entity Cleaner</div>
-                <button class="main-menu-btn mt-10 py-2 text-sm" onclick="buy('OPTIMIZACIÓN BÁSICA', 5)">COMPRAR</button>
+                <div class="feature"><i class="fas fa-check"></i> Spigot/Paper Optm.</div><div class="feature"><i class="fas fa-check"></i> Entity Cleaner</div>
+                <button class="main-menu-btn mt-10 py-2 text-sm" onclick="buy('OPTIMIZACION BASICA', 5)">COMPRAR</button>
             </div>
             <div class="plan-card">
                 <div class="price-tag text-orange-400">$10</div><h4 class="font-black text-white mt-4 uppercase">Media</h4>
-                <div class="feature"><i class="fas fa-check"></i> JVM Flags Setup</div><div class="feature"><i class="fas fa-check"></i> Pre-Generado de Mundo</div>
-                <button class="main-menu-btn mt-10 py-2 text-sm" onclick="buy('OPTIMIZACIÓN MEDIA', 10)">COMPRAR</button>
+                <div class="feature"><i class="fas fa-check"></i> JVM Flags Setup</div><div class="feature"><i class="fas fa-check"></i> Pre-Generado (10k)</div>
+                <button class="main-menu-btn mt-10 py-2 text-sm" onclick="buy('OPTIMIZACION MEDIA', 10)">COMPRAR</button>
             </div>
             <div class="plan-card border-orange-500">
                 <div class="price-tag text-orange-500">$15</div><h4 class="font-black text-white mt-4 uppercase italic">Extrema</h4>
-                <div class="feature text-orange-400 font-black"><i class="fas fa-star"></i> 20 TIPS EXCLUSIVOS</div><div class="feature"><i class="fas fa-check"></i> Linux/Ptero Tuning</div>
-                <button class="main-menu-btn mt-10 py-2 text-sm bg-orange-500" onclick="buy('OPTIMIZACIÓN EXTREMA', 15)">COMPRAR</button>
+                <div class="feature text-orange-400 font-black"><i class="fas fa-star text-white"></i> 20 TIPS EXCLUSIVOS</div><div class="feature"><i class="fas fa-check"></i> Linux/Ptero Tuning</div>
+                <button class="main-menu-btn mt-10 py-2 text-sm bg-orange-500" onclick="buy('OPTIMIZACION EXTREMA', 15)">COMPRAR</button>
             </div>
         </div>
     </section>
 
     <section id="sec-otros" class="section-container">
         <div class="max-w-2xl mx-auto bg-zinc-900 p-12 rounded-[40px] text-center border-2 border-dashed border-zinc-700">
-            <h2 class="text-3xl font-black mb-8 italic uppercase text-yellow-400">Ticket Personalizado</h2>
+            <h2 class="text-3xl font-black mb-8 italic uppercase text-yellow-400">Personalizado</h2>
             <input type="text" id="otherName" placeholder="TU NOMBRE / DISCORD" class="form-input">
-            <textarea id="otherMsg" placeholder="¿QUÉ PROYECTO TIENES EN MENTE?" class="form-input h-48"></textarea>
-            <button class="main-menu-btn w-full" onclick="sendTicket()">ENVIAR A MAIK</button>
+            <textarea id="otherMsg" placeholder="DESCRIBE TU PROYECTO..." class="form-input h-48"></textarea>
+            <button class="main-menu-btn w-full" onclick="sendTicket()">ENVIAR TICKET</button>
         </div>
     </section>
 
     <div id="buyModal" class="fixed inset-0 bg-black/98 z-[10000] hidden items-center justify-center p-6 text-center">
-        <div class="bg-zinc-900 border-2 border-yellow-400 p-10 rounded-[40px] max-w-md w-full">
+        <div class="bg-zinc-900 border-2 border-yellow-400 p-8 rounded-[40px] max-w-2xl w-full overflow-y-auto max-h-[90vh]">
             <h3 id="planName" class="text-xl font-black text-yellow-400 uppercase italic"></h3>
-            <p id="planPrice" class="text-6xl font-black my-8 text-white"></p>
-            <input type="text" id="custName" placeholder="TU DISCORD PARA CONTACTAR" class="form-input">
-            <button class="main-menu-btn w-full py-4" onclick="checkout()">PEDIR POR WHATSAPP</button>
-            <p class="mt-6 text-red-500 cursor-pointer text-xs font-black uppercase" onclick="document.getElementById('buyModal').style.display='none'">CANCELAR</p>
+            <p id="planPrice" class="text-6xl font-black my-4 text-white"></p>
+            
+            <input type="text" id="custName" placeholder="TU DISCORD PARA LA ENTREGA" class="form-input">
+
+            <div class="info-card">
+                <p class="text-[10px] font-black text-yellow-500 mb-3 uppercase">Métodos de Pago Aceptados</p>
+                <div class="flex justify-center gap-6 text-2xl text-gray-400">
+                    <i class="fab fa-paypal" title="PayPal"></i>
+                    <i class="fab fa-bitcoin" title="Binance / Crypto"></i>
+                    <i class="fas fa-university" title="Transferencia Ecuador"></i>
+                    <i class="fas fa-credit-card" title="Tarjetas"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-left">
+                <div class="info-card">
+                    <p class="text-[9px] font-black text-white mb-2 uppercase italic"><i class="fas fa-file-contract text-yellow-500 mr-1"></i> Condiciones</p>
+                    <ul class="text-[8px] text-gray-500 font-bold space-y-1">
+                        <li>• Entrega en 24-72 horas hábiles.</li>
+                        <li>• Soporte técnico incluido (7 días).</li>
+                        <li>• No hay reembolsos tras la entrega.</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <p class="text-[9px] font-black text-white mb-2 uppercase italic"><i class="fas fa-certificate text-yellow-500 mr-1"></i> Licencia MaikDev</p>
+                    <p class="text-[8px] text-gray-500 font-bold">Se entrega una **Licencia Digital única** por cada configuración, garantizando la originalidad y el derecho de uso comercial en tu servidor.</p>
+                </div>
+            </div>
+
+            <button class="main-menu-btn w-full mt-6 py-4" onclick="checkout()">FINALIZAR PEDIDO</button>
+            <p class="mt-4 text-red-500 cursor-pointer text-[10px] font-black uppercase" onclick="document.getElementById('buyModal').style.display='none'">[ CANCELAR ]</p>
         </div>
     </div>
 
@@ -138,13 +172,7 @@
                 for(let i=0; i<12; i++) {
                     let p = (i === 0) ? 5 : Math.min(10 + (i*6.5), 80);
                     let myF = specs[sec].slice(0, (i + 1) * 2);
-                    grid.innerHTML += `
-                    <div class="plan-card">
-                        <div class="price-tag">$${Math.floor(p)}</div>
-                        <h4 class="font-black text-yellow-500 text-xs mb-6 uppercase tracking-widest">PAQUETE NIVEL ${i+1}</h4>
-                        <div class="flex-grow">${myF.map(f => `<div class="feature"><i class="fas fa-check-circle text-yellow-400"></i> ${f}</div>`).join('')}</div>
-                        <button class="main-menu-btn w-full mt-8 py-2 text-xs" onclick="buy('${sec.toUpperCase()} NIVEL ${i+1}', ${Math.floor(p)})">ADQUIRIR</button>
-                    </div>`;
+                    grid.innerHTML += `<div class="plan-card"><div class="price-tag">$${Math.floor(p)}</div><h4 class="font-black text-yellow-500 text-[10px] mb-6 uppercase">PACK NIVEL ${i+1}</h4><div class="flex-grow">${myF.map(f => `<div class="feature"><i class="fas fa-check-circle text-yellow-400"></i> ${f}</div>`).join('')}</div><button class="main-menu-btn w-full mt-8 py-2 text-xs" onclick="buy('${sec.toUpperCase()} NIVEL ${i+1}', ${Math.floor(p)})">ADQUIRIR</button></div>`;
                 }
             });
         }
@@ -153,25 +181,13 @@
         function buy(n, p) { curP=n; curPr=p; document.getElementById('planName').innerText=n; document.getElementById('planPrice').innerText="$"+p; document.getElementById('buyModal').style.display='flex'; }
         function toggleMenu() { document.getElementById('fullMenu').classList.add('active'); }
         function closeOverlay() { document.getElementById('fullMenu').classList.remove('active'); }
-        function goHome() { 
-            document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); 
-            document.getElementById('home').style.display = 'flex'; 
-            document.getElementById('navGroup').style.display = 'none'; 
-        }
-        function openSection(id) { 
-            document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); 
-            document.getElementById('home').style.display = 'none'; 
-            document.getElementById('sec-' + id).classList.add('active'); 
-            document.getElementById('navGroup').style.display = 'flex'; 
-            closeOverlay(); window.scrollTo(0,0); 
-        }
+        function goHome() { document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); document.getElementById('home').style.display = 'flex'; document.getElementById('navGroup').style.display = 'none'; }
+        function openSection(id) { document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); document.getElementById('home').style.display = 'none'; document.getElementById('sec-' + id).classList.add('active'); document.getElementById('navGroup').style.display = 'flex'; closeOverlay(); window.scrollTo(0,0); }
         function checkout() { 
             const u = document.getElementById('custName').value || "Cliente"; 
-            window.open(`https://wa.me/593987749885?text=Maik,%20soy%20${u},%20me%20interesa%20contratar%20el%20plan:%20${curP}%20con%20precio%20de%20$${curPr}`); 
+            window.open(`https://wa.me/593987749885?text=Maik,%20soy%20${u},%20me%20interesa%20el%20plan:%20${curP}%20($${curPr}).%20Acepto%20las%20condiciones%20y%20licencia.`); 
         }
-        function sendTicket() { 
-            window.location.href = `mailto:chimbayuliana@gmail.com?subject=TICKET_PERSONALIZADO&body=${document.getElementById('otherName').value}: ${document.getElementById('otherMsg').value}`; 
-        }
+        function sendTicket() { window.location.href = `mailto:chimbayuliana@gmail.com?subject=TICKET&body=${document.getElementById('otherName').value}: ${document.getElementById('otherMsg').value}`; }
         build();
     </script>
 </body>
