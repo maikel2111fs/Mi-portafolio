@@ -3,497 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Dev | Agencia de Setups</title>
+    <title>Maik Desarrollador | Soluciones Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
-        body { background-color: #050505; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        .section-box { border-bottom: 1px solid #1a1a1a; padding: 100px 0; }
-        .price-card { 
-            background: #0a0a0a; 
-            border: 1px solid #1a1a1a; 
-            transition: all 0.3s ease; 
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .price-card:hover { border-color: #3b82f6; transform: translateY(-5px); }
-        .boxpvp-theme { border-top: 4px solid #3b82f6; }
-        .survival-theme { border-top: 4px solid #10b981; }
-        .lobby-theme { border-top: 4px solid #8b5cf6; }
-        .btn-buy { font-weight: 900; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-    </style>
-</head>
-<body>
-
-    <nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
-            <div class="text-xl font-black italic">MAIK <span class="text-blue-500">DEV</span></div>
-            <div class="flex gap-6 text-[10px] font-bold uppercase">
-                <a href="#boxpvp-sec" class="hover:text-blue-500">BoxPvP</a>
-                <a href="#survival-sec" class="hover:text-green-500">Survival</a>
-                <a href="#lobby-sec" class="hover:text-purple-500">Lobby</a>
-                <a href="#cita" class="bg-white text-black px-4 py-2 rounded-full">Contacto</a>
-            </div>
-        </div>
-    </nav>
-
-    <header class="h-screen flex flex-col justify-center items-center text-center px-6">
-        <h1 class="text-7xl md:text-9xl font-black tracking-tighter mb-4">SETUP <br><span class="text-blue-500">AGENCY</span></h1>
-        <p class="text-gray-500 max-w-lg uppercase text-xs tracking-[0.3em]">Configuraciones profesionales para servidores de alto rendimiento</p>
-    </header>
-
-    <section id="boxpvp-sec" class="section-box">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="mb-16">
-                <h2 class="text-5xl font-black italic uppercase">Configuración <span class="text-blue-500">BoxPvP</span></h2>
-                <p class="text-gray-500 mt-2">Sistemas de combate, minas progresivas y optimización total.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="price-card boxpvp-theme p-8 rounded-2xl">
-                    <div>
-                        <h3 class="text-lg font-black mb-2 uppercase">Básico</h3>
-                        <div class="text-4xl font-black mb-6">$15.00</div>
-                        <ul class="text-xs text-gray-400 space-y-3 mb-8">
-                            <li><i class="fas fa-check text-blue-500 mr-2"></i> Optimización Paper 1.20+</li>
-                            <li><i class="fas fa-check text-blue-500 mr-2"></i> Setup de 5 Minas</li>
-                            <li><i class="fas fa-check text-blue-500 mr-2"></i> Anti-Lag Config</li>
-                        </ul>
-                    </div>
-                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Basico&amount=15.00&currency_code=USD" class="btn-buy w-full py-4 bg-blue-600 text-white text-center rounded-xl text-[10px]">Comprar $15</a>
-                </div>
-                <div class="price-card boxpvp-theme p-8 rounded-2xl border-blue-500 shadow-2xl shadow-blue-500/10">
-                    <div>
-                        <h3 class="text-lg font-black mb-2 uppercase text-blue-500">Profesional</h3>
-                        <div class="text-4xl font-black mb-6">$45.00</div>
-                        <ul class="text-xs text-gray-400 space-y-3 mb-8">
-                            <li><i class="fas fa-star text-blue-500 mr-2"></i> Todo lo del Básico</li>
-                            <li><i class="fas fa-star text-blue-500 mr-2"></i> Tradeos Custom (NPC)</li>
-                            <li><i class="fas fa-star text-blue-500 mr-2"></i> Sistema de KOTH y Eventos</li>
-                        </ul>
-                    </div>
-                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Pro&amount=45.00&currency_code=USD" class="btn-buy w-full py-4 bg-blue-600 text-white text-center rounded-xl text-[10px]">Comprar $45</a>
-                </div>
-                <div class="price-card boxpvp-theme p-8 rounded-2xl bg-blue-500/5 border-yellow-500">
-                    <div>
-                        <h3 class="text-lg font-black mb-2 uppercase text-yellow-500 italic">Supremo</h3>
-                        <div class="text-4xl font-black mb-6">$100.00</div>
-                        <ul class="text-xs text-gray-400 space-y-3 mb-8">
-                            <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Setup de Network Completa</li>
-                            <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Anticheat Premium Config</li>
-                            <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Soporte VIP 24/7</li>
-                        </ul>
-                    </div>
-                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Supremo&amount=100.00&currency_code=USD" class="btn-buy w-full py-4 bg-yellow-600 text-white text-center rounded-xl text-[10px]">Comprar $100</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="survival-sec        .blue-gradient { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
-    </style>
-</head>
-<body class="opacity-0 transition-opacity duration-1000">
-
-    <div id="preloader">
-        <div class="text-xl font-black tracking-[0.5em] text-white uppercase italicSyncopate">Maik <span class="text-blue-500">Dev</span></div>
-        <div class="loader-bar"><div class="loader-progress"></div></div>
-        <div class="text-[8px] text-gray-500 uppercase mt-4 tracking-widest">Iniciando sistemas de desarrollo...</div>
-    </div>
-
-    <nav class="fixed top-0 w-full z-50 bg-[#05070a]/80 backdrop-blur-xl border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-            <div class="text-2xl font-black tracking-tighter italic">MAIK<span class="text-blue-500">DEV</span></div>
-            <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em]">
-                <a href="#boxpvp" class="hover:text-blue-500 transition">BoxPvP</a>
-                <a href="#survival" class="hover:text-green-500 transition">Survival</a>
-                <a href="#lobby" class="hover:text-purple-500 transition">Lobby</a>
-                <a href="#cita" class="text-blue-500">Contratar</a>
-            </div>
-        </div>
-    </nav>
-
-    <header class="pt-48 pb-32 px-6 text-center">
-        <div class="inline-block px-4 py-1 border border-blue-500/30 rounded-full mb-6 bg-blue-500/5">
-            <span class="text-blue-500 font-bold text-[10px] uppercase tracking-widest">Agencia Elite N°1</span>
-        </div>
-        <h1 class="text-6xl md:text-9xl font-black text-white mb-8 tracking-tighter leading-none">
-            ELEVANDO TU <br> <span class="text-blue-500 italic text-glow">PROYECTO.</span>
-        </h1>
-        <p class="max-w-xl mx-auto text-gray-400 text-sm md:text-lg italic leading-relaxed">
-            Configuraciones optimizadas para 0 LAG, seguridad avanzada y setups de alta retención.
-        </p>
-    </header>
-
-    <section id="boxpvp" class="max-w-7xl mx-auto py-24 px-8">
-        <div class="flex items-end gap-6 mb-16">
-            <h2 class="text-5xl font-black italic uppercase">Setups <span class="text-blue-500">BoxPvP</span></h2>
-            <div class="flex-1 h-px bg-white/10 mb-3"></div>
-        </div>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-card p-10 rounded-[3rem]">
-                <h4 class="text-gray-500 font-bold text-[10px] uppercase mb-2 tracking-widest">Nivel Carbón</h4>
-                <div class="text-3xl font-black mb-6">$15.00</div>
-                <ul class="space-y-4 text-xs text-gray-400 mb-10">
-                    <li><i class="fas fa-check text-blue-500 mr-3"></i>Optimización de Paper/Spigot</li>
-                    <li><i class="fas fa-check text-blue-500 mr-3"></i>Setup de 5 Minas Base</li>
-                    <li><i class="fas fa-check text-blue-500 mr-3"></i>Tradeos Base NPC</li>
-                </ul>
-                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Carbon&amount=15.00&currency_code=USD" class="block w-full py-4 text-center rounded-2xl font-black text-[10px] uppercase tracking-widest border border-blue-500/30 hover:bg-blue-500 transition">Comprar Nivel</a>
+        body { background-color: #0b0f15; color: #fff; font-family: 'Inter', sans-serif; }
+        
+        /* Estilo de Tarjetas basado en tu imagen */
+        .card-panel {
+            background: #161d26;
+            border: 1px solid #2d3748;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card-panel:hover { border-color: #3b82f6; background: #1a232e; }
+
+        .btn-blue { background: #1d4ed8; transition: 0.3s; }
+        .btn-blue:hover { background: #2563eb; transform: scale(1.02); }
+
+        /* Plan Supremo Dorado */
+        .plan-supremo {
+            border: 2px solid #fbbf24;
+            background: linear-gradient(180deg, #161d26 0%, #0b0f15 100%);
+        }
+
+        .text-cyan { color: #22d3ee; }
+        .text-gold { color: #fbbf24; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <nav class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+        <div class="text-xl font-black italic tracking-tighter uppercase">
+            MAIK <span class="text-blue-500">DESARROLLADOR</span>
+        </div>
+        <a href="#cita" class="bg-blue-600 px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest">Agendar Cita</a>
+    </nav>
+
+    <header class="text-center py-16">
+        <h1 class="text-5xl md:text-6xl font-black uppercase tracking-tight">SOLUCIONES <span class="text-blue-500">PRO</span></h1>
+        <p class="text-gray-500 text-xs mt-4 uppercase tracking-widest font-bold">Configuración de Minecraft, Diseño y Web. Elige el plan que se adapte a tu presupuesto.</p>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="card-panel p-6">
+            <span class="text-[8px] text-gray-500 font-bold uppercase">Nivel 1</span>
+            <h3 class="text-xl font-black uppercase">CARBÓN</h3>
+            <div class="text-2xl font-black text-blue-500 my-2">$5,00</div>
+            <ul class="text-[10px] text-gray-400 space-y-2 mt-4">
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Optimización básica</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Revisión de Logs</li>
+            </ul>
+        </div>
+        <div class="card-panel p-6">
+            <span class="text-[8px] text-gray-500 font-bold uppercase">Nivel 2</span>
+            <h3 class="text-xl font-black uppercase">PIEDRA</h3>
+            <div class="text-2xl font-black text-blue-500 my-2">$10,00</div>
+            <ul class="text-[10px] text-gray-400 space-y-2 mt-4">
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Fix de errores</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Config de 5 Plugins</li>
+            </ul>
+        </div>
+        <div class="card-panel p-8 md:col-span-2 flex flex-col justify-center">
+             <div class="flex items-center gap-4 mb-4">
+                <h4 class="text-2xl font-black uppercase">Nivel Inicial <span class="text-blue-500">CARBÓN</span></h4>
+                <span class="text-3xl font-black text-blue-500">$5,00</span>
+             </div>
+             <p class="text-xs text-gray-400 leading-relaxed">
+                <span class="text-blue-500 font-bold">✔ "Optimización Básica":</span> Ajustes esenciales para quitar el lag inicial de tu servidor.<br>
+                <span class="text-blue-500 font-bold">✔ "Revisión de Logs":</span> Identificación de errores que consumen recursos.
+             </p>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 border border-gray-800 rounded-[2rem] p-8 bg-[#0d121a]">
+        <div class="mb-10">
+            <span class="text-[10px] text-gray-500 font-bold uppercase">Nivel Profesional</span>
+            <h2 class="text-3xl font-black uppercase tracking-tighter">PIEDRA & <span class="text-blue-500">MAS</span></h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="card-panel p-8 border-gray-700">
+                <h4 class="text-xs font-bold text-gray-500 uppercase">Nivel 2 / Rendimiento</h4>
+                <h3 class="text-2xl font-black uppercase mt-2">PIEDRA</h3>
+                <div class="text-3xl font-black text-blue-500 my-4">$10,00</div>
+                <p class="text-[10px] text-gray-400 mb-6 italic">El sintonía de cualquier proyecto exitoso. Limpiamos el ruido técnico.</p>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=Plan+Piedra&amount=10.00&currency_code=USD" class="block w-full py-3 border border-gray-600 rounded-lg text-center text-[10px] font-black uppercase">Elegir Plan</a>
             </div>
-            <div class="glass-card p-10 rounded-[3rem] border-blue-500 border-2 shadow-2xl shadow-blue-500/10">
-                <h4 class="text-blue-500 font-bold text-[10px] uppercase mb-2 tracking-widest">Nivel Diamante</h4>
-                <div class="text-3xl font-black mb-6">$45.00</div>
-                <ul class="space-y-4 text-xs text-gray-400 mb-10">
-                    <li><i class="fas fa-star text-blue-500 mr-3"></i>Todo el nivel Carbón</li>
-                    <li><i class="fas fa-star text-blue-500 mr-3"></i>Minas con Reset Animado</li>
-                    <li><i class="fas fa-star text-blue-500 mr-3"></i>Koth, Eventos y Tops</li>
-                </ul>
-                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Diamante&amount=45.00&currency_code=USD" class="block w-full py-4 text-center rounded-2xl font-black text-[10px] uppercase tracking-widest blue-gradient text-white">Comprar Nivel</a>
+
+            <div class="card-panel p-8 border-blue-500 relative">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 px-4 py-1 rounded-full text-[8px] font-black uppercase">Popular</div>
+                <h4 class="text-xs font-bold text-gray-500 uppercase">Nivel 3 / Game Design</h4>
+                <h3 class="text-2xl font-black uppercase mt-2">DIAMANTE</h3>
+                <div class="text-3xl font-black text-white my-4">$34,00</div>
+                <p class="text-[10px] text-gray-400 mb-6 italic">Especializado en jugabilidad competitiva y sistemas de economía.</p>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=Plan+Diamante&amount=34.00&currency_code=USD" class="block w-full py-3 btn-blue rounded-lg text-center text-[10px] font-black uppercase text-white">Elegir Plan</a>
             </div>
-            <div class="glass-card p-10 rounded-[3rem] bg-white/5">
-                <h4 class="text-yellow-500 font-bold text-[10px] uppercase mb-2 tracking-widest">Nivel Supremo</h4>
-                <div class="text-3xl font-black mb-6">$100.00</div>
-                <ul class="space-y-4 text-xs text-gray-400 mb-10">
-                    <li><i class="fas fa-crown text-yellow-500 mr-3"></i>Setup Full Red / Network</li>
-                    <li><i class="fas fa-crown text-yellow-500 mr-3"></i>Anticheat Premium Setup</li>
-                    <li><i class="fas fa-crown text-yellow-500 mr-3"></i>Tablist/Scoreboard Animado</li>
-                </ul>
-                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Supremo&amount=100.00&currency_code=USD" class="block w-full py-4 text-center rounded-2xl font-black text-[10px] uppercase tracking-widest bg-yellow-600 text-white">Comprar Supremo</a>
+
+            <div class="card-panel p-8 border-green-600">
+                <h4 class="text-xs font-bold text-gray-500 uppercase">Nivel 4 / Web Presence</h4>
+                <h3 class="text-2xl font-black uppercase mt-2">ESMERALDA</h3>
+                <div class="text-3xl font-black text-green-500 my-4">$46,00</div>
+                <p class="text-[10px] text-gray-400 mb-6 italic">Tu carta de presentación al mundo. Profesionalismo puro.</p>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=Plan+Esmeralda&amount=46.00&currency_code=USD" class="block w-full py-3 border border-green-900 rounded-lg text-center text-[10px] font-black uppercase">Elegir Plan</a>
+            </div>
+
+            <div class="card-panel p-8 plan-supremo text-center">
+                <i class="fas fa-crown text-gold text-2xl mb-2"></i>
+                <h4 class="text-xs font-bold text-gold uppercase">Nivel Final</h4>
+                <h3 class="text-2xl font-black uppercase mt-2 text-gold">SUPREMO</h3>
+                <div class="text-4xl font-black text-gold my-4">$100,00</div>
+                <p class="text-[10px] text-gray-400 mb-6 italic">La solución total para grandes comunidades y creadores.</p>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=Plan+Supremo&amount=100.00&currency_code=USD" class="block w-full py-4 border-2 border-gold rounded-lg text-center text-[10px] font-black uppercase text-gold hover:bg-gold hover:text-black transition">Contratar Agencia</a>
             </div>
         </div>
     </section>
 
-    <section id="cita" class="max-w-4xl mx-auto py-32 px-8">
-        <div class="glass-card p-16 rounded-[4rem] border-white/10 relative overflow-hidden">
-            <div id="formBody">
-                <h2 class="text-4xl font-black text-center mb-4 uppercase italic">Inicia tu <span class="text-blue-500">Imperio</span></h2>
-                <p class="text-center text-gray-500 text-xs uppercase tracking-widest mb-12">Rellena el formulario para contactar con Maik</p>
-                <form id="mainForm" action="https://formsubmit.co/chimbayuliana@gmail.com" method="POST" class="space-y-6">
-                    <input type="hidden" name="_captcha" value="false">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <input type="text" name="name" placeholder="Tu Nombre" class="bg-black/40 border border-white/10 rounded-2xl p-5 text-white outline-none focus:border-blue-500 transition" required>
-                        <input type="text" name="discord" placeholder="Discord ID (ej: Maik#0001)" class="bg-black/40 border border-white/10 rounded-2xl p-5 text-white outline-none focus:border-blue-500 transition" required>
-                    </div>
-                    <textarea name="message" rows="5" placeholder="Cuéntame sobre tu servidor..." class="w-full bg-black/40 border border-white/10 rounded-2xl p-5 text-white outline-none focus:border-blue-500 transition" required></textarea>
-                    <button type="submit" class="w-full py-6 blue-gradient text-white font-black rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] transition shadow-2xl shadow-blue-500/20">Enviar Solicitud Directa</button>
-                </form>
+    <section id="cita" class="max-w-4xl mx-auto mt-20 p-10 card-panel border-blue-900/30">
+        <h2 class="text-3xl font-black text-center mb-2 uppercase">¿Hacemos algo <span class="text-blue-500 italic">Legendario?</span></h2>
+        <p class="text-center text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-10">Reserva tu cita con Maik hoy mismo</p>
+        
+        <form id="maikForm" action="https://formsubmit.co/chimbayuliana@gmail.com" method="POST" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" name="marca" placeholder="Nombre de la Marca/Usuario" class="bg-[#0b0f15] border border-gray-700 rounded-xl p-4 text-xs outline-none focus:border-blue-500">
+                <input type="text" name="discord" placeholder="Discord (Ej: AddMaik)" class="bg-[#0b0f15] border border-gray-700 rounded-xl p-4 text-xs outline-none focus:border-blue-500">
             </div>
-
-            <div id="successMsg" class="hidden text-center py-20">
-                <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-8">
-                    <i class="fas fa-check text-3xl text-green-500"></i>
-                </div>
-                <h3 class="text-3xl font-black text-white mb-2 uppercase italic">¡Todo listo!</h3>
-                <p class="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em]">Gracias por confiar en nosotros, un superior se pondrá en contacto contigo.</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-20 text-center opacity-40">
-        <div class="text-[10px] font-black uppercase tracking-[0.5em]">Maik Desarrollador © 2026</div>
-    </footer>
-
-    <script>
-        // Manejo del Preloader
-        window.onload = () => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            document.body.classList.remove('opacity-0');
-            setTimeout(() => { preloader.style.display = 'none'; }, 800);
-        };
-
-        // Manejo del Formulario
-        document.getElementById('mainForm').addEventListener('submit', function(e) {
-            setTimeout(() => {
-                document.getElementById('formBody').classList.add('hidden');
-                document.getElementById('successMsg').classList.remove('hidden');
-            }, 400);
-        });
-    </script>
-</body>
-</html>                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-gray-500 uppercase">Nivel 2</h3>
-                    <h2 class="text-2xl font-black mb-1">PIEDRA</h2>
-                    <div class="text-xl font-bold text-blue-400 mb-4">$10,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-blue-400 font-bold italic">+ Todo lo de Carbón</li>
-                        <li><i class="fas fa-bolt text-blue-500 mr-2"></i>Optimización Spigot/Paper</li>
-                        <li><i class="fas fa-bug text-blue-500 mr-2"></i>Fix de Errores de Consola</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-gray-500 uppercase">Nivel 3</h3>
-                    <h2 class="text-2xl font-black mb-1 text-orange-400">COBRE</h2>
-                    <div class="text-xl font-bold text-blue-400 mb-4">$15,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-blue-400 font-bold italic">+ Todo lo de Piedra</li>
-                        <li><i class="fas fa-plug text-blue-500 mr-2"></i>Configuración de 10 Plugins</li>
-                        <li><i class="fas fa-key text-blue-500 mr-2"></i>Sistema de Permisos Base</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-gray-500 uppercase">Nivel 4</h3>
-                    <h2 class="text-2xl font-black mb-1 text-blue-300">LAPIS</h2>
-                    <div class="text-xl font-bold text-blue-400 mb-4">$20,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-blue-400 font-bold italic">+ Todo lo de Cobre</li>
-                        <li><i class="fas fa-coins text-blue-500 mr-2"></i>Sistema de Economía</li>
-                        <li><i class="fas fa-store text-blue-500 mr-2"></i>Creación de Tiendas (NPC/GUI)</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-gray-500 uppercase">Nivel 5</h3>
-                    <h2 class="text-2xl font-black mb-1 text-gray-300">HIERRO</h2>
-                    <div class="text-xl font-bold text-blue-400 mb-4">$25,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-blue-400 font-bold italic">+ Todo lo de Lapis</li>
-                        <li><i class="fas fa-cube text-blue-500 mr-2"></i>Instalación de Mods</li>
-                        <li><i class="fas fa-microchip text-blue-500 mr-2"></i>Optimización Forge/Fabric</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-gray-500 uppercase">Nivel 6</h3>
-                    <h2 class="text-2xl font-black mb-1 text-yellow-500">ORO</h2>
-                    <div class="text-xl font-bold text-blue-400 mb-4">$30,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-blue-400 font-bold italic">+ Todo lo de Hierro</li>
-                        <li><i class="fas fa-shield-alt text-blue-500 mr-2"></i>Sistema Anti-Hack</li>
-                        <li><i class="fas fa-lock text-blue-500 mr-2"></i>Seguridad de Bungee/Velocity</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl border-blue-500 border-2">
-                <div>
-                    <h3 class="text-[10px] font-bold text-blue-500 uppercase">Nivel 7</h3>
-                    <h2 class="text-2xl font-black mb-1">DIAMANTE</h2>
-                    <div class="text-xl font-bold text-blue-400 mb-4">$40,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-blue-400 font-bold italic">+ Todo lo de Oro</li>
-                        <li><i class="fas fa-swords text-blue-500 mr-2"></i>Setup BoxPvP Especializado</li>
-                        <li><i class="fas fa-gem text-blue-500 mr-2"></i>Minas y Kits Balanceados</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 blue-gradient rounded-lg text-center text-xs font-bold uppercase text-white shadow-lg">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl border-green-500/30 border">
-                <div>
-                    <h3 class="text-[10px] font-bold text-green-500 uppercase">Nivel 8</h3>
-                    <h2 class="text-2xl font-black mb-1">ESMERALDA</h2>
-                    <div class="text-xl font-bold text-green-500 mb-4">$50,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-green-500 font-bold italic">+ Todo lo de Diamante</li>
-                        <li><i class="fas fa-globe text-green-500 mr-2"></i>Portafolio Web Profesional</li>
-                        <li><i class="fas fa-code text-green-500 mr-2"></i>SEO Básico (Google Search)</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-green-900/40 rounded-lg text-center text-xs font-bold hover:bg-green-800 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-purple-500 uppercase">Nivel 9</h3>
-                    <h2 class="text-2xl font-black mb-1 text-purple-400">OBSIDIANA</h2>
-                    <div class="text-xl font-bold text-purple-500 mb-4">$65,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-purple-400 font-bold italic">+ Todo lo de Esmeralda</li>
-                        <li><i class="fas fa-palette text-purple-400 mr-2"></i>Banner + Logo Personalizado</li>
-                        <li><i class="fas fa-id-card text-purple-400 mr-2"></i>Identidad Visual Completa</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-red-500 uppercase">Nivel 10</h3>
-                    <h2 class="text-2xl font-black mb-1 text-red-400">NETHERITE</h2>
-                    <div class="text-xl font-bold text-red-500 mb-4">$75,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-red-400 font-bold italic">+ Todo lo de Obsidiana</li>
-                        <li><i class="fas fa-shopping-cart text-red-400 mr-2"></i>Tienda Tebex Completa</li>
-                        <li><i class="fas fa-money-check-alt text-red-400 mr-2"></i>Pasarelas de Pago</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-yellow-500 uppercase">Nivel 11</h3>
-                    <h2 class="text-2xl font-black mb-1">ESTRELLA</h2>
-                    <div class="text-xl font-bold text-yellow-500 mb-4">$80,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="text-yellow-400 font-bold italic">+ Todo lo de Netherite</li>
-                        <li><i class="fas fa-broadcast-tower text-yellow-500 mr-2"></i>Gestión para Streamers</li>
-                        <li><i class="fas fa-headset text-yellow-500 mr-2"></i>Soporte en Eventos Pro</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-2 bg-gray-800 rounded-lg text-center text-xs font-bold hover:bg-gray-700 uppercase transition">Elegir</a>
-            </div>
-
-            <div class="plan-card p-6 rounded-2xl gold-border relative shadow-xl shadow-yellow-500/10">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-500 text-black text-[9px] px-3 py-1 rounded-full font-black uppercase tracking-tighter">EL MÁS COMPLETO</div>
-                <div>
-                    <h2 class="text-2xl font-black mb-1 text-yellow-500">SUPREMO</h2>
-                    <div class="text-xl font-bold text-white mb-4">$100,00</div>
-                    <ul class="text-xs space-y-2 text-gray-300 border-t border-gray-800 pt-4">
-                        <li class="text-yellow-500 font-bold uppercase tracking-widest text-[9px]">SOLUCIÓN TOTAL AGENCIA</li>
-                        <li><i class="fas fa-crown text-yellow-500 mr-2"></i>Soporte VIP 24/7</li>
-                        <li><i class="fas fa-sync text-yellow-500 mr-2"></i>Mantenimiento Mensual</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-6 block py-3 bg-yellow-600 rounded-lg text-center text-xs font-black uppercase text-white shadow-lg hover:scale-105 transition">Contratar</a>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="agendar" class="max-w-4xl mx-auto py-24 px-6">
-        <div class="plan-card p-12 rounded-[2.5rem] border-2 border-blue-500/20 shadow-2xl">
-            <h2 class="text-3xl font-black text-white text-center mb-8 uppercase italic">Agendar <span class="text-blue-500">Cita</span></h2>
+            <select name="plan" class="w-full bg-[#0b0f15] border border-gray-700 rounded-xl p-4 text-xs outline-none focus:border-blue-500 appearance-none text-gray-400">
+                <option value="Piedra">Plan Piedra - Optimización ($10)</option>
+                <option value="Diamante">Plan Diamante - Game Design ($34)</option>
+                <option value="Esmeralda">Plan Esmeralda - Web ($46)</option>
+                <option value="Supremo">Plan Supremo - Agencia Full ($100)</option>
+            </select>
+            <textarea name="mensaje" rows="5" placeholder="¿Qué tienes en mente? Cuéntame sobre tu servidor o la web que necesitas..." class="w-full bg-[#0b0f15] border border-gray-700 rounded-xl p-4 text-xs outline-none focus:border-blue-500"></textarea>
             
-            <form id="contactForm" action="https://formsubmit.co/chimbayuliana@gmail.com" method="POST" class="space-y-4">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://maikel2111fs.github.io/Mi-portafolio/gracias.html">
+            <button type="submit" class="w-full py-4 btn-blue rounded-xl font-black text-[10px] uppercase tracking-tighter">Enviar Solicitud y Agendar Cita</button>
+        </form>
 
-                <div class="grid md:grid-cols-2 gap-4">
-                    <input type="text" name="nombre" placeholder="Nombre de Usuario / Marca" class="bg-gray-900 border border-gray-700 rounded-xl p-4 text-white outline-none focus:border-blue-500" required>
-                    <input type="text" name="discord" placeholder="Discord ID (AddMaik)" class="bg-gray-900 border border-gray-700 rounded-xl p-4 text-white outline-none focus:border-blue-500" required>
-                </div>
-
-                <select name="plan_seleccionado" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-4 text-white outline-none focus:border-blue-500 appearance-none">
-                    <option value="Carbon-5">Carbón ($5)</option>
-                    <option value="Piedra-10">Piedra ($10)</option>
-                    <option value="Cobre-15">Cobre ($15)</option>
-                    <option value="Lapis-20">Lapis ($20)</option>
-                    <option value="Hierro-25">Hierro ($25)</option>
-                    <option value="Oro-30">Oro ($30)</option>
-                    <option value="Diamante-40">Diamante ($40)</option>
-                    <option value="Esmeralda-50">Esmeralda ($50)</option>
-                    <option value="Obsidiana-65">Obsidiana ($65)</option>
-                    <option value="Netherite-75">Netherite ($75)</option>
-                    <option value="Estrella-80">Estrella ($80)</option>
-                    <option value="Supremo-100">Supremo ($100)</option>
-                </select>
-
-                <textarea name="mensaje" rows="4" placeholder="Cuéntame sobre tu proyecto..." class="w-full bg-gray-900 border border-gray-700 rounded-xl p-4 text-white outline-none focus:border-blue-500" required></textarea>
-
-                <button type="submit" class="w-full py-4 blue-gradient text-white font-black rounded-xl text-sm uppercase shadow-xl hover:scale-[1.01] transition transform">ENVIAR SOLICITUD</button>
-            </form>
-            <div id="successMessage" class="hidden mt-8 text-center p-6 bg-green-900/20 border border-green-500 rounded-2xl">
-                <p class="text-green-400 font-bold uppercase tracking-widest text-sm">¡Gracias por confiar en nosotros!</p>
-                <p class="text-gray-300 text-xs mt-2 italic">Un superior se pondrá en contacto contigo a la brevedad.</p>
-            </div>
+        <div id="success" class="hidden text-center py-10">
+            <h3 class="text-xl font-black text-white uppercase italic">¡Solicitud Enviada!</h3>
+            <p class="text-gray-400 text-xs mt-2 font-bold">Gracias por confiar en nosotros, un superior se pondrá en contacto contigo.</p>
         </div>
     </section>
 
-    <footer class="text-center py-10 border-t border-gray-800 text-gray-600 text-[10px] uppercase tracking-[0.4em]">
-        Maik Desarrollador © 2026 | Saquisilí, Cotopaxi
-    </footer>
-
     <script>
-        // Lógica para mostrar el mensaje de agradecimiento
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            // Se muestra el mensaje después de un pequeño retraso para permitir el envío
+        document.getElementById('maikForm').addEventListener('submit', function(e) {
             setTimeout(() => {
-                document.getElementById('contactForm').classList.add('hidden');
-                document.getElementById('successMessage').classList.remove('hidden');
+                this.style.display = 'none';
+                document.getElementById('success').classList.remove('hidden');
             }, 500);
         });
     </script>
 </body>
-</html>                        <li><i class="fas fa-check text-blue-500 mr-1"></i> Optimización Básica</li>
-                        <li><i class="fas fa-check text-blue-500 mr-1"></i> Revisión de Logs</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-4 block py-2 bg-gray-800 rounded-lg text-center text-[10px] font-bold uppercase hover:bg-gray-700">Elegir</a>
-            </div>
-
-            <div class="glass-card p-5 rounded-2xl card-hover">
-                <div>
-                    <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Nivel 2</h3>
-                    <h2 class="text-xl font-black mb-2 italic text-gray-300">PIEDRA</h2>
-                    <div class="text-2xl font-black text-white mb-4">$10,00</div>
-                    <ul class="text-[12px] space-y-2 text-gray-400 border-t border-gray-800 pt-4">
-                        <li class="font-bold text-blue-400">+ Plan Carbón</li>
-                        <li><i class="fas fa-bolt text-blue-500 mr-1"></i> Optimización de Lag</li>
-                        <li><i class="fas fa-bug text-blue-500 mr-1"></i> Fix de Errores de Consola</li>
-                    </ul>
-                </div>
-                <a href="#agendar" class="mt-4 block py-2 bg-gray-800 rounded-lg text-center text-[10px] font-bold uppercase hover:bg-gray-700">Elegir</a>
-            </div>
-
-            <div class="glass-                    <h3 class="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest italic">Nivel Inicial</h3>
-                    <h2 class="text-3xl font-black text-white mb-4 uppercase">Carbón</h2>
-                    <div class="text-4xl font-black text-blue-400 mb-6">$5,00</div>
-                    <ul class="space-y-4 text-sm text-gray-300 border-t border-gray-800 pt-6">
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i> **Optimización Básica:** Ajustes esenciales para quitar el lag inicial.</li>
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i> **Revisión de Logs:** Identificación de errores que crashean tu servidor.</li>
-                    </ul>
-                </div>
-                <a href="#cita-seccion" class="mt-8 block py-3 bg-gray-800 rounded-xl text-center font-bold text-xs uppercase hover:bg-gray-700 transition">Elegir Carbón</a>
-            </div>
-
-            <div class="glass-card p-8 rounded-3xl card-hover border-gray-700">
-                <div>
-                    <h3 class="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest italic">Nivel Rendimiento</h3>
-                    <h2 class="text-3xl font-black text-white mb-4 uppercase">Piedra</h2>
-                    <div class="text-4xl font-black text-blue    <section class="max-w-[1440px] mx-auto pb-24 px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <div class="glass-card p-8 rounded-3xl card-hover border-gray-700">
-                <div>
-                    <h3 class="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest italic">Nivel 1: Rendimiento</h3>
-                    <h2 class="text-3xl font-black text-white mb-4">PIEDRA</h2>
-                    <div class="text-4xl font-black text-blue-500 mb-6">$10,00</div>
-                    <p class="text-gray-400 text-sm mb-6">El cimiento de cualquier proyecto exitoso. Limpiamos el ruido técnico.</p>
-                    <ul class="space-y-4 text-sm text-gray-300 border-t border-gray-800 pt-6">
-                        <li><i class="fas fa-bolt text-blue-500 mr-2"></i> **Optimización de Lag:** Ajustes en spigot.yml, paper.yml y purpur.</li>
-                        <li><i class="fas fa-bug text-blue-500 mr-2"></i> **Fix de Consola:** Eliminamos errores de plugins y dependencias.</li>
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Configuración de 5 Plugins Base.</li>
-                    </ul>
-                </div>
-                <a href="#cita-formulario" class="mt-8 block py-3 bg-gray-800 rounded-xl text-center font-bold text-xs uppercase hover:bg-gray-700 transition">Elegir Plan</a>
-            </div>
-
-            <div class="glass-card p-8 rounded-3xl border-2 border-blue-600 card-hover relative shadow-2xl">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] px-4 py-1 rounded-full font-black">MÁS POPULAR</div>
-                <div>
-                    <h3 class="text-xs font-bold text-blue-400 mb-2 uppercase tracking-widest italic">Nivel 3: Game Design</h3>
-                    <h2 class="text-3xl font-black text-white mb-4">DIAMANTE</h2>
-                    <div class="text-4xl font-black text-white mb-6">$34,00</div>
-                    <p class="text-gray-400 text-sm mb-6">Especializado en jugabilidad competitiva y sistemas de economía.</p>
-                    <ul class="space-y-4 text-sm text-gray-300 border-t border-gray-800 pt-6">
-                        <li class="text-blue-400 text-xs font-bold uppercase tracking-tighter italic">Todo lo de Hierro +</li>
-                        <li><i class="fas fa-fist-raised text-blue-500 mr-2"></i> **Setup BoxPvP Pro:** Minas, zonas de combate y protección.</li>
-                        <li><i class="fas fa-gem text-blue-500 mr-2"></i> **Economía Real:** Balancé de precios, tiendas y trades.</li>
-                        <li><i class="fas fa-crown text-blue-500 mr-2"></i> **Rangos & Kits:** Configuración de permisos profesional.</li>
-                    </ul>
+</html>                    </ul>
                 </div>
                 <a href="#cita-formulario" class="mt-8 block py-3 blue-gradient rounded-xl text-center font-black text-xs text-white uppercase shadow-lg">Elegir Plan</a>
             </div>
