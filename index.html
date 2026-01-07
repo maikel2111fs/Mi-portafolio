@@ -3,66 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Portfolio Oficial</title>
+    <title>MAIK DEV | Licencia Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* FONDO DE VIDEO REAL */
-        .video-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; object-fit: cover; filter: brightness(0.3) blur(2px);
-        }
+        /* FONDO DINÁMICO */
+        .video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; object-fit: cover; filter: brightness(0.25) contrast(1.1); }
+        .overlay-particles { position: fixed; inset: 0; background: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.3; z-index: -1; pointer-events: none; }
 
-        .main-hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; }
+
+        /* LOGO MAIK */
+        .maik-logo { width: 120px; height: 120px; background: #facc15; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #000; font-weight: 900; margin-bottom: 20px; box-shadow: 0 0 50px rgba(250,204,21,0.4); animation: pulse 2s infinite; border: 4px solid #fff; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 70px rgba(250,204,21,0.6); } 100% { transform: scale(1); } }
+
+        .license-box { background: linear-gradient(90deg, #facc15, #a16207); color: #000; padding: 8px 25px; border-radius: 50px; font-weight: 900; font-size: 11px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 2px; }
         
-        .license-badge { 
-            background: linear-gradient(90deg, #facc15, #a16207); color: #000; 
-            padding: 8px 20px; border-radius: 5px; font-weight: 900; font-size: 11px; 
-            text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px;
-        }
+        h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; font-style: italic; line-height: 0.8; margin-bottom: 15px; }
+        .bio { max-width: 600px; color: #ccc; font-size: 14px; margin-bottom: 40px; line-height: 1.6; }
 
-        h1 { font-size: clamp(50px, 10vw, 100px); font-weight: 900; font-style: italic; line-height: 0.8; margin-bottom: 40px; }
-
-        /* BOTONES CATEGORÍAS */
-        .nav-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; width: 100%; max-width: 1100px; }
-        .nav-card { 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
-            padding: 30px; border-radius: 20px; cursor: pointer; transition: 0.3s; backdrop-filter: blur(15px);
-        }
-        .nav-card:hover { background: #facc15; color: #000; transform: translateY(-10px); }
-        .nav-card i { font-size: 30px; margin-bottom: 15px; display: block; }
-        .nav-card span { font-weight: 900; text-transform: uppercase; font-size: 12px; }
+        /* MENÚ */
+        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; width: 100%; max-width: 1100px; }
+        .nav-card { background: rgba(20,20,20,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; cursor: pointer; transition: 0.4s; backdrop-filter: blur(10px); }
+        .nav-card:hover { border-color: #facc15; transform: translateY(-10px); background: rgba(250,204,21,0.1); }
+        .nav-card i { font-size: 32px; color: #facc15; margin-bottom: 15px; display: block; }
+        .nav-card span { font-weight: 900; text-transform: uppercase; font-size: 11px; }
 
         /* MODALES */
         .modal-view { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; overflow-y: auto; padding: 60px 20px; }
-        .close-modal { position: fixed; top: 25px; right: 25px; background: #facc15; color: #000; padding: 12px 30px; border-radius: 10px; font-weight: 900; cursor: pointer; z-index: 1100; border: none; }
-
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: 50px auto; }
-        .p-card { background: #0a0a0a; border: 1px solid #222; padding: 30px; border-radius: 25px; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
-        .p-card:hover { border-color: #facc15; }
+        .close-btn { position: fixed; top: 25px; right: 25px; background: #facc15; color: #000; padding: 10px 25px; border-radius: 10px; font-weight: 900; cursor: pointer; z-index: 1100; border: none; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: 40px auto; }
         
-        .p-price { font-size: 45px; font-weight: 900; color: #facc15; margin: 15px 0; }
-        .p-stock { background: #ff0055; color: #fff; font-size: 10px; font-weight: 900; padding: 4px 12px; border-radius: 5px; position: absolute; top: 20px; right: 20px; }
-
-        .feat-list { list-style: none; text-align: left; margin-bottom: 25px; }
-        .feat-list li { font-size: 11px; text-transform: uppercase; font-weight: 800; color: #aaa; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .feat-list li i { color: #facc15; font-size: 14px; }
+        .p-card { background: #0a0a0a; border: 1px solid #222; padding: 30px; border-radius: 25px; position: relative; text-align: left; }
+        .p-price { font-size: 40px; font-weight: 900; color: #facc15; margin: 10px 0; }
+        .stock-badge { background: #ef4444; font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 5px; position: absolute; top: 20px; right: 20px; }
 
         /* FORMULARIO */
-        #formOrder { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        #orderForm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .form-box { background: #0d0d0d; border: 1px solid #facc15; padding: 40px; border-radius: 30px; max-width: 450px; width: 100%; text-align: center; }
         .f-input { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; }
-        
-        .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .pay-btn { background: #1a1a1a; padding: 12px; border-radius: 10px; cursor: pointer; font-size: 10px; font-weight: 900; border: 1px solid #333; }
-        .pay-btn.active { border-color: #facc15; background: rgba(250,204,21,0.1); color: #facc15; }
+        .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .pay-opt { background: #1a1a1a; padding: 12px; border-radius: 10px; cursor: pointer; font-size: 10px; font-weight: 900; border: 1px solid #333; }
+        .pay-opt.active { border-color: #facc15; background: rgba(250,204,21,0.1); color: #facc15; }
 
-        .btn-buy { background: #facc15; color: #000; width: 100%; padding: 15px; border-radius: 12px; font-weight: 900; text-transform: uppercase; cursor: pointer; border: none; }
+        .btn-confirm { background: #facc15; color: #000; width: 100%; padding: 18px; border-radius: 15px; font-weight: 900; text-transform: uppercase; cursor: pointer; border: none; margin-top: 10px; }
+        .legal-check { font-size: 10px; color: #666; display: flex; align-items: center; gap: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -70,147 +59,139 @@
     <video autoplay muted loop playsinline class="video-bg">
         <source src="https://assets.mixkit.co/videos/preview/mixkit-forest-landscape-seen-from-the-air-at-sunset-39726-large.mp4" type="video/mp4">
     </video>
+    <div class="overlay-particles"></div>
 
-    <div class="main-hero">
-        <div class="license-badge"><i class="fas fa-crown mr-2"></i> Licencia Oficial Maik Developer</div>
-        <h1>MAIK <span class="text-yellow-400">DEV</span></h1>
+    <div class="hero">
+        <div class="maik-logo">M</div>
         
-        <div class="nav-menu">
-            <div class="nav-card" onclick="showModal('boxpvp')"><i class="fas fa-skull"></i><span>BoxPvP</span></div>
-            <div class="nav-card" onclick="showModal('survival')"><i class="fas fa-tree"></i><span>Survival</span></div>
-            <div class="nav-card" onclick="showModal('setups')"><i class="fas fa-server"></i><span>Setups</span></div>
-            <div class="nav-card" onclick="showModal('opti')" style="border-color: #00f2ff;"><i class="fas fa-bolt" style="color: #00f2ff;"></i><span>Optimización</span></div>
-            <div class="nav-card" onclick="showModal('promos')" style="border-color: #ff0055;"><i class="fas fa-fire" style="color: #ff0055;"></i><span>Promociones</span></div>
+        <div class="license-box"><i class="fas fa-shield-alt mr-2"></i> LICENCIA OFICIAL CERTIFICADA</div>
+        <h1>MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
+        
+        <p class="bio">
+            ¡Hola! Soy <b>Maik</b>, experto en configuración y optimización de servidores de Minecraft. 
+            Ofrezco setups profesionales con <b>Licencia Oficial</b>, garantizando la mayor calidad, 
+            estabilidad (20 TPS) y seguridad para tu comunidad. ¡Elige un servicio y eleva tu servidor!
+        </p>
+        
+        <div class="nav-grid">
+            <div class="nav-card" onclick="openModal('boxpvp')"><i class="fas fa-skull"></i><span>BoxPvP</span></div>
+            <div class="nav-card" onclick="openModal('survival')"><i class="fas fa-tree"></i><span>Survival</span></div>
+            <div class="nav-card" onclick="openModal('setup')"><i class="fas fa-server"></i><span>Setups</span></div>
+            <div class="nav-card" onclick="openModal('opti')" style="border-color: #00f2ff;"><i class="fas fa-bolt" style="color:#00f2ff"></i><span>Optimización</span></div>
+            <div class="nav-card" onclick="openModal('promo')" style="border-color: #ff0055;"><i class="fas fa-fire" style="color:#ff0055"></i><span>Promociones</span></div>
         </div>
     </div>
 
     <div id="modalProducts" class="modal-view">
-        <button class="close-modal" onclick="closeModal()">CERRAR</button>
+        <button class="close-btn" onclick="closeModal()">CERRAR MENÚ</button>
         <div class="max-w-7xl mx-auto text-center">
-            <h2 id="modalTitle" class="text-6xl font-black italic uppercase text-yellow-400">PRODUCTOS</h2>
-            <div id="productGrid" class="grid-layout"></div>
+            <h2 id="modalTitle" class="text-6xl font-black italic uppercase text-yellow-400 mb-10">PRODUCTOS</h2>
+            <div id="gridCards" class="grid-cards"></div>
         </div>
     </div>
 
-    <div id="formOrder">
+    <div id="orderForm">
         <div class="form-box">
-            <h3 class="text-2xl font-black text-yellow-400 mb-2 uppercase italic">Solicitar Pedido</h3>
-            <p class="text-[9px] text-gray-500 mb-6 uppercase tracking-widest">Se otorgará una Licencia Oficial tras el pago</p>
+            <h3 class="text-2xl font-black text-yellow-400 mb-1 uppercase italic">ADQUIRIR SERVICIO</h3>
+            <p class="text-[9px] text-gray-500 mb-6 uppercase tracking-widest">Al comprar aceptas mi Licencia de Autor</p>
             
             <form action="https://formspree.io/f/TU_ID_AQUI" method="POST">
-                <input type="text" name="Nombre" placeholder="Tu Nombre Completo" class="f-input" required>
+                <input type="text" name="Nombre" placeholder="Tu Nombre" class="f-input" required>
                 <input type="text" name="Discord" placeholder="Usuario de Discord" class="f-input" required>
-                <input type="text" id="finalItem" name="Plan" class="f-input text-yellow-500 font-bold border-none bg-zinc-900 text-center" readonly>
-                <input type="hidden" id="methodValue" name="Metodo" value="PayPal">
+                <input type="text" id="itemName" name="Servicio" class="f-input text-yellow-500 font-bold border-none bg-zinc-900 text-center" readonly>
+                <input type="hidden" id="methodPay" name="Pago" value="PayPal">
                 
                 <div class="pay-grid">
-                    <div class="pay-btn active" onclick="selectPay(this, 'PayPal')">PAYPAL</div>
-                    <div class="pay-btn" onclick="selectPay(this, 'Binance')">BINANCE</div>
-                    <div class="pay-btn" onclick="selectPay(this, 'Ecuador')">BANCO EC</div>
-                    <div class="pay-btn" onclick="selectPay(this, 'Gmail')">GMAIL/OTRO</div>
+                    <div class="pay-opt active" onclick="setPay(this, 'PayPal')">PAYPAL</div>
+                    <div class="pay-opt" onclick="setPay(this, 'Binance')">BINANCE</div>
+                    <div class="pay-opt" onclick="setPay(this, 'Banco EC')">BANCO EC</div>
+                    <div class="pay-opt" onclick="setPay(this, 'Otro/Gmail')">OTRO / GMAIL</div>
                 </div>
 
-                <button type="submit" class="btn-buy shadow-lg shadow-yellow-500/20">Confirmar Compra</button>
-                <p class="mt-4 text-[10px] text-gray-600 cursor-pointer font-bold uppercase" onclick="document.getElementById('formOrder').style.display='none'">Volver</p>
+                <div class="legal-check">
+                    <input type="checkbox" required checked>
+                    <span>Acepto Licencia Oficial Maik y Términos</span>
+                </div>
+
+                <button type="submit" class="btn-confirm">Pagar y Obtener Licencia</button>
+                <p class="mt-4 text-[10px] text-gray-500 cursor-pointer font-bold uppercase" onclick="document.getElementById('orderForm').style.display='none'">CANCELAR</p>
             </form>
         </div>
     </div>
 
     <script>
-        // CONFIGURACIÓN DE LAS 10 PROMOCIONES (Suben $5 cada una)
-        const promoList = [
-            { name: "Promo Starter", price: 5, stock: 10, items: ["Lobby Simple", "NPC Selector", "Licencia Oficial"] },
-            { name: "Promo Box Miner", price: 10, stock: 8, items: ["BoxPvP 5 Minas", "Scoreboard", "Licencia Oficial"] },
-            { name: "Promo Survival RPG", price: 15, stock: 7, items: ["Survival Base", "Clanes", "Licencia Oficial"] },
-            { name: "Promo Network Proxy", price: 20, stock: 6, items: ["Velocity Setup", "Anti-DDoS", "Licencia Oficial"] },
-            { name: "Promo Extreme Opti", price: 25, stock: 5, items: ["Optimización Extrema", "20 TPS", "Licencia Oficial"] },
-            { name: "Promo Box Full", price: 30, stock: 5, items: ["BoxPvP Completo", "Eventos", "Licencia Oficial"] },
-            { name: "Promo Mega Network", price: 35, stock: 4, items: ["Lobby + Survival", "MySQL", "Licencia Oficial"] },
-            { name: "Promo Terabusing", price: 40, stock: 3, items: ["Setup Terabusing", "Hosting Opti", "Licencia Oficial"] },
-            { name: "Promo Global VIP", price: 45, stock: 2, items: ["Toda la Network", "Tienda Web", "Licencia Oficial"] },
-            { name: "Promo MAIK SUPREMO", price: 50, stock: 1, items: ["TODO LO ANTERIOR", "Soporte VIP", "Licencia Oficial"] }
+        const promoData = [
+            { n: "Pack Starter", p: 5, s: 10, i: ["Lobby", "NPCs", "Licencia"] },
+            { n: "Pack Box Miner", p: 10, s: 8, i: ["BoxPvP Base", "Items", "Licencia"] },
+            { n: "Pack Survival RPG", p: 15, s: 7, i: ["Survival", "Clanes", "Licencia"] },
+            { n: "Pack Velocity", p: 20, s: 6, i: ["Proxy Setup", "Anti-Bot", "Licencia"] },
+            { n: "Pack Extreme TPS", p: 25, s: 5, i: ["Opti 20 TPS", "JVM Flags", "Licencia"] },
+            { n: "Pack Box Full", p: 30, s: 5, i: ["Full BoxPvP", "Eventos", "Licencia"] },
+            { n: "Pack Network", p: 35, s: 4, i: ["Sync MySQL", "Lobby+Surv", "Licencia"] },
+            { n: "Pack Terabusing", p: 40, s: 3, i: ["Setup Tera", "Seguridad", "Licencia"] },
+            { n: "Pack VIP Network", p: 45, s: 2, i: ["Todo el Servidor", "Web", "Licencia"] },
+            { n: "Pack MAIK SUPREMO", p: 50, s: 1, i: ["FULL SETUP MIX", "Soporte", "Licencia"] }
         ];
 
-        const optiList = [
-            { name: "Opti Básica", price: 5, items: ["Limpieza de Lag", "20 TPS", "Archivos Base"] },
-            { name: "Opti Normal", price: 10, items: ["Spark Monitor", "JVM Flags", "Pre-Generación"] },
-            { name: "Opti Extrema", price: 15, items: ["Anti-DDoS Java", "Optimización RAM", "Soporte 24/7"] }
-        ];
-
-        const baseLevels = ["Madera", "Piedra", "Carbón", "Hierro", "Lapis", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
-
-        function showModal(type) {
-            const grid = document.getElementById('productGrid');
+        function openModal(type) {
+            const grid = document.getElementById('gridCards');
             const title = document.getElementById('modalTitle');
             grid.innerHTML = '';
-            
-            if(type === 'promos') {
+
+            if(type === 'promo') {
                 title.innerText = "10 MEGA PROMOCIONES";
-                promoList.forEach((p, idx) => {
+                promoData.forEach((d, idx) => {
                     grid.innerHTML += `
                         <div class="p-card border-pink-600">
-                            <div class="p-stock">${p.stock} STOCK</div>
-                            <h4 class="text-xl font-black uppercase">${p.name}</h4>
-                            <div class="p-price">$${p.price}.00</div>
-                            <ul class="feat-list">
-                                ${p.items.map(i => `<li><i class="fas fa-fire text-pink-500"></i> ${i}</li>`).join('')}
+                            <span class="stock-badge">${d.s} DISPONIBLES</span>
+                            <h4 class="text-xl font-black uppercase">${d.n}</h4>
+                            <div class="p-price">$${d.p}.00</div>
+                            <ul class="text-[10px] text-gray-400 mb-6 font-bold uppercase">
+                                ${d.i.map(li => `<li><i class="fas fa-fire text-pink-500 mr-2"></i>${li}</li>`).join('')}
                             </ul>
-                            <button class="btn-buy" onclick="buyPromo(${idx})">Comprar Ahora</button>
+                            <button class="btn-confirm" onclick="buyPromo(${idx})">Comprar</button>
                         </div>
                     `;
                 });
             } else if(type === 'opti') {
-                title.innerText = "SISTEMA DE OPTIMIZACIÓN";
-                optiList.forEach(p => {
-                    grid.innerHTML += `
-                        <div class="p-card border-cyan-500">
-                            <h4 class="text-xl font-black uppercase">${p.name}</h4>
-                            <div class="p-price">$${p.price}.00</div>
-                            <ul class="feat-list">
-                                ${p.items.map(i => `<li><i class="fas fa-bolt text-cyan-400"></i> ${i}</li>`).join('')}
-                            </ul>
-                            <button class="btn-buy" onclick="openOrder('${p.name}', ${p.price})">Mejorar Servidor</button>
-                        </div>
-                    `;
+                title.innerText = "OPTIMIZACIÓN PRO";
+                [{n:"Básica", p:5}, {n:"Normal", p:10}, {n:"Extrema", p:15}].forEach(o => {
+                    grid.innerHTML += `<div class="p-card border-cyan-500">
+                        <h4 class="text-xl font-black uppercase">Opti ${o.n}</h4>
+                        <div class="p-price">$${o.p}.00</div>
+                        <button class="btn-confirm" onclick="openOrder('Opti ${o.n}', ${o.p})">Contratar</button>
+                    </div>`;
                 });
             } else {
                 title.innerText = `PLANES ${type.toUpperCase()}`;
-                baseLevels.forEach((lvl, i) => {
-                    const price = (5 + (i * 7)).toFixed(2);
-                    grid.innerHTML += `
-                        <div class="p-card">
-                            <h4 class="text-xl font-black uppercase">${lvl}</h4>
-                            <div class="p-price">$${price}</div>
-                            <ul class="feat-list">
-                                <li><i class="fas fa-check"></i> Setup ${type}</li>
-                                <li><i class="fas fa-check"></i> Calidad ${lvl}</li>
-                                <li><i class="fas fa-check"></i> Licencia Maik Dev</li>
-                            </ul>
-                            <button class="btn-buy" onclick="openOrder('${type} ${lvl}', ${price})">Adquirir</button>
-                        </div>
-                    `;
+                ["Madera", "Piedra", "Hierro", "Diamante", "SUPREMO"].forEach((lvl, i) => {
+                    const price = 5 + (i * 10);
+                    grid.innerHTML += `<div class="p-card">
+                        <h4 class="text-xl font-black uppercase">${lvl}</h4>
+                        <div class="p-price">$${price}.00</div>
+                        <button class="btn-confirm" onclick="openOrder('${type} ${lvl}', ${price})">Adquirir</button>
+                    </div>`;
                 });
             }
             document.getElementById('modalProducts').style.display = 'block';
         }
 
         function buyPromo(idx) {
-            if(promoList[idx].stock > 0) {
-                promoList[idx].stock--;
-                showModal('promos');
-                openOrder(promoList[idx].name, promoList[idx].price);
-            } else { alert("¡Stock Agotado!"); }
+            if(promoData[idx].s > 0) {
+                promoData[idx].s--;
+                openOrder(promoData[idx].n, promoData[idx].p);
+            } else { alert("Stock Agotado"); }
         }
 
-        function openOrder(name, price) {
-            document.getElementById('finalItem').value = `${name} ($${price})`;
-            document.getElementById('formOrder').style.display = 'flex';
+        function openOrder(n, p) {
+            document.getElementById('itemName').value = `${n} ($${p})`;
+            document.getElementById('orderForm').style.display = 'flex';
         }
 
-        function selectPay(el, val) {
-            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+        function setPay(el, val) {
+            document.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            document.getElementById('methodValue').value = val;
+            document.getElementById('methodPay').value = val;
         }
 
         function closeModal() { document.getElementById('modalProducts').style.display = 'none'; }
