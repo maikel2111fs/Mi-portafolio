@@ -8,17 +8,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* FONDO Y CAPAS */
         .video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; filter: brightness(0.2) contrast(1.1); }
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.4; }
 
         .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
 
-        /* LOGO CON GLOW */
         .maik-logo { 
             width: 100px; height: 100px; background: #facc15; border-radius: 25px; 
             display: flex; align-items: center; justify-content: center; font-size: 50px; 
@@ -35,70 +32,39 @@
             box-shadow: 0 0 30px rgba(250,204,21,0.4); border: 1px solid #fff;
         }
         
-        h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; font-style: italic; line-height: 0.8; margin-bottom: 15px; text-shadow: 0 0 20px rgba(250,204,21,0.3); }
-        .bio { max-width: 600px; color: #ddd; font-size: 14px; margin-bottom: 40px; text-shadow: 1px 1px 2px #000; }
+        h1 { font-size: clamp(40px, 8vw, 90px); font-weight: 900; font-style: italic; line-height: 0.8; margin-bottom: 15px; }
+        .bio { max-width: 600px; color: #ddd; font-size: 14px; margin-bottom: 40px; }
 
-        /* MENÚ CON EFECTO NEÓN */
         .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; width: 100%; max-width: 1100px; }
-        .nav-card { 
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); 
-            padding: 25px; border-radius: 20px; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            backdrop-filter: blur(15px); 
-        }
-        .nav-card:hover { 
-            border-color: #facc15; transform: scale(1.1); 
-            background: rgba(250,204,21,0.15); 
-            box-shadow: 0 0 30px rgba(250,204,21,0.2);
-        }
-        .nav-card i { font-size: 30px; color: #facc15; margin-bottom: 10px; display: block; filter: drop-shadow(0 0 5px #facc15); }
+        .nav-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 25px; border-radius: 20px; cursor: pointer; transition: 0.4s; backdrop-filter: blur(15px); }
+        .nav-card:hover { border-color: #facc15; transform: scale(1.1); background: rgba(250,204,21,0.15); }
+        .nav-card i { font-size: 30px; color: #facc15; margin-bottom: 10px; display: block; }
 
-        /* VENTANAS ELEGANTES */
-        .modal-view { 
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); 
-            z-index: 1000; overflow-y: auto; padding: 60px 20px; backdrop-filter: blur(20px);
-            animation: fadeIn 0.4s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .close-btn { position: fixed; top: 25px; right: 25px; background: #facc15; color: #000; padding: 10px 25px; border-radius: 10px; font-weight: 900; cursor: pointer; z-index: 1100; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.3s; }
-        .close-btn:hover { background: #fff; transform: rotate(5deg); }
+        .modal-view { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; overflow-y: auto; padding: 60px 20px; backdrop-filter: blur(20px); }
+        .close-btn { position: fixed; top: 25px; right: 25px; background: #facc15; color: #000; padding: 10px 25px; border-radius: 10px; font-weight: 900; cursor: pointer; z-index: 1100; border: none; }
         
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: 40px auto; }
-        .p-card { 
-            background: rgba(15,15,15,0.8); border: 1px solid #333; padding: 30px; 
-            border-radius: 30px; text-align: left; transition: 0.4s; position: relative;
-            overflow: hidden;
-        }
-        .p-card:hover { border-color: #facc15; transform: translateY(-10px); background: rgba(20,20,20,1); }
-        .p-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(250,204,21,0.05) 0%, transparent 70%); pointer-events: none; }
+        .p-card { background: rgba(15,15,15,0.9); border: 1px solid #333; padding: 30px; border-radius: 30px; text-align: left; position: relative; transition: 0.3s; }
+        .p-card:hover { border-color: #facc15; transform: translateY(-5px); }
         
-        .p-price { font-size: 35px; font-weight: 900; color: #facc15; margin: 10px 0; letter-spacing: -1px; }
-        .stock-tag { background: #ff0055; font-size: 9px; padding: 4px 12px; border-radius: 50px; position: absolute; top: 20px; right: 20px; font-weight: 900; box-shadow: 0 0 15px rgba(255,0,85,0.4); }
+        .p-price { font-size: 35px; font-weight: 900; color: #facc15; margin: 10px 0; }
+        .stock-tag { background: #ff0055; font-size: 9px; padding: 4px 12px; border-radius: 50px; position: absolute; top: 20px; right: 20px; font-weight: 900; }
 
         .feat-list { list-style: none; font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; margin-bottom: 25px; }
         .feat-list li { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-        .feat-list li i { color: #facc15; font-size: 12px; }
+        .feat-list li i { color: #facc15; }
 
-        /* FORMULARIO PREMIUM */
         #orderForm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .form-box { background: #0a0a0a; border: 2px solid #facc15; padding: 45px; border-radius: 40px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 60px rgba(250,204,21,0.2); }
-        .f-input { width: 100%; background: #111; border: 1px solid #333; padding: 16px; border-radius: 15px; color: #fff; margin-bottom: 12px; transition: 0.3s; }
-        .f-input:focus { border-color: #facc15; box-shadow: 0 0 15px rgba(250,204,21,0.1); }
+        .form-box { background: #0a0a0a; border: 2px solid #facc15; padding: 45px; border-radius: 40px; max-width: 450px; width: 100%; text-align: center; }
+        .f-input { width: 100%; background: #111; border: 1px solid #333; padding: 16px; border-radius: 15px; color: #fff; margin-bottom: 12px; }
         
         .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .pay-opt { background: #151515; padding: 12px; border-radius: 12px; cursor: pointer; font-size: 10px; font-weight: 900; border: 1px solid #333; transition: 0.3s; }
-        .pay-opt.active { border-color: #facc15; color: #facc15; background: rgba(250,204,21,0.05); transform: scale(1.05); }
+        .pay-opt { background: #151515; padding: 12px; border-radius: 12px; cursor: pointer; font-size: 10px; font-weight: 900; border: 1px solid #333; }
+        .pay-opt.active { border-color: #facc15; color: #facc15; background: rgba(250,204,21,0.05); }
 
-        .btn-buy { 
-            background: linear-gradient(45deg, #facc15, #ffaa00); color: #000; 
-            width: 100%; padding: 20px; border-radius: 15px; font-weight: 900; 
-            text-transform: uppercase; cursor: pointer; border: none; 
-            box-shadow: 0 10px 20px rgba(250,204,21,0.3); transition: 0.3s;
-        }
-        .btn-buy:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(250,204,21,0.5); }
-
-        .whatsapp-btn { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 500; transition: 0.3s; }
-        .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+        .btn-buy { background: linear-gradient(45deg, #facc15, #ffaa00); color: #000; width: 100%; padding: 20px; border-radius: 15px; font-weight: 900; text-transform: uppercase; cursor: pointer; border: none; }
+        .legal-notice { font-size: 9px; color: #666; margin-top: 15px; line-height: 1.4; text-align: center; }
+        .legal-notice b { color: #ef4444; }
     </style>
 </head>
 <body>
@@ -108,39 +74,37 @@
     </video>
     <div class="particles"></div>
 
-    <a href="https://wa.me/TU_NUMERO" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i></a>
-
     <div class="hero">
         <div class="maik-logo">M</div>
         <div class="license-badge"><i class="fas fa-crown mr-2"></i> LICENCIA OFICIAL MAIK DEVELOPER</div>
         <h1>MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
-        <p class="bio">Configuraciones de Minecraft de Élite. Calidad insuperable, optimización de 20 TPS constante y protección de licencia certificada.</p>
+        <p class="bio">Expertos en configuraciones de Minecraft. 20 TPS constantes y garantía de Licencia Oficial Maik.</p>
         
         <div class="nav-grid">
             <div class="nav-card" onclick="openModal('boxpvp')"><i class="fas fa-skull"></i><span>BoxPvP</span></div>
             <div class="nav-card" onclick="openModal('survival')"><i class="fas fa-tree"></i><span>Survival</span></div>
-            <div class="nav-card" onclick="openModal('lobby')"><i class="fas fa-door-open"></i><span>Lobby Setup</span></div>
+            <div class="nav-card" onclick="openModal('lobby')"><i class="fas fa-door-open"></i><span>Lobby</span></div>
             <div class="nav-card" onclick="openModal('server')"><i class="fas fa-server"></i><span>Bungee/Velocity</span></div>
             <div class="nav-card" onclick="openModal('opti')" style="border-color: #00f2ff;"><i class="fas fa-bolt" style="color:#00f2ff"></i><span>Optimización</span></div>
-            <div class="nav-card" onclick="openModal('promo')" style="border-color: #ff0055;"><i class="fas fa-fire" style="color:#ff0055"></i><span>10 Promociones</span></div>
+            <div class="nav-card" onclick="openModal('promo')" style="border-color: #ff0055;"><i class="fas fa-fire" style="color:#ff0055"></i><span>Promociones</span></div>
         </div>
     </div>
 
     <div id="modalProducts" class="modal-view">
         <button class="close-btn" onclick="closeModal()">CERRAR</button>
         <div class="max-w-7xl mx-auto text-center">
-            <h2 id="modalTitle" class="text-5xl font-black italic uppercase text-yellow-400 mb-10 tracking-tighter">PLANES MAIK DEV</h2>
+            <h2 id="modalTitle" class="text-5xl font-black italic uppercase text-yellow-400 mb-10">PLANES</h2>
             <div id="gridCards" class="grid-cards"></div>
         </div>
     </div>
 
     <div id="orderForm">
         <div class="form-box">
-            <h3 class="text-3xl font-black text-yellow-400 mb-2 uppercase italic tracking-tighter">FINALIZAR PEDIDO</h3>
-            <p class="text-[10px] text-gray-400 mb-8 uppercase tracking-widest font-bold">Seguridad Maik Dev &copy; 2024</p>
+            <h3 class="text-3xl font-black text-yellow-400 mb-2 uppercase italic">ADQUIRIR PLAN</h3>
+            <p class="text-[10px] text-gray-500 mb-6 uppercase">Seguridad Maik Dev &copy; 2024</p>
             <form action="https://formspree.io/f/TU_ID_AQUI" method="POST">
                 <input type="text" name="Nombre" placeholder="Tu Nombre Real" class="f-input" required>
-                <input type="text" name="Discord" placeholder="Usuario de Discord (Ej: maik#0001)" class="f-input" required>
+                <input type="text" name="Discord" placeholder="Usuario de Discord" class="f-input" required>
                 <input type="text" id="finalName" name="Plan" class="f-input text-yellow-500 font-bold border-none bg-zinc-900 text-center" readonly>
                 <input type="hidden" id="payMethod" name="Metodo" value="PayPal">
 
@@ -151,26 +115,27 @@
                     <div class="pay-opt" onclick="setPay(this, 'Gmail/Discord')">OTRO / GMAIL</div>
                 </div>
 
-                <button type="submit" class="btn-buy">Confirmar Pago</button>
-                <p class="mt-4 text-[10px] text-gray-500 cursor-pointer uppercase font-bold hover:text-white" onclick="document.getElementById('orderForm').style.display='none'">[ CANCELAR ]</p>
+                <button type="submit" class="btn-buy">Confirmar Pedido</button>
+                
+                <div class="legal-notice">
+                    Al comprar aceptas nuestra <b>Licencia de Autor</b>.<br>
+                    Queda prohibida la reventa. <b>NO HAY REEMBOLSOS</b> tras la entrega.
+                </div>
+                <p class="mt-4 text-[10px] text-gray-500 cursor-pointer uppercase font-bold" onclick="document.getElementById('orderForm').style.display='none'">[ VOLVER ]</p>
             </form>
         </div>
     </div>
 
     <script>
+        // LISTAS DE CARACTERÍSTICAS
+        const pool = ["Minas Pro", "Items Custom", "Ranks Sync", "Celdas", "Bosses", "Eventos", "Protección", "Economía Pro", "Clanes", "Misiones", "Skills", "Jobs", "Anti-Bot", "Sincronización", "Anti-DDoS", "Menús Pro", "Tienda Web", "Soporte VIP"];
+
         const features = {
-            boxpvp: ["5 Minas Base", "Items Custom", "Ranks", "Celdas", "Pociones", "Bosses", "Eventos", "Minas Pro", "Sistema VIP", "Tienda", "Anticheat", "Opti Full"],
-            survival: ["Protecciones", "Economía", "Subastas", "Clanes", "Misiones", "Items RPG", "Dungeons", "Skills", "Mercado", "Mundo Recursos", "Jobs", "Soporte"],
-            lobby: ["NPCs", "Hologramas", "Selector", "Skins", "Parkour", "Scoreboard", "Cosméticos", "Music", "Efectos", "Anti-Lag", "Seguridad", "Velocidad"],
+            boxpvp: ["5 Minas Base", "Items Simples", "Celdas", "Rangos", "Pociones", "Bosses", "Eventos", "Minas VIP", "Tienda", "Anticheat", "Trade Pro", "Opti Full"],
+            survival: ["Protecciones", "Economía", "Subastas", "Clanes", "Misiones", "Items RPG", "Dungeons", "Skills", "Jobs", "Mundo Recursos", "Tienda", "Soporte"],
+            lobby: ["NPCs", "Hologramas", "Selector Pro", "Skins", "Parkour", "Scoreboard", "Cosméticos", "Music", "Efectos", "Anti-Lag", "Seguridad", "Velocidad"],
             server: ["Velocity Proxy", "Lobby Setup", "Seguridad", "Anti-Bot", "Sincronización", "MySQL", "Auto-Ads", "TabList Pro", "Ranks Sync", "Global Chat", "Protección DDoS", "Mantenimiento"]
         };
-
-        const promos = [
-            {n:"Pack Starter", p:5, s:10}, {n:"Pack Box Miner", p:10, s:8}, {n:"Pack Survival RPG", p:15, s:7},
-            {n:"Pack Velocity", p:20, s:6}, {n:"Pack Extreme TPS", p:25, s:5}, {n:"Pack Box Full", p:30, s:5},
-            {n:"Pack Network", p:35, s:4}, {n:"Pack Terabusing", p:40, s:3}, {n:"Pack VIP Network", p:45, s:2},
-            {n:"Pack MAIK SUPREMO", p:50, s:1}
-        ];
 
         function openModal(type) {
             const grid = document.getElementById('gridCards');
@@ -179,46 +144,39 @@
             title.innerText = `PLANES ${type.toUpperCase()}`;
 
             if(type === 'promo') {
-                promos.forEach((p, i) => {
-                    grid.innerHTML += `<div class="p-card border-pink-600">
-                        <div class="stock-tag">${p.s} STOCK</div>
-                        <h4 class="text-xl font-black uppercase">${p.n}</h4>
-                        <div class="p-price">$${p.p}.00</div>
-                        <ul class="feat-list"><li><i class="fas fa-fire"></i> Mix Premium Maik #${i+1}</li><li><i class="fas fa-certificate"></i> Licencia Oficial</li></ul>
-                        <button class="btn-buy" onclick="buyPromo(${i})">Adquirir Promo</button>
-                    </div>`;
-                });
+                for(let i=1; i<=10; i++) {
+                    const price = i * 5;
+                    const items = pool.slice(0, i * 2); // 2 cosas más por nivel
+                    grid.innerHTML += createCard(`PROMO MIX #${i}`, price, items, true);
+                }
             } else if(type === 'opti') {
-                [{n:"Básica",p:5},{n:"Pro",p:10},{n:"Extreme",p:15}].forEach(o => {
-                    grid.innerHTML += `<div class="p-card border-cyan-500">
-                        <h4 class="text-xl font-black uppercase">Opti ${o.n}</h4>
-                        <div class="p-price">$${o.p}.00</div>
-                        <ul class="feat-list"><li><i class="fas fa-bolt"></i> Mejora de TPS</li><li><i class="fas fa-certificate"></i> Licencia Oficial</li></ul>
-                        <button class="btn-buy" onclick="openOrder('Opti ${o.n}', ${o.p})">Mejorar Ahora</button>
-                    </div>`;
-                });
+                grid.innerHTML += createCard("Opti Básica", 5, ["20 TPS Garantizados", "Limpieza de archivos"]);
+                grid.innerHTML += createCard("Opti Pro", 10, ["20 TPS Garantizados", "Spark Monitor", "JVM Flags"]);
+                grid.innerHTML += createCard("Opti Extreme", 15, ["20 TPS Garantizados", "RAM Optimization", "Anti-DDoS"]);
             } else {
                 const lvls = ["Madera", "Piedra", "Hierro", "Oro", "Diamante", "SUPREMO"];
                 lvls.forEach((l, i) => {
                     const price = 5 + (i * 10);
                     const list = features[type].slice(0, (i + 1) * 2);
-                    grid.innerHTML += `<div class="p-card">
-                        <h4 class="text-xl font-black uppercase text-yellow-500">${l}</h4>
-                        <div class="p-price">$${price}.00</div>
-                        <ul class="feat-list">
-                            ${list.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
-                            <li><i class="fas fa-certificate text-white"></i> Licencia Maik Dev</li>
-                        </ul>
-                        <button class="btn-buy" onclick="openOrder('${type} ${l}', ${price})">Comprar Nivel</button>
-                    </div>`;
+                    grid.innerHTML += createCard(`${type.toUpperCase()} ${l}`, price, list, false);
                 });
             }
             document.getElementById('modalProducts').style.display = 'block';
         }
 
-        function buyPromo(i) {
-            if(promos[i].s > 0) { promos[i].s--; openOrder(promos[i].n, promos[i].p); }
-            else { alert("¡Lo sentimos! Esta promo se ha agotado."); }
+        function createCard(name, price, list, isPromo) {
+            return `
+                <div class="p-card ${isPromo ? 'border-pink-600' : ''}">
+                    ${isPromo ? '<div class="stock-tag">STOCK LIMITADO</div>' : ''}
+                    <h4 class="text-xl font-black uppercase text-white">${name}</h4>
+                    <div class="p-price">$${price}.00</div>
+                    <ul class="feat-list">
+                        ${list.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
+                        <li><i class="fas fa-certificate text-yellow-500"></i> Licencia Maik Dev</li>
+                    </ul>
+                    <button class="btn-buy" onclick="openOrder('${name}', ${price})">Adquirir</button>
+                </div>
+            `;
         }
 
         function openOrder(n, p) {
