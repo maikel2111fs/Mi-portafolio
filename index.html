@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Expert Minecraft Developer</title>
+    <title>MAIK DEVELOPER | Elite Minecraft Services</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -14,31 +14,38 @@
         /* FONDO DE ESTRELLAS */
         .video-bg { position: fixed; inset: 0; z-index: -2; object-fit: cover; filter: brightness(0.2); width: 100%; height: 100%; }
 
-        /* ACORDEÓN (EL MENÚ QUE CIERRA Y ABRE) */
-        .section-box { border-bottom: 1px solid #1a1a1a; background: rgba(0,0,0,0.4); backdrop-blur: 5px; }
-        .section-header { padding: 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .section-header:hover { background: rgba(250, 204, 21, 0.05); }
-        .section-content { max-height: 0; overflow: hidden; transition: max-height 0.7s ease-in-out; }
-        .section-box.active .section-content { max-height: 8000px; padding: 40px 20px; }
-        .section-box.active .chevron { transform: rotate(180deg); color: #facc15; }
+        /* LA RUEDA FLOTANTE (MENÚ DE NAVEGACIÓN) */
+        .nav-wheel { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
+        .wheel-main { width: 70px; height: 70px; background: #facc15; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; border: 4px solid #fff; box-shadow: 0 0 20px rgba(250,204,21,0.5); transition: 0.5s; }
+        .wheel-main:hover { transform: rotate(90deg); scale: 1.1; }
+        .wheel-items { position: absolute; bottom: 85px; left: 0; display: none; flex-direction: column; gap: 12px; }
+        .wheel-items.active { display: flex; animation: slideUp 0.4s forwards; }
+        .nav-item { background: #111; color: #fff; padding: 12px 20px; border-radius: 50px; border: 1px solid #facc15; white-space: nowrap; font-weight: 900; font-size: 11px; text-transform: uppercase; cursor: pointer; }
+        .nav-item:hover { background: #facc15; color: #000; transform: translateX(10px); }
 
-        /* TARJETAS DETALLADAS */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 1400px; margin: 0 auto; }
-        .card { background: #0a0a0a; border: 1px solid #222; padding: 30px; border-radius: 35px; display: flex; flex-direction: column; transition: 0.3s; }
-        .card:hover { border-color: #facc15; transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
-        .price { font-size: 45px; font-weight: 900; color: #facc15; font-style: italic; margin-bottom: 5px; }
+        /* SECCIONES ACORDEÓN */
+        .sec-box { border-bottom: 1px solid #1a1a1a; background: rgba(0,0,0,0.6); backdrop-blur: 10px; }
+        .sec-header { padding: 35px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .sec-content { max-height: 0; overflow: hidden; transition: max-height 0.8s ease; }
+        .sec-box.active .sec-content { max-height: 15000px; padding: 40px 20px; }
+        .sec-box.active .chevron { transform: rotate(180deg); color: #facc15; }
+
+        /* CARDS Y GRIDS */
+        .p-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; max-width: 1400px; margin: 0 auto; }
+        .card { background: #0a0a0a; border: 1px solid #222; padding: 30px; border-radius: 35px; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
+        .card:hover { border-color: #facc15; transform: translateY(-10px); }
+        .price { font-size: 40px; font-weight: 900; color: #facc15; font-style: italic; margin-bottom: 10px; }
+        .feat { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; display: flex; gap: 8px; margin-bottom: 8px; border-bottom: 1px solid #111; padding-bottom: 4px; }
         
-        .feat-item { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; display: flex; gap: 10px; margin-bottom: 8px; border-bottom: 1px solid #111; padding-bottom: 5px; }
-        .feat-item i { color: #facc15; }
-
-        /* FORMULARIO DE TICKET */
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
-        .form-box { background: #050505; border: 2px solid #facc15; padding: 40px; border-radius: 40px; width: 100%; max-width: 550px; text-align: center; }
-        .maik-input { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 15px; font-weight: bold; }
-        textarea.maik-input { height: 130px; resize: none; border-color: #444; }
-
+        /* FORMULARIO */
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
+        .f-box { background: #050505; border: 2px solid #facc15; padding: 40px; border-radius: 45px; width: 100%; max-width: 550px; text-align: center; }
+        .m-input { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 15px; font-weight: bold; }
+        
         .btn-buy { background: #facc15; color: #000; width: 100%; padding: 18px; border-radius: 15px; font-weight: 900; text-transform: uppercase; cursor: pointer; border: none; margin-top: auto; }
-        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; z-index: 1000; text-decoration: none; }
+        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 9999; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -49,128 +56,196 @@
 
     <a href="https://wa.me/593987749885" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
 
-    <header class="py-20 text-center">
-        <div class="inline-block bg-yellow-400 text-black px-4 py-1 rounded font-black text-[10px] mb-4">MÁXIMO RENDIMIENTO GARANTIZADO</div>
-        <h1 class="text-7xl font-black italic uppercase">MAIK <span class="text-yellow-400">DEV</span></h1>
-        <p class="text-gray-500 font-bold mt-2 uppercase tracking-widest">Configuraciones de Autor • Ecuador 🇪🇨</p>
+    <div class="nav-wheel">
+        <div class="wheel-items" id="wheelMenu">
+            <div class="nav-item" onclick="jump('sec-1')">01. Configuraciones</div>
+            <div class="nav-item" onclick="jump('sec-2')">02. Optimización</div>
+            <div class="nav-item" onclick="jump('sec-3')">03. Mega Promociones</div>
+            <div class="nav-item" onclick="jump('sec-4')">04. Web & Gráficos</div>
+            <div class="nav-item" onclick="jump('sec-5')">05. Soporte Técnico</div>
+            <div class="nav-item" onclick="jump('sec-6')">06. Seguridad</div>
+        </div>
+        <div class="wheel-main" onclick="document.getElementById('wheelMenu').classList.toggle('active')">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+
+    <header class="py-24 text-center">
+        <div class="inline-block bg-yellow-400 text-black px-6 py-2 rounded-full font-black text-xs uppercase mb-6 tracking-widest">Ecuadorian Professional Configurator 🇪🇨</div>
+        <h1 class="text-8xl font-black italic uppercase leading-none">MAIK <span class="text-yellow-400">DEV</span></h1>
+        <div class="max-w-2xl mx-auto mt-8 bg-white/5 p-6 rounded-[35px] border border-white/10 backdrop-blur-md">
+            <p class="text-gray-400 text-sm font-medium uppercase tracking-tighter">
+                Experticia técnica en infraestructura de servidores. Cada plan es escalable y diseñado para alto rendimiento. Logos y Tiendas Web incluidos en planes de gama alta.
+            </p>
+        </div>
     </header>
 
-    <div class="section-box active" id="sec-config">
-        <div class="section-header" onclick="toggleSection('sec-config')">
-            <h2 class="text-3xl font-black uppercase italic"><span class="text-yellow-400">01.</span> Modalidades de Juego</h2>
-            <i class="fas fa-chevron-down chevron transition-transform text-2xl"></i>
+    <div class="sec-box active" id="sec-1">
+        <div class="sec-header" onclick="toggleSec('sec-1')">
+            <h2 class="text-3xl font-black uppercase italic"><span class="text-yellow-400">01.</span> Configuraciones de Juego</h2>
+            <i class="fas fa-chevron-down chevron text-2xl transition-transform"></i>
         </div>
-        <div class="section-content">
+        <div class="sec-content">
             <div class="flex justify-center gap-4 mb-10">
-                <button class="bg-yellow-400 text-black px-8 py-2 rounded-xl font-black text-xs uppercase" onclick="showTab('boxpvp')">BoxPvP Pro</button>
-                <button class="bg-zinc-800 text-white px-8 py-2 rounded-xl font-black text-xs uppercase" onclick="showTab('survival')">Survival Elite</button>
+                <button class="bg-yellow-400 text-black px-8 py-2 rounded-xl font-black text-xs uppercase" onclick="loadConfigs('boxpvp')">BoxPvP Pro</button>
+                <button class="bg-zinc-800 text-white px-8 py-2 rounded-xl font-black text-xs uppercase" onclick="loadConfigs('survival')">Survival Elite</button>
             </div>
-            <div id="grid-configs" class="product-grid"></div>
+            <div id="grid-configs" class="p-grid"></div>
         </div>
     </div>
 
-    <div class="section-box" id="sec-opti">
-        <div class="section-header" onclick="toggleSection('sec-opti')">
+    <div class="sec-box" id="sec-2">
+        <div class="sec-header" onclick="toggleSec('sec-2')">
             <h2 class="text-3xl font-black uppercase italic text-blue-500"><span class="text-white">02.</span> Ingeniería de Optimización</h2>
-            <i class="fas fa-chevron-down chevron transition-transform text-2xl"></i>
+            <i class="fas fa-chevron-down chevron text-2xl transition-transform"></i>
         </div>
-        <div class="section-content">
-            <div id="grid-opti" class="product-grid"></div>
+        <div class="sec-content">
+            <div id="grid-opti" class="p-grid"></div>
         </div>
     </div>
 
-    <div id="orderOverlay" class="overlay">
-        <div class="form-box">
-            <h3 id="orderLabel" class="text-2xl font-black text-yellow-400 mb-2 uppercase"></h3>
-            <p id="orderPriceLabel" class="text-white font-bold mb-6 italic"></p>
+    <div class="sec-box" id="sec-3">
+        <div class="sec-header" onclick="toggleSec('sec-3')">
+            <h2 class="text-3xl font-black uppercase italic text-pink-500"><span class="text-white">03.</span> Mega Promociones</h2>
+            <i class="fas fa-chevron-down chevron text-2xl transition-transform"></i>
+        </div>
+        <div class="sec-content">
+            <div id="grid-promos" class="p-grid"></div>
+        </div>
+    </div>
+
+    <div class="sec-box" id="sec-4">
+        <div class="sec-header" onclick="toggleSec('sec-4')">
+            <h2 class="text-3xl font-black uppercase italic text-purple-500"><span class="text-white">04.</span> Diseño Web & Logos</h2>
+            <i class="fas fa-chevron-down chevron text-2xl transition-transform"></i>
+        </div>
+        <div class="sec-content">
+            <div id="grid-web" class="p-grid"></div>
+        </div>
+    </div>
+
+    <div class="sec-box" id="sec-5">
+        <div class="sec-header" onclick="toggleSec('sec-5')">
+            <h2 class="text-3xl font-black uppercase italic text-green-500"><span class="text-white">05.</span> Soporte & Mantenimiento</h2>
+            <i class="fas fa-chevron-down chevron text-2xl transition-transform"></i>
+        </div>
+        <div class="sec-content">
+            <div id="grid-soporte" class="p-grid"></div>
+        </div>
+    </div>
+
+    <div class="sec-box" id="sec-6">
+        <div class="sec-header" onclick="toggleSec('sec-6')">
+            <h2 class="text-3xl font-black uppercase italic text-red-500"><span class="text-white">06.</span> Seguridad Anti-DDoS</h2>
+            <i class="fas fa-chevron-down chevron text-2xl transition-transform"></i>
+        </div>
+        <div class="sec-content">
+            <div id="grid-security" class="p-grid"></div>
+        </div>
+    </div>
+
+    <div id="buyOverlay" class="overlay">
+        <div class="f-box">
+            <h3 id="formTitle" class="text-3xl font-black text-yellow-400 mb-2 uppercase"></h3>
+            <p id="formPrice" class="text-white font-bold mb-6 italic"></p>
+            <input type="text" id="cName" placeholder="Tu Nombre / Discord" class="m-input">
+            <textarea id="cErrors" placeholder="Describe los errores de tu servidor o qué necesitas..." class="m-input h-32"></textarea>
             
-            <input type="text" id="custName" placeholder="Tu Nombre / Nick" class="maik-input">
-            <input type="text" id="custDiscord" placeholder="Discord (Ej: maik#1234)" class="maik-input">
-            
-            <div class="text-left text-[10px] text-yellow-400 font-black mb-2 uppercase">Diagnóstico Técnico:</div>
-            <textarea id="custErrors" placeholder="Describe aquí los errores que tiene tu servidor o los detalles específicos que quieres que configure..." class="maik-input"></textarea>
-            
-            <button class="btn-buy" onclick="completeOrder()">Pagar y Enviar Ticket</button>
-            <p class="mt-4 text-xs text-gray-500 cursor-pointer font-bold" onclick="document.getElementById('orderOverlay').style.display='none'">CANCELAR</p>
+            <div class="text-left text-[10px] text-gray-500 uppercase font-black mb-4">
+                Condiciones: Pagos 100% seguros vía PayPal. No hay reembolsos una vez iniciado el trabajo. Tiempo estimado de entrega: 1-3 días.
+            </div>
+
+            <button class="btn-buy" onclick="sendOrder()">Pagar y Enviar Ticket</button>
+            <p class="mt-4 text-xs text-red-500 cursor-pointer font-bold uppercase" onclick="document.getElementById('buyOverlay').style.display='none'">Cancelar</p>
         </div>
     </div>
 
     <script>
-        const details = {
-            boxpvp: ["Mina Madera Optimizada", "Mina Carbón NBT", "Mina Hierro Atributos", "Mina Oro Custom", "Mina Diamante Hard", "Mina Esmeralda VIP", "Mina Obsidiana Final", "KOTH Automático", "Cristales de Poder", "Rankup Sistema", "Armaduras Lore Animado", "Trade NPC System", "Cajas de Recompensa", "Dungeons Boss AI", "Combat Tag Anti-Log", "Logo Profesional PNG", "Tienda Tebex Full"],
-            survival: ["Claims Protecciones", "Economía Balanceada", "Subastas GUI", "Misiones Diarias", "Mundo Recursos", "Skills Niveles", "Trabajos con Salario", "Mascotas Evolutivas", "Mercado Global", "Dungeons RPG", "Mythic Items", "Matrimonios", "Banco XP", "Logo Profesional PNG", "Tienda Tebex Full"]
+        const library = {
+            boxpvp: ["Mina Madera", "Mina Carbón", "Mina Hierro", "KOTH 24/7", "Cristales", "Cajas", "Dungeons", "Bosses AI", "Logo Servidor", "Tienda Tebex"],
+            survival: ["Claims Protecciones", "Economía Balanceada", "Subastas GUI", "Misiones Diarias", "Mundo Recursos", "Skills Niveles", "Trabajos Pro", "Logo Pro", "Tienda Tebex"]
         };
 
-        function toggleSection(id) {
-            const sec = document.getElementById(id);
-            const active = sec.classList.contains('active');
-            document.querySelectorAll('.section-box').forEach(s => s.classList.remove('active'));
-            if(!active) sec.classList.add('active');
+        function toggleSec(id) {
+            const el = document.getElementById(id);
+            const active = el.classList.contains('active');
+            document.querySelectorAll('.sec-box').forEach(s => s.classList.remove('active'));
+            if(!active) el.classList.add('active');
         }
 
-        function showTab(type) {
+        function jump(id) {
+            toggleSec(id);
+            document.getElementById(id).scrollIntoView();
+            document.getElementById('wheelMenu').classList.remove('active');
+        }
+
+        function loadConfigs(type) {
             const grid = document.getElementById('grid-configs');
             grid.innerHTML = '';
             for(let i=1; i<=12; i++) {
-                let p = (i === 1) ? 5 : 10 + (i*6.5); // Escala económica $5 - $80+
-                let list = details[type].slice(0, 3 + i);
-                if(p >= 60 && !list.includes("Logo Profesional PNG")) list.push("Logo Profesional PNG", "Tienda Tebex Full");
+                let p = (i === 1) ? 5 : 10 + (i*6);
+                let feats = library[type].slice(0, 2 + i);
+                if(p >= 60) feats.push("Logo Incluido", "Tienda Setup");
 
                 grid.innerHTML += `
                     <div class="card">
-                        <div class="price">$${p.toFixed(0)}</div>
-                        <h4 class="font-black text-xs text-white uppercase mb-4">${type} Plan #${i}</h4>
-                        <div class="flex-grow mb-6">
-                            ${list.map(f => `<div class="feat-item"><i class="fas fa-check"></i> ${f}</div>`).join('')}
+                        <div class="price">$${p}</div>
+                        <h4 class="font-black text-white uppercase text-xs mb-4">${type} Plan #${i}</h4>
+                        <div class="flex-grow">
+                            ${feats.map(f => `<div class="feat"><i class="fas fa-check text-yellow-400"></i> ${f}</div>`).join('')}
                         </div>
-                        <button class="btn-buy" onclick="openOrder('${type.toUpperCase()} #${i}', ${p.toFixed(0)})">Adquirir</button>
+                        <button class="btn-buy" onclick="openForm('${type} #${i}', ${p})">Adquirir</button>
                     </div>`;
             }
         }
 
-        let currentItem = "";
-        let currentPrice = 0;
-
-        function openOrder(name, price) {
-            currentItem = name;
-            currentPrice = price;
-            document.getElementById('orderLabel').innerText = name;
-            document.getElementById('orderPriceLabel').innerText = "Total a pagar: $" + price + ".00 USD";
-            document.getElementById('orderOverlay').style.display = 'flex';
-        }
-
-        function completeOrder() {
-            const name = document.getElementById('custName').value;
-            const discord = document.getElementById('custDiscord').value;
-            const errors = document.getElementById('custErrors').value;
-
-            if(!name || !discord) return alert("Por favor completa tu Nombre y Discord");
-
-            const ticketBody = `NUEVO PEDIDO MAIK DEV\n------------------\nProducto: ${currentItem}\nPrecio: $${currentPrice}\nCliente: ${name}\nDiscord: ${discord}\n\nDETALLES/ERRORES DEL SERVER:\n${errors}`;
-
-            // PAGO (Va a gancinomaikel@gmail.com)
-            window.open(`https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=gancinomaikel@gmail.com&item_name=${encodeURIComponent(currentItem)}&amount=${currentPrice}&currency_code=USD`, '_blank');
-
-            // TICKET (Va a chimbayuliana@gmail.com)
-            setTimeout(() => {
-                window.location.href = `mailto:chimbayuliana@gmail.com?subject=TICKET DE CONFIGURACION - ${name}&body=${encodeURIComponent(ticketBody)}`;
-            }, 2000);
-        }
-
         function loadOpti() {
             const grid = document.getElementById('grid-opti');
-            const opts = [
-                {n: "Limpieza Básica", p: 5, d: ["Limpieza .yml", "Chunks Adjust", "Entity Cull"]},
-                {n: "Optimización Pro", p: 25, d: ["JVM Flags", "Spark Analysis", "Lag Patches", "Paper Config"]},
-                {n: "Elite 20 TPS Locked", p: 50, d: ["Pufferfish Kernel", "MySQL Sync", "Map Pre-gen", "Network Audit"]}
-            ];
+            const opts = [{n: "Básica", p: 5}, {n: "Pro", p: 25}, {n: "Elite 20TPS", p: 50}];
             opts.forEach(o => {
-                grid.innerHTML += `<div class="card border-blue-500/20"><div class="price text-blue-500">$${o.p}</div><h4 class="font-black text-white uppercase mb-4">${o.n}</h4><div class="flex-grow">${o.d.map(x => `<div class="feat-item"><i class="fas fa-bolt text-blue-500"></i> ${x}</div>`).join('')}</div><button class="btn-buy" style="background:#3b82f6; color:white;" onclick="openOrder('OPTI ${o.n}', ${o.p})">Adquirir</button></div>`;
+                grid.innerHTML += `<div class="card border-blue-500/20"><div class="price text-blue-500">$${o.p}</div><h4 class="text-white font-black mb-4 uppercase">Opti ${o.n}</h4><button class="btn-buy" onclick="openForm('OPTI ${o.n}', ${o.p})">Optimizar</button></div>`;
             });
         }
 
-        showTab('boxpvp');
-        loadOpti();
+        function loadPromos() {
+            const grid = document.getElementById('grid-promos');
+            for(let i=1; i<=4; i++) {
+                let p = 30 + (i*20);
+                grid.innerHTML += `<div class="card border-pink-500/20"><div class="price text-pink-500">$${p}</div><h4 class="text-white font-black mb-4 uppercase">Combo Promo #${i}</h4><button class="btn-buy" onclick="openForm('PROMO #${i}', ${p})">Comprar Pack</button></div>`;
+            }
+        }
+
+        function openForm(n, p) {
+            document.getElementById('formTitle').innerText = n;
+            document.getElementById('formPrice').innerText = "Inversión: $" + p + ".00 USD";
+            document.getElementById('buyOverlay').style.display = 'flex';
+        }
+
+        function sendOrder() {
+            const name = document.getElementById('cName').value;
+            const err = document.getElementById('cErrors').value;
+            const item = document.getElementById('formTitle').innerText;
+            const price = document.getElementById('formPrice').innerText.split('$')[1].split('.')[0];
+
+            if(!name) return alert("Pon tu nombre/discord");
+
+            const msg = `PEDIDO MAIK DEV: ${item}\nCliente: ${name}\nDetalles: ${err}`;
+            
+            // PAYPAL
+            window.open(`https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=gancinomaikel@gmail.com&item_name=${encodeURIComponent(item)}&amount=${price}&currency_code=USD`, '_blank');
+            
+            // TICKET CORREO
+            setTimeout(() => {
+                window.location.href = `mailto:chimbayuliana@gmail.com?subject=PEDIDO ${item}&body=${encodeURIComponent(msg)}`;
+            }, 2000);
+        }
+
+        // INIT
+        loadConfigs('boxpvp'); loadOpti(); loadPromos();
+        // Cargar las otras 3 grillas igual...
+        document.getElementById('grid-web').innerHTML = '<div class="card"><div class="price">$15</div><h4 class="text-white font-black uppercase">Logo Profesional PNG</h4><button class="btn-buy" onclick="openForm(\'Logo\', 15)">Comprar</button></div>';
+        document.getElementById('grid-soporte').innerHTML = '<div class="card"><div class="price">$10</div><h4 class="text-white font-black uppercase">Mantenimiento Semanal</h4><button class="btn-buy" onclick="openForm(\'Soporte\', 10)">Contratar</button></div>';
+        document.getElementById('grid-security').innerHTML = '<div class="card"><div class="price">$20</div><h4 class="text-white font-black uppercase">Protección Anti-DDoS</h4><button class="btn-buy" onclick="openForm(\'Seguridad\', 20)">Protegerme</button></div>';
     </script>
 </body>
 </html>
