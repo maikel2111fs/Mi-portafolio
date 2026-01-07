@@ -3,38 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Desarrollador | Agencia Pro</title>
+    <title>Maik Dev | Agencia de Setups</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
+        body { background-color: #050505; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .section-box { border-bottom: 1px solid #1a1a1a; padding: 100px 0; }
+        .price-card { 
+            background: #0a0a0a; 
+            border: 1px solid #1a1a1a; 
+            transition: all 0.3s ease; 
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .price-card:hover { border-color: #3b82f6; transform: translateY(-5px); }
+        .boxpvp-theme { border-top: 4px solid #3b82f6; }
+        .survival-theme { border-top: 4px solid #10b981; }
+        .lobby-theme { border-top: 4px solid #8b5cf6; }
+        .btn-buy { font-weight: 900; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    </style>
+</head>
+<body>
 
-        body { background-color: #05070a; color: #e6edf3; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
-        /* Efecto de Carga */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #05070a; z-index: 9999; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: opacity 0.8s ease;
-        }
-        .loader-bar { width: 200px; height: 2px; background: #1a1a1a; position: relative; overflow: hidden; margin-top: 20px; }
-        .loader-progress { width: 100%; height: 100%; background: #3b82f6; position: absolute; left: -100%; animation: load 2s infinite; }
-        @keyframes load { 0% { left: -100%; } 50% { left: 0; } 100% { left: 100%; } }
+    <nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+            <div class="text-xl font-black italic">MAIK <span class="text-blue-500">DEV</span></div>
+            <div class="flex gap-6 text-[10px] font-bold uppercase">
+                <a href="#boxpvp-sec" class="hover:text-blue-500">BoxPvP</a>
+                <a href="#survival-sec" class="hover:text-green-500">Survival</a>
+                <a href="#lobby-sec" class="hover:text-purple-500">Lobby</a>
+                <a href="#cita" class="bg-white text-black px-4 py-2 rounded-full">Contacto</a>
+            </div>
+        </div>
+    </nav>
 
-        /* Estilos Premium */
-        .glass-card { 
-            background: rgba(13, 17, 23, 0.7); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(12px); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .glass-card:hover { 
-            border-color: #3b82f6; 
-            transform: translateY(-10px); 
-            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.15); 
-        }
-        .text-glow { text-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
-        .blue-gradient { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+    <header class="h-screen flex flex-col justify-center items-center text-center px-6">
+        <h1 class="text-7xl md:text-9xl font-black tracking-tighter mb-4">SETUP <br><span class="text-blue-500">AGENCY</span></h1>
+        <p class="text-gray-500 max-w-lg uppercase text-xs tracking-[0.3em]">Configuraciones profesionales para servidores de alto rendimiento</p>
+    </header>
+
+    <section id="boxpvp-sec" class="section-box">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="mb-16">
+                <h2 class="text-5xl font-black italic uppercase">Configuración <span class="text-blue-500">BoxPvP</span></h2>
+                <p class="text-gray-500 mt-2">Sistemas de combate, minas progresivas y optimización total.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="price-card boxpvp-theme p-8 rounded-2xl">
+                    <div>
+                        <h3 class="text-lg font-black mb-2 uppercase">Básico</h3>
+                        <div class="text-4xl font-black mb-6">$15.00</div>
+                        <ul class="text-xs text-gray-400 space-y-3 mb-8">
+                            <li><i class="fas fa-check text-blue-500 mr-2"></i> Optimización Paper 1.20+</li>
+                            <li><i class="fas fa-check text-blue-500 mr-2"></i> Setup de 5 Minas</li>
+                            <li><i class="fas fa-check text-blue-500 mr-2"></i> Anti-Lag Config</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Basico&amount=15.00&currency_code=USD" class="btn-buy w-full py-4 bg-blue-600 text-white text-center rounded-xl text-[10px]">Comprar $15</a>
+                </div>
+                <div class="price-card boxpvp-theme p-8 rounded-2xl border-blue-500 shadow-2xl shadow-blue-500/10">
+                    <div>
+                        <h3 class="text-lg font-black mb-2 uppercase text-blue-500">Profesional</h3>
+                        <div class="text-4xl font-black mb-6">$45.00</div>
+                        <ul class="text-xs text-gray-400 space-y-3 mb-8">
+                            <li><i class="fas fa-star text-blue-500 mr-2"></i> Todo lo del Básico</li>
+                            <li><i class="fas fa-star text-blue-500 mr-2"></i> Tradeos Custom (NPC)</li>
+                            <li><i class="fas fa-star text-blue-500 mr-2"></i> Sistema de KOTH y Eventos</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Pro&amount=45.00&currency_code=USD" class="btn-buy w-full py-4 bg-blue-600 text-white text-center rounded-xl text-[10px]">Comprar $45</a>
+                </div>
+                <div class="price-card boxpvp-theme p-8 rounded-2xl bg-blue-500/5 border-yellow-500">
+                    <div>
+                        <h3 class="text-lg font-black mb-2 uppercase text-yellow-500 italic">Supremo</h3>
+                        <div class="text-4xl font-black mb-6">$100.00</div>
+                        <ul class="text-xs text-gray-400 space-y-3 mb-8">
+                            <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Setup de Network Completa</li>
+                            <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Anticheat Premium Config</li>
+                            <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Soporte VIP 24/7</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=BoxPvP+Supremo&amount=100.00&currency_code=USD" class="btn-buy w-full py-4 bg-yellow-600 text-white text-center rounded-xl text-[10px]">Comprar $100</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="survival-sec        .blue-gradient { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
     </style>
 </head>
 <body class="opacity-0 transition-opacity duration-1000">
