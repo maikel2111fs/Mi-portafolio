@@ -3,41 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | PREMIUM CONFIGURATOR</title>
+    <title>MAIK DEV | OPTIMIZATION SPECIALIST</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
-        .bg-stars { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #111 0%, #000 100%); opacity: 0.6; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        /* BOTONES FLOTANTES */
-        .ws-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: #fff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 9999; border: 3px solid #fff; box-shadow: 0 0 20px #25d366; }
+        .bg-stars { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #111 0%, #000 100%); }
+
+        /* WHATSAPP */
+        .ws-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: #fff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 9999; border: 3px solid #fff; box-shadow: 0 0 20px rgba(37,211,102,0.5); text-decoration: none; }
         .ws-badge { position: absolute; top: -5px; right: -15px; background: #fff; color: #000; font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 900; box-shadow: 0 5px 10px rgba(0,0,0,0.5); }
 
+        /* NAV */
         .nav-buttons { position: fixed; bottom: 30px; right: 30px; display: none; flex-direction: column; gap: 12px; z-index: 8000; }
-        .btn-nav { background: #facc15; color: #000; padding: 15px 25px; border-radius: 15px; font-weight: 900; cursor: pointer; border: 2px solid #fff; text-transform: uppercase; font-size: 12px; text-align: center; transition: 0.3s; }
-        .btn-nav:hover { transform: scale(1.05); }
+        .btn-nav { background: #facc15; color: #000; padding: 15px 25px; border-radius: 15px; font-weight: 900; cursor: pointer; border: 2px solid #fff; text-transform: uppercase; font-size: 11px; text-align: center; }
 
         /* HERO */
-        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; background: linear-gradient(to bottom, transparent, #000); }
-        .license-card { border: 2px solid #facc15; padding: 20px 40px; border-radius: 20px; background: rgba(250, 204, 21, 0.1); margin-bottom: 30px; box-shadow: 0 0 30px rgba(250, 204, 21, 0.2); }
-        .main-menu-btn { background: #facc15; color: #000; padding: 25px 60px; border-radius: 20px; font-weight: 900; font-size: 26px; cursor: pointer; text-transform: uppercase; border: 4px solid #fff; box-shadow: 0 10px 0 #b45309; transition: 0.2s; }
-        .main-menu-btn:active { transform: translateY(5px); box-shadow: 0 5px 0 #b45309; }
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        .main-menu-btn { background: #facc15; color: #000; padding: 25px 60px; border-radius: 20px; font-weight: 900; font-size: 26px; cursor: pointer; text-transform: uppercase; border: 4px solid #fff; box-shadow: 0 8px 0 #b45309; transition: 0.1s; }
 
-        /* SECCIONES */
-        .section-container { display: none; padding: 100px 20px; max-width: 1500px; margin: 0 auto; }
-        .section-container.active { display: block; animation: fadeIn 0.8s ease; }
-        .plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
-        .plan-card { background: #0a0a0a; border: 1px solid #222; border-radius: 35px; padding: 40px; display: flex; flex-direction: column; transition: 0.4s; position: relative; }
-        .plan-card:hover { border-color: #facc15; background: #0f0f0f; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .price-tag { font-size: 60px; font-weight: 900; color: #facc15; font-style: italic; text-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); }
-        .feature { font-size: 11px; font-weight: 700; color: #ddd; text-transform: uppercase; border-bottom: 1px solid #1a1a1a; padding: 10px 0; display: flex; align-items: center; gap: 12px; line-height: 1.4; }
-        .feature i { color: #facc15; font-size: 14px; }
+        /* OVERLAY NEGRO SÓLIDO */
+        .full-overlay { position: fixed; inset: 0; background: #000; z-index: 9500; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .full-overlay.active { display: flex; }
 
-        .form-input { width: 100%; background: #111; border: 2px solid #222; padding: 18px; border-radius: 15px; color: #fff; margin-bottom: 20px; font-size: 14px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .menu-grid-container { width: 100%; max-width: 1000px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+        .menu-card { background: #0a0a0a; border: 1px solid #222; padding: 30px 15px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .menu-card:hover { border-color: #facc15; background: #111; }
+        .menu-card i { font-size: 30px; margin-bottom: 10px; display: block; }
+
+        /* PLANES */
+        .section-container { display: none; padding: 80px 20px; max-width: 1400px; margin: 0 auto; }
+        .section-container.active { display: block; animation: fadeInUp 0.4s ease; }
+        .plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .plan-card { background: #080808; border: 1px solid #1a1a1a; border-radius: 35px; padding: 35px; display: flex; flex-direction: column; }
+        .price-tag { font-size: 55px; font-weight: 900; color: #facc15; font-style: italic; }
+        .feature { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; border-bottom: 1px solid #111; padding: 8px 0; display: flex; align-items: center; gap: 10px; }
+
+        .form-input { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { .menu-grid-container { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -50,195 +57,130 @@
     </a>
 
     <div id="navGroup" class="nav-buttons">
-        <div class="btn-nav" onclick="toggleMenu()"><i class="fas fa-grid-2 mr-2"></i> SECCIONES</div>
-        <div class="btn-nav" style="background: #fff;" onclick="goHome()"><i class="fas fa-home mr-2"></i> INICIO</div>
+        <div class="btn-nav" onclick="toggleMenu()">SERVICIOS</div>
+        <div class="btn-nav" style="background: #fff;" onclick="goHome()">INICIO</div>
     </div>
 
     <div id="home" class="hero">
-        <div class="license-card">
-            <p class="text-xs font-black text-yellow-500 tracking-widest uppercase mb-1 text-center">Software & Game Design</p>
-            <p class="text-2xl font-black italic uppercase text-center">MAIK DEV SPECIALIST</p>
-        </div>
-        <h1 class="text-9xl font-black italic uppercase leading-none tracking-tighter">MAIK <span class="text-yellow-400">DEV</span></h1>
-        <p class="max-w-3xl mt-8 text-gray-500 font-bold uppercase text-sm tracking-[0.3em] leading-relaxed">
-            Ecuador 🇪🇨 • BoxPvP • Survival • Lobby • Soporte • Diseño • Promociones
-        </p>
-        <div class="mt-16 main-menu-btn" onclick="toggleMenu()">VER CATÁLOGO PREMIUM</div>
+        <h1 class="text-8xl font-black italic uppercase leading-none">MAIK <span class="text-yellow-400">DEV</span></h1>
+        <p class="mt-4 text-gray-500 font-bold uppercase tracking-widest text-sm">Ecuador Specialist • High Performance Services</p>
+        <div class="mt-12 main-menu-btn" onclick="toggleMenu()">CATÁLOGO 2026</div>
     </div>
 
-    <div id="fullMenu" class="fixed inset-0 bg-black/98 z-[9000] hidden flex-col items-center justify-center p-6">
+    <div id="fullMenu" class="full-overlay">
         <div class="absolute top-10 right-10 text-5xl cursor-pointer text-yellow-400" onclick="closeOverlay()">×</div>
-        <h2 class="text-4xl font-black text-white uppercase mb-12 italic tracking-widest">SERVICIOS <span class="text-yellow-400">DISPONIBLES</span></h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl">
-            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-yellow-400 transition" onclick="openSection('boxpvp')"><i class="fas fa-box text-3xl text-yellow-400 mb-4"></i><p class="font-black text-xs">BOXPVP</p></div>
-            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-green-500 transition" onclick="openSection('survival')"><i class="fas fa-tree text-3xl text-green-500 mb-4"></i><p class="font-black text-xs">SURVIVAL</p></div>
-            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-blue-500 transition" onclick="openSection('lobby')"><i class="fas fa-door-open text-3xl text-blue-500 mb-4"></i><p class="font-black text-xs">LOBBY</p></div>
-            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-red-500 transition" onclick="openSection('soporte')"><i class="fas fa-headset text-3xl text-red-500 mb-4"></i><p class="font-black text-xs">SOPORTE</p></div>
-            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-purple-500 transition" onclick="openSection('diseno')"><i class="fas fa-paint-brush text-3xl text-purple-500 mb-4"></i><p class="font-black text-xs">DISEÑO</p></div>
-            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-pink-500 transition" onclick="openSection('promo')"><i class="fas fa-fire text-3xl text-pink-500 mb-4"></i><p class="font-black text-xs">PROMOS</p></div>
-            <div class="bg-white text-black p-6 rounded-3xl text-center cursor-pointer font-black col-span-2 md:col-span-3 text-sm hover:bg-yellow-400 transition" onclick="openSection('otros')">CREAR TICKET PERSONALIZADO / OTROS TRABAJOS</div>
+        <h2 class="text-3xl font-black text-white uppercase mb-10 italic">ELIGE UNA <span class="text-yellow-400">CATEGORÍA</span></h2>
+        
+        <div class="menu-grid-container">
+            <div class="menu-card" onclick="openSection('boxpvp')"><i class="fas fa-box text-yellow-400"></i><p class="font-black text-[9px]">BOXPVP</p></div>
+            <div class="menu-card" onclick="openSection('survival')"><i class="fas fa-tree text-green-500"></i><p class="font-black text-[9px]">SURVIVAL</p></div>
+            <div class="menu-card" onclick="openSection('lobby')"><i class="fas fa-door-open text-blue-500"></i><p class="font-black text-[9px]">LOBBY</p></div>
+            <div class="menu-card" onclick="openSection('opti')"><i class="fas fa-bolt text-orange-400"></i><p class="font-black text-[9px]">OPTIMIZACIÓN</p></div>
+            <div class="menu-card" onclick="openSection('soporte')"><i class="fas fa-headset text-red-500"></i><p class="font-black text-[9px]">SOPORTE</p></div>
+            <div class="menu-card" onclick="openSection('diseno')"><i class="fas fa-paint-brush text-purple-500"></i><p class="font-black text-[9px]">DISEÑO</p></div>
+            <div class="menu-card" onclick="openSection('promo')"><i class="fas fa-fire text-pink-500"></i><p class="font-black text-[9px]">PROMOS</p></div>
+            <div class="menu-card" onclick="openSection('otros')"><i class="fas fa-ticket-alt text-white"></i><p class="font-black text-[9px]">TICKET</p></div>
         </div>
     </div>
 
-    <section id="sec-boxpvp" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-yellow-400 italic">BOXPVP CONFIGURATION</h2><div class="plan-grid" id="grid-boxpvp"></div></section>
-    <section id="sec-survival" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-green-500 italic">SURVIVAL SYSTEMS</h2><div class="plan-grid" id="grid-survival"></div></section>
-    <section id="sec-lobby" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-blue-500 italic">LOBBY & CONNECTIVITY</h2><div class="plan-grid" id="grid-lobby"></div></section>
-    <section id="sec-soporte" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-red-500 italic">TECHNICAL SUPPORT</h2><div class="plan-grid" id="grid-soporte"></div></section>
-    <section id="sec-diseno" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-purple-500 italic">VISUAL DESIGN</h2><div class="plan-grid" id="grid-diseno"></div></section>
-    <section id="sec-promo" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-pink-500 italic">MEGA COMBOS MIX</h2><div class="plan-grid" id="grid-promo"></div></section>
-    
-    <section id="sec-otros" class="section-container">
-        <h2 class="text-5xl font-black text-center mb-16 text-white italic">PROYECTOS ESPECIALES</h2>
-        <div class="max-w-2xl mx-auto bg-zinc-900 p-12 rounded-[40px] border-4 border-dashed border-zinc-700">
-            <p class="text-center text-gray-400 font-bold mb-8 uppercase text-xs tracking-widest">Si buscas una Network completa o algo que no está aquí, escribe directamente.</p>
-            <input type="text" id="otherName" placeholder="TU NOMBRE / DISCORD" class="form-input">
-            <textarea id="otherMsg" placeholder="CUÉNTAME LOS DETALLES DE TU PROYECTO..." class="form-input h-48"></textarea>
-            <button class="main-menu-btn w-full" onclick="sendTicket()">ENVIAR SOLICITUD A MAIK</button>
+    <section id="sec-opti" class="section-container">
+        <h2 class="text-5xl font-black text-center mb-16 text-orange-400 italic uppercase">Server Optimization</h2>
+        <div class="plan-grid">
+            <div class="plan-card">
+                <div class="price-tag text-orange-300">$15</div>
+                <h4 class="font-black text-white text-xs mb-6 uppercase">Optimización Básica</h4>
+                <div class="flex-grow">
+                    <div class="feature"><i class="fas fa-check"></i> Ajuste spigot.yml</div>
+                    <div class="feature"><i class="fas fa-check"></i> Ajuste paper.yml</div>
+                    <div class="feature"><i class="fas fa-check"></i> Reducción de View Distance</div>
+                    <div class="feature"><i class="fas fa-check"></i> Limpieza de Entidades</div>
+                </div>
+                <button class="main-menu-btn w-full mt-10 py-3 text-sm" onclick="buy('OPTIMIZACIÓN BÁSICA', 15)">ELEGIR</button>
+            </div>
+            <div class="plan-card border-orange-500/30">
+                <div class="price-tag text-orange-400">$35</div>
+                <h4 class="font-black text-white text-xs mb-6 uppercase">Optimización Media</h4>
+                <div class="flex-grow">
+                    <div class="feature"><i class="fas fa-check"></i> Todo lo anterior</div>
+                    <div class="feature"><i class="fas fa-check"></i> JVM Startup Flags</div>
+                    <div class="feature"><i class="fas fa-check"></i> Pre-generado de mundo (10k)</div>
+                    <div class="feature"><i class="fas fa-check"></i> Fix Memory Leaks</div>
+                    <div class="feature"><i class="fas fa-check"></i> Database Optimization</div>
+                </div>
+                <button class="main-menu-btn w-full mt-10 py-3 text-sm" onclick="buy('OPTIMIZACIÓN MEDIA', 35)">ELEGIR</button>
+            </div>
+            <div class="plan-card border-orange-500 shadow-2xl shadow-orange-500/20">
+                <div class="price-tag text-orange-500">$60</div>
+                <h4 class="font-black text-white text-xs mb-6 uppercase italic">Optimización Extrema</h4>
+                <div class="flex-grow">
+                    <div class="feature text-orange-400 font-black"><i class="fas fa-star"></i> 20 TIPS EXCLUSIVOS MAIK</div>
+                    <div class="feature"><i class="fas fa-check"></i> Tuning de Linux/Pterodactyl</div>
+                    <div class="feature"><i class="fas fa-check"></i> Zero Lag Entities</div>
+                    <div class="feature"><i class="fas fa-check"></i> Async Chunk Loading</div>
+                    <div class="feature"><i class="fas fa-check"></i> Auditoría de Plugins Pesados</div>
+                    <div class="feature"><i class="fas fa-check"></i> Estabilidad 20 TPS Garantizada</div>
+                </div>
+                <button class="main-menu-btn w-full mt-10 py-3 text-sm bg-orange-500" onclick="buy('OPTIMIZACIÓN EXTREMA', 60)">ELEGIR</button>
+            </div>
         </div>
     </section>
 
-    <div id="buyModal" class="fixed inset-0 bg-black/98 z-[10000] hidden items-center justify-center p-6">
-        <div class="bg-zinc-900 border-4 border-yellow-400 p-10 rounded-[50px] max-w-lg w-full text-center">
-            <h3 id="planName" class="text-2xl font-black text-yellow-400 uppercase italic"></h3>
-            <p id="planPrice" class="text-white font-black text-5xl my-6"></p>
-            <input type="text" id="custName" placeholder="TU NOMBRE O DISCORD" class="form-input">
-            <button class="main-menu-btn w-full py-5 text-xl" onclick="checkout()">ORDENAR POR WHATSAPP</button>
-            <p class="mt-6 text-red-500 cursor-pointer text-xs font-black uppercase tracking-widest" onclick="document.getElementById('buyModal').style.display='none'">← REGRESAR</p>
+    <section id="sec-boxpvp" class="section-container"><div class="plan-grid" id="grid-boxpvp"></div></section>
+    <section id="sec-survival" class="section-container"><div class="plan-grid" id="grid-survival"></div></section>
+    <section id="sec-lobby" class="section-container"><div class="plan-grid" id="grid-lobby"></div></section>
+    <section id="sec-soporte" class="section-container"><div class="plan-grid" id="grid-soporte"></div></section>
+    <section id="sec-diseno" class="section-container"><div class="plan-grid" id="grid-diseno"></div></section>
+    <section id="sec-promo" class="section-container"><div class="plan-grid" id="grid-promo"></div></section>
+    <section id="sec-otros" class="section-container">
+        <div class="max-w-2xl mx-auto bg-zinc-900 p-10 rounded-3xl">
+            <input type="text" id="otherName" placeholder="TU NOMBRE" class="form-input">
+            <textarea id="otherMsg" placeholder="DETALLES" class="form-input h-40"></textarea>
+            <button class="main-menu-btn w-full" onclick="sendTicket()">ENVIAR TICKET</button>
+        </div>
+    </section>
+
+    <div id="buyModal" class="fixed inset-0 bg-black/95 z-[10000] hidden items-center justify-center p-6 text-center">
+        <div class="bg-zinc-900 border-2 border-yellow-400 p-10 rounded-3xl max-w-md w-full">
+            <h3 id="planName" class="text-xl font-black text-yellow-400"></h3>
+            <p id="planPrice" class="text-5xl font-black my-6"></p>
+            <input type="text" id="custName" placeholder="TU DISCORD" class="form-input">
+            <button class="main-menu-btn w-full py-4" onclick="checkout()">COMPRAR</button>
+            <p class="mt-4 text-red-500 cursor-pointer text-xs uppercase" onclick="document.getElementById('buyModal').style.display='none'">CERRAR</p>
         </div>
     </div>
 
     <script>
-        // DATA ULTRA DETALLADA - 24 ITEMS POR CATEGORÍA PARA CUBRIR 12 PLANES (2 POR PLAN)
-        const detailedSpecs = {
-            boxpvp: [
-                "Protección de Spawn (WorldGuard)", "Configuración de Minas A y B",
-                "Kits de Inicio Balanceados", "Scoreboard Animado (TitleManager)",
-                "Minas Automáticas (MineResetLite)", "NPCs de Venta (ZNPCs + ShopGUI)",
-                "Combate Anti-Log (CombatLogX)", "Hologramas HD (DecentHolograms)",
-                "Sistema de Ranks (Rankup)", "Cristales de Poder Custom",
-                "Cajas de Recompensas (ExcellentCrates)", "Tablist Personalizado con Logos",
-                "Minas de Evento Especiales", "Anti-Kill Farm (Prevención)",
-                "Menús Interactivos (DeluxeMenus)", "Optimización de TPS (LaggRemover)",
-                "Vouchers de Rango Canjeables", "Anuncios Globales Programados",
-                "Economía Avanzada (Vault)", "Soporte Técnico Post-Entrega",
-                "Anti-Cheat (Matrix/Grim) Config", "Skins Restorer para Usuarios",
-                "Sistema de Logeo (AuthMe SQL)", "Tienda Tebex/Buycraft Setup"
-            ],
-            survival: [
-                "Claims de Terrenos (Lands)", "EssentialsX Configuración Full",
-                "Warps de Comunidad", "Tienda Virtual Dinámica",
-                "Subastas de Jugadores (AH)", "Sistema de Clanes con Alianzas",
-                "Misiones Diarias (Quests)", "Habilidades RPG (McMMO)",
-                "Habilidades de Combate Custom", "Mochilas Virtuales (MinePacks)",
-                "Mundo Pre-generado (Chunky)", "Mascotas de Compañía",
-                "Sistema de Empleos (Jobs)", "Backups Diarios Automáticos",
-                "Base de Datos MySQL", "Integración con Tebex",
-                "Link de Servidor con Web", "Protección Anti-Griefing",
-                "Mensajes de Bienvenida Únicos", "Vanish Pro para Staff",
-                "Soporte 24/7 en Discord", "Optimización de Ram/CPU",
-                "Seguridad Anti-Exploits", "Chat Formateado por Rango"
-            ],
-            lobby: [
-                "Spawn Fijo con Efectos", "Mensajes de Join/Quit",
-                "Selector de Servidores (Menus)", "BungeeCord/Velocity Setup",
-                "Skins para No-Premium", "AuthMe (Login Seguro)",
-                "Gadgets Diversos (Cosméticos)", "Parkour con Top Tiempos",
-                "Mascotas de Lobby", "Trampolines Impulsores",
-                "Protección Anti-Bots", "Anuncios Automáticos",
-                "Seguridad de Proxy", "Titles en Pantalla HD",
-                "Bossbar de Información", "NPCs de Selección Animados",
-                "Selector Pro con Texturas", "BungeeGuard (Seguridad Proxy)",
-                "Layout de Tablist Global", "Portales de Teletransporte",
-                "Música de Fondo (Noteblock)", "Scoreboard de Conexión",
-                "Welcome Message Animado", "Reglas en Menú Interactivo"
-            ],
-            soporte: [
-                "Corrección de Errores Java", "Limpieza de Consola",
-                "Permisos LuckPerms Pro", "Jerarquía de Grupos",
-                "Backups de Seguridad", "Instalación de MySQL",
-                "Protección Anti-Bot Layer 7", "Optimización de Archivos",
-                "Ajustes de JVM (Startup Scripts)", "Arreglo de Lag TPS",
-                "Auditoría de Plugins", "Seguridad de Panel (Pterodactyl)",
-                "Actualización de Versión", "Link con Discord (SRV)",
-                "Configuración Tebex Pro", "Web Hosting Setup",
-                "Fix de Plugins Antiguos", "Traducción al Español Full",
-                "Análisis de Logs Pesados", "Depuración de Scripts",
-                "Fix de Crashing de Server", "Cierre de Exploits Críticos",
-                "Ajustes de Host (Linux/Win)", "Asesoría VIP de Gestión"
-            ],
-            diseno: [
-                "Logo en PNG Alta Definición", "Icono de Servidor (64x64)",
-                "Banner para Discord", "Banner para Web/Foros",
-                "Diseño de Tienda Tebex", "Interfaz de Menús (UI)",
-                "Fondo Personalizado Web", "Firma Animada",
-                "Iconos para Rangos", "Sitio Web Básico (HTML)",
-                "SEO para Servidores", "Configuración de Hosting",
-                "Logo Animado (GIF)", "Banner para YouTube",
-                "Skin de Minecraft Custom", "Resource Pack Base",
-                "GUI de Menús Personalizada", "Tags de Chat Estéticos",
-                "CSS Custom para Web", "Portafolio Personal",
-                "Avatar para Redes Sociales", "Template de Anuncio",
-                "Wiki del Servidor Setup", "Panel Pterodactyl Skin"
-            ]
+        const specs = {
+            boxpvp: ["WorldGuard", "Minas A/B", "Kits", "Scoreboard", "ResetLite", "ZNPCs", "CombatLogX", "Hologramas", "Rankup", "Crystals", "Crates", "Tablist", "Minas Evento", "Anti-Farm", "DeluxeMenus", "TPS Fix", "Vouchers", "Ads", "Vault", "Support", "AntiCheat", "Skins", "AuthMe", "Tebex"],
+            survival: ["Claims", "Essentials", "Warps", "Shop", "Auction", "Clanes", "Quests", "McMMO", "Skills", "Packs", "Chunky", "Pets", "Jobs", "Backups", "MySQL", "Tebex", "WebSync", "GriefFix", "JoinMsg", "Vanish", "Discord", "RamFix", "Security", "Chat"],
+            lobby: ["Spawn", "Join", "Selector", "Velocity", "Skins", "AuthMe", "Gadgets", "Parkour", "Pets", "Trampolin", "AntiBot", "Ads", "Proxy", "Title", "Bossbar", "NPCs", "Texture", "BungeeGuard", "Tablist", "Portals", "Music", "Score", "Anim", "Rules"],
+            soporte: ["Java", "Console", "LuckPerms", "Groups", "Backups", "MySQL", "L7 Protect", "Files", "JVM", "TPS", "Audit", "Pterodactyl", "Update", "Discord", "Tebex", "Web", "OldFix", "Spanish", "Logs", "Scripts", "Crash", "Exploit", "Linux", "VIP"],
+            diseno: ["Logo PNG", "Icon", "Banner Discord", "Banner Web", "Tebex", "UI", "WebBG", "Sign", "Ranks", "HTML", "SEO", "Hosting", "Animated", "YT", "Skin", "Resource", "GUI", "Tags", "CSS", "Portfolio", "Social", "Ad", "Wiki", "Panel"]
         };
 
         function build() {
-            Object.keys(detailedSpecs).forEach(sec => {
+            Object.keys(specs).forEach(sec => {
                 const grid = document.getElementById('grid-' + sec);
+                if(!grid) return;
                 for(let i=0; i<12; i++) {
                     let p = (i === 0) ? 5 : Math.min(10 + (i*6.5), 80);
-                    let featuresCount = (i + 1) * 2;
-                    let myFeatures = detailedSpecs[sec].slice(0, featuresCount);
-                    grid.innerHTML += `
-                    <div class="plan-card">
-                        <div class="price-tag">$${Math.floor(p)}</div>
-                        <h4 class="font-black text-yellow-500 text-xs mb-6 uppercase tracking-widest">NIVEL PROFESIONAL #${i+1}</h4>
-                        <div class="flex-grow">
-                            ${myFeatures.map(f => `<div class="feature"><i class="fas fa-check-double"></i> ${f}</div>`).join('')}
-                        </div>
-                        <button class="main-menu-btn w-full mt-10 py-3 text-sm rounded-2xl" onclick="buy('${sec.toUpperCase()} NIVEL ${i+1}', ${Math.floor(p)})">ADQUIRIR PLAN</button>
-                    </div>`;
+                    let myF = specs[sec].slice(0, (i + 1) * 2);
+                    grid.innerHTML += `<div class="plan-card"><div class="price-tag">$${Math.floor(p)}</div><h4 class="font-black text-yellow-500 text-xs mb-6 uppercase">PACK #${i+1}</h4><div class="flex-grow">${myF.map(f => `<div class="feature"><i class="fas fa-check-circle"></i> ${f}</div>`).join('')}</div><button class="main-menu-btn w-full mt-8 py-2 text-xs" onclick="buy('${sec.toUpperCase()} #${i+1}', ${Math.floor(p)})">ADQUIRIR</button></div>`;
                 }
             });
-
-            // MEGA COMBOS
             const pg = document.getElementById('grid-promo');
-            const promos = [
-                {n:"COMBO STARTER MC", p:45, d:"BoxPvP Config + Logo PNG + Icono + Soporte 1 Sem."},
-                {n:"COMBO SURVIVAL PRO", p:70, d:"Survival Full + Tienda Tebex + Banner + Optimización"},
-                {n:"COMBO NETWORK TOTAL", p:80, d:"Lobby + BoxPvP + Survival + Soporte VIP + Web Base"}
-            ];
-            promos.forEach(c => {
-                pg.innerHTML += `<div class="plan-card border-pink-500 bg-pink-500/5"><div class="price-tag text-pink-500">$${c.p}</div><h4 class="text-white font-black mb-4 uppercase text-sm">${c.n}</h4><div class="feature"><i class="fas fa-star text-pink-500"></i> ${c.d}</div><button class="main-menu-btn w-full mt-10 py-3 text-sm border-pink-500" onclick="buy('${c.n}', ${c.p})">ORDENAR COMBO</button></div>`;
-            });
+            const promos = [{n:"STARTER COMBO", p:45, d:"BoxPvP + Logo + Soporte"}, {n:"PRO SURVIVAL", p:70, d:"Survival + Tebex + Banner"}, {n:"ULTIMATE NETWORK", p:80, d:"Lobby + Box + Survi + VIP"}];
+            promos.forEach(c => { pg.innerHTML += `<div class="plan-card border-pink-500"><div class="price-tag text-pink-500">$${c.p}</div><h4 class="text-white font-black mb-4 uppercase">${c.n}</h4><div class="feature">${c.d}</div><button class="main-menu-btn w-full mt-8 py-2 text-xs" onclick="buy('${c.n}', ${c.p})">ORDENAR</button></div>`; });
         }
 
-        // FUNCIONES DE CONTROL
         let curP, curPr;
-        function buy(n, p) { curP=n; curPr=p; document.getElementById('planName').innerText=n; document.getElementById('planPrice').innerText="$"+p+".00"; document.getElementById('buyModal').style.display='flex'; }
-        function toggleMenu() { document.getElementById('fullMenu').style.display = 'flex'; }
-        function closeOverlay() { document.getElementById('fullMenu').style.display = 'none'; }
-        function goHome() { 
-            document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active'));
-            document.getElementById('home').style.display = 'flex';
-            document.getElementById('navGroup').style.display = 'none';
-        }
-        function openSection(id) {
-            document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active'));
-            document.getElementById('home').style.display = 'none';
-            document.getElementById('sec-' + id).classList.add('active');
-            document.getElementById('navGroup').style.display = 'flex';
-            closeOverlay(); window.scrollTo(0,0);
-        }
-        function checkout() {
-            const u = document.getElementById('custName').value || "Interesado";
-            window.open(`https://wa.me/593987749885?text=Hola%20Maik!%20Soy%20${u},%20me%20interesa%20contratar:%20${curP}%20con%20valor%20de%20$${curPr}`);
-        }
-        function sendTicket() {
-            const n = document.getElementById('otherName').value;
-            const m = document.getElementById('otherMsg').value;
-            window.location.href = `mailto:chimbayuliana@gmail.com?subject=TICKET_MAIKDEV&body=Nombre: ${n}%0AMensaje: ${m}`;
-        }
+        function buy(n, p) { curP=n; curPr=p; document.getElementById('planName').innerText=n; document.getElementById('planPrice').innerText="$"+p; document.getElementById('buyModal').style.display='flex'; }
+        function toggleMenu() { document.getElementById('fullMenu').classList.add('active'); }
+        function closeOverlay() { document.getElementById('fullMenu').classList.remove('active'); }
+        function goHome() { document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); document.getElementById('home').style.display = 'flex'; document.getElementById('navGroup').style.display = 'none'; }
+        function openSection(id) { document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); document.getElementById('home').style.display = 'none'; document.getElementById('sec-' + id).classList.add('active'); document.getElementById('navGroup').style.display = 'flex'; closeOverlay(); window.scrollTo(0,0); }
+        function checkout() { const u = document.getElementById('custName').value || "Cliente"; window.open(`https://wa.me/593987749885?text=Maik,%20soy%20${u},%20quiero:%20${curP}%20($${curPr})`); }
+        function sendTicket() { window.location.href = `mailto:chimbayuliana@gmail.com?subject=TICKET&body=${document.getElementById('otherName').value}: ${document.getElementById('otherMsg').value}`; }
         build();
     </script>
 </body>
