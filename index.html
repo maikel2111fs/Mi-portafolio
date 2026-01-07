@@ -3,38 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Dev | Agencia de Ingeniería Minecraft</title>
+    <title>Maik Dev | Servicios de Configuración</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        :root { --holy-yellow: #facc15; --holy-dark: #080808; --holy-card: #121212; --holy-border: #1f1f1f; }
-        body { background-color: var(--holy-dark); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        :root { --yellow: #facc15; --bg: #000; --card: #0a0a0a; --border: #1a1a1a; }
+        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; scroll-behavior: smooth; }
         
-        /* Efectos de Brillo */
-        .yellow-glow { text-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
-        .card-holy { background: var(--holy-card); border: 1px solid var(--holy-border); border-radius: 1.5rem; transition: 0.3s; }
-        .card-holy:hover { border-color: var(--holy-yellow); transform: translateY(-5px); }
+        .card-service { background: var(--card); border: 1px solid var(--border); border-radius: 1.5rem; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
+        .card-service:hover { border-color: var(--yellow); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* Estilo de Comandos (Terminal) */
-        .terminal-box { background: #000; border: 1px solid #333; font-family: 'Courier New', monospace; padding: 20px; border-radius: 10px; color: #00ff00; font-size: 13px; }
-        .cmd-line { color: #facc15; font-weight: bold; }
-        
-        .btn-main { background: var(--holy-yellow); color: #000; font-weight: 900; text-transform: uppercase; border-radius: 8px; transition: 0.3s; }
-        .btn-main:hover { box-shadow: 0 0 25px rgba(250, 204, 21, 0.5); transform: scale(1.02); }
+        .btn-buy { background: var(--yellow); color: #000; font-weight: 900; text-transform: uppercase; font-size: 10px; padding: 12px; border-radius: 8px; text-align: center; margin-top: 1.5rem; transition: 0.2s; }
+        .btn-buy:hover { transform: scale(1.03); box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+
+        .section-header { margin-bottom: 3rem; border-left: 4px solid var(--yellow); padding-left: 1.5rem; }
+        .price-tag { font-size: 2.2rem; font-weight: 900; color: #fff; margin: 1rem 0; }
+        .price-tag span { color: var(--yellow); }
+
+        .feature-item { font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; }
+        .feature-item i { color: var(--yellow); }
     </style>
 </head>
 <body>
 
-    <div class="bg-black border-b-2 border-yellow-400 py-2 text-center text-[10px] font-black uppercase tracking-widest">
-        Sistema de Gestión Maik v4.0 — <span class="text-yellow-400 italic">Precios actualizados 2026</span>
+    <div class="bg-black border-b border-white/5 py-3 text-center text-[10px] font-black uppercase tracking-[0.3em] text-yellow-400">
+        Configuraciones Profesionales — Maik Systems v4.0 — 2026
     </div>
 
-    <nav class="flex justify-between items-center px-10 py-6 sticky top-0 bg-[#080808]/90 backdrop-blur-md z-50">
-        <div class="flex items-center gap-3">
-            <div class="bg-yellow-400 text-black px-2 py-1 font-black rounded">M</div>
-            <span class="text-xl font-black italic tracking-tighter uppercase">MAIK <span class="text-gray-500">SYSTEMS</span></span>
+    <nav class="flex justify-between items-center px-10 py-6 border-b border-white/5 sticky top-0 bg-black/90 backdrop-blur-md z-50">
+        <div class="flex items-center gap-2">
+            <div class="bg-yellow-400 text-black px-2 py-1 font-black rounded text-xl">M</div>
+            <span class="text-xl font-black italic tracking-tighter uppercase">MAIK <span class="text-gray-600 font-normal">DEV</span></span>
         </div>
+        <div class="hidden lg:flex gap-8 text-[10px] font-black uppercase text-gray-400">
+            <a href="#boxpvp" class="hover:text-yellow-400">BoxPvP</a>
+            <a href="#survival" class="hover:text-yellow-400">Survival</a>
+            <a href="#lobby" class="hover:text-yellow-400">Lobby</a>
+            <a href="#config" class="hover:text-yellow-400">Configuración</a>
+        </div>
+    </nav>
+
+    <section id="boxpvp" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="section-header">
+            <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Modalidad Combate</span>
+            <h2 class="text-5xl font-black uppercase italic">BOX<span class="text-yellow-400 text-6xl">PVP</span></h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">BoxPvP Inicial</h3>
+                <div class="price-tag"><span>$</span>15.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-check"></i> Mapa Base Incluido</li>
+                    <li class="feature-item"><i class="fas fa-check"></i> Minas A a la Z</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service border-yellow-400/30">
+                <h3 class="font-black text-xs uppercase tracking-widest text-yellow-400">BoxPvP Avanzado</h3>
+                <div class="price-tag"><span>$</span>35.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-star"></i> Custom Items / NBT</li>
+                    <li class="feature-item"><i class="fas fa-star"></i> Sistema de Economía</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">BoxPvP Supremo</h3>
+                <div class="price-tag"><span>$</span>60.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-crown"></i> Full Rankup & Anticheat</li>
+                    <li class="feature-item"><i class="fas fa-crown"></i> Optimización Extrema</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="survival" class="max-w-7xl mx-auto px-6 py-24 bg-[#050505] rounded-[3rem]">
+        <div class="section-header">
+            <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Modalidad Aventura</span>
+            <h2 class="text-5xl font-black uppercase italic">SURVI<span class="text-yellow-400 text-6xl">VAL</span></h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">Survival Classic</h3>
+                <div class="price-tag"><span>$</span>20.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-check"></i> Sistema de Protecciones</li>
+                    <li class="feature-item"><i class="fas fa-check"></i> Menú de Warps</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">Survival RPG</h3>
+                <div class="price-tag"><span>$</span>45.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-star"></i> Skills (mcMMO/Aurelium)</li>
+                    <li class="feature-item"><i class="fas fa-star"></i> Misiones Diarias</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service border-yellow-400">
+                <h3 class="font-black text-xs uppercase tracking-widest text-yellow-400">Survival Custom</h3>
+                <div class="price-tag"><span>$</span>80.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-gem"></i> Texturas Personalizadas</li>
+                    <li class="feature-item"><i class="fas fa-gem"></i> Bosses y Mazmorras</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="lobby" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="section-header">
+            <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Modalidad Hub</span>
+            <h2 class="text-5xl font-black uppercase italic">LOB<span class="text-yellow-400 text-6xl">BY</span></h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">Lobby Simple</h3>
+                <div class="price-tag"><span>$</span>10.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-check"></i> Selector de Servidores</li>
+                    <li class="feature-item"><i class="fas fa-check"></i> Ocultar Jugadores</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">Lobby Animado</h3>
+                <div class="price-tag"><span>$</span>25.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-star"></i> Scoreboard Animada</li>
+                    <li class="feature-item"><i class="fas fa-star"></i> NPCs Interactivos</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">Lobby Network</h3>
+                <div class="price-tag"><span>$</span>40.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-crown"></i> Sincronización Global</li>
+                    <li class="feature-item"><i class="fas fa-crown"></i> Sistema de Rangos Hub</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="config" class="max-w-7xl mx-auto px-6 py-24 bg-[#0a0a0a] border border-white/5 rounded-[3rem] mb-20">
+        <div class="section-header">
+            <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Soporte Técnico</span>
+            <h2 class="text-5xl font-black uppercase italic">CON<span class="text-yellow-400 text-6xl">FIG</span></h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">Optimización</h3>
+                <div class="price-tag"><span>$</span>5.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-bolt"></i> Paper/Purpur Setup</li>
+                    <li class="feature-item"><i class="fas fa-bolt"></i> Flags de Java</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service">
+                <h3 class="font-black text-xs uppercase tracking-widest text-gray-400">Seguridad Full</h3>
+                <div class="price-tag"><span>$</span>15.00</div>
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-shield-alt"></i> AntiBot / AntiDDoS</li>
+                    <li class="feature-item"><i class="fas fa-shield-alt"></i> Firewall Config</li>
+                </ul>
+                <a href="#" class="btn-buy">Adquirir</a>
+            </div>
+            <div class="card-service bg-yellow-400 text-black">
+                <h3 class="font-black text-xs uppercase tracking-widest">Mantenimiento</h3>
+                <div class="price-tag text-black"><span>$</span>30.00</div>
+                <ul class="feature-list text-black">
+                    <li class="feature-item"><i class="fas fa-infinity text-black"></i> Soporte Mensual        </div>
         <div class="hidden lg:flex gap-8 text-xs font-bold uppercase text-gray-400">
             <a href="#soluciones" class="hover:text-yellow-400">Soluciones</a>
             <a href="#tecnico" class="hover:text-yellow-400">Comandos</a>
