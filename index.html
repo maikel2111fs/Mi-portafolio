@@ -3,38 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Desarrollador | Soluciones Pro</title>
+    <title>Maik Dev | Agencia de Ingeniería Minecraft</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        :root { --holy-yellow: #facc15; --holy-dark: #080808; --holy-card: #121212; --holy-border: #1f1f1f; }
+        body { background-color: var(--holy-dark); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        body { background-color: #0b0f15; color: #fff; font-family: 'Inter', sans-serif; }
+        /* Efectos de Brillo */
+        .yellow-glow { text-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+        .card-holy { background: var(--holy-card); border: 1px solid var(--holy-border); border-radius: 1.5rem; transition: 0.3s; }
+        .card-holy:hover { border-color: var(--holy-yellow); transform: translateY(-5px); }
         
-        /* Estilo de Tarjetas basado en tu imagen */
-        .card-panel {
-            background: #161d26;
-            border: 1px solid #2d3748;
-            border-radius: 1.5rem;
-            transition: all 0.3s ease;
-        }
+        /* Estilo de Comandos (Terminal) */
+        .terminal-box { background: #000; border: 1px solid #333; font-family: 'Courier New', monospace; padding: 20px; border-radius: 10px; color: #00ff00; font-size: 13px; }
+        .cmd-line { color: #facc15; font-weight: bold; }
         
-        .card-panel:hover { border-color: #3b82f6; background: #1a232e; }
-
-        .btn-blue { background: #1d4ed8; transition: 0.3s; }
-        .btn-blue:hover { background: #2563eb; transform: scale(1.02); }
-
-        /* Plan Supremo Dorado */
-        .plan-supremo {
-            border: 2px solid #fbbf24;
-            background: linear-gradient(180deg, #161d26 0%, #0b0f15 100%);
-        }
-
-        .text-cyan { color: #22d3ee; }
-        .text-gold { color: #fbbf24; }
+        .btn-main { background: var(--holy-yellow); color: #000; font-weight: 900; text-transform: uppercase; border-radius: 8px; transition: 0.3s; }
+        .btn-main:hover { box-shadow: 0 0 25px rgba(250, 204, 21, 0.5); transform: scale(1.02); }
     </style>
 </head>
-<body class="pb-20">
+<body>
+
+    <div class="bg-black border-b-2 border-yellow-400 py-2 text-center text-[10px] font-black uppercase tracking-widest">
+        Sistema de Gestión Maik v4.0 — <span class="text-yellow-400 italic">Precios actualizados 2026</span>
+    </div>
+
+    <nav class="flex justify-between items-center px-10 py-6 sticky top-0 bg-[#080808]/90 backdrop-blur-md z-50">
+        <div class="flex items-center gap-3">
+            <div class="bg-yellow-400 text-black px-2 py-1 font-black rounded">M</div>
+            <span class="text-xl font-black italic tracking-tighter uppercase">MAIK <span class="text-gray-500">SYSTEMS</span></span>
+        </div>
+        <div class="hidden lg:flex gap-8 text-xs font-bold uppercase text-gray-400">
+            <a href="#soluciones" class="hover:text-yellow-400">Soluciones</a>
+            <a href="#tecnico" class="hover:text-yellow-400">Comandos</a>
+            <a href="#precios" class="hover:text-yellow-400">Planes</a>
+            <a href="#contacto" class="text-yellow-400 underline">Agendar</a>
+        </div>
+    </nav>
+
+    <header class="max-w-7xl mx-auto pt-24 pb-16 px-6 grid lg:grid-cols-2 items-center">
+        <div>
+            <h1 class="text-6xl lg:text-8xl font-black leading-none mb-6">SOLUCIONES <br><span class="text-yellow-400 yellow-glow italic">SIN LÍMITES.</span></h1>
+            <p class="text-gray-400 max-w-lg text-sm leading-relaxed mb-10">Desarrollamos la arquitectura técnica de tu servidor para garantizar el 100% de rendimiento, seguridad de nivel empresarial y una experiencia sin lag.</p>
+            <div class="flex gap-4">
+                <a href="#precios" class="btn-main px-10 py-4 text-xs">Ver Servicios</a>
+                <a href="#tecnico" class="border border-white/20 px-10 py-4 rounded-lg text-xs font-bold uppercase">Specs Técnicas</a>
+            </div>
+        </div>
+        <div class="hidden lg:block relative">
+            <div class="absolute -inset-10 bg-yellow-400/10 blur-[100px] rounded-full"></div>
+            <img src="https://i.imgur.com/8Yv3kXv.png" class="relative z-10 w-[500px] animate-pulse">
+        </div>
+    </header>
+
+    <section id="soluciones" class="py-20 bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-black mb-4 uppercase">SIN COMPLICACIONES</h2>
+            <p class="text-gray-500 text-xs uppercase tracking-widest mb-16">No pagues de más por tu servidor. Nos encargamos de todo el trabajo sucio.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card-holy p-10 text-left">
+                    <i class="fas fa-headset text-yellow-400 text-3xl mb-6"></i>
+                    <h4 class="font-black text-lg mb-2 uppercase">Soporte 24/7</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">Nuestro equipo técnico está listo para resolver errores de consola y bugs de plugins en cualquier momento.</p>
+                </div>
+                <div class="card-holy p-10 text-left">
+                    <i class="fas fa-check-circle text-yellow-400 text-3xl mb-6"></i>
+                    <h4 class="font-black text-lg mb-2 uppercase">Simplicidad</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">Configuramos interfaces intuitivas para que gestiones tu servidor sin necesidad de saber programación.</p>
+                </div>
+                <div class="card-holy p-10 text-left">
+                    <i class="fas fa-shield-alt text-yellow-400 text-3xl mb-6"></i>
+                    <h4 class="font-black text-lg mb-2 uppercase">Seguridad</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">Implementamos Firewalls avanzados y protección Anti-DDoS para proteger tus datos y a tus usuarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tecnico" class="py-20 max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="terminal-box">
+                <p><span class="cmd-line">maik@dev:~$</span> optimize --server --extreme</p>
+                <p class="text-gray-500">... Scanning bukkit.yml</p>
+                <p class="text-gray-500">... Tuning spigot.yml (Tick-rates adjusted)</p>
+                <p class="text-gray-500">... Setup Paper-World (View Distance: 4)</p>
+                <p class="text-yellow-400">[SUCCESS] Server performance improved by 45%</p>
+                <p><span class="cmd-line">maik@dev:~$</span> protect --database --sql</p>
+                <p class="text-white">... Securing MySQL connection</p>
+                <p class="text-white">... Encrypting user data</p>
+                <p><span class="cmd-line">maik@dev:~$</span> <span class="animate-pulse">_</span></p>
+            </div>
+            <div>
+                <h3 class="text-3xl font-black uppercase mb-6 italic">Control Total del <span class="text-yellow-400">Backend</span></h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4">
+                        <div class="bg-yellow-400/10 p-2 rounded text-yellow-400 font-bold text-xs italic">/setup</div>
+                        <p class="text-xs text-gray-400"><b class="text-white">Instalación Limpia:</b> Instalamos los núcleos (Purpur, Paper, Velocity) desde cero con flags de arranque optimizadas.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="bg-yellow-400/10 p-2 rounded text-yellow-400 font-bold text-xs italic">/perms</div>
+                        <p class="text-xs text-gray-400"><b class="text-white">Jerarquías LuckPerms:</b> Grupos, rangos, herencias y prefijos configurados con bases de datos SQL para sincronización global.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="bg-yellow-400/10 p-2 rounded text-yellow-400 font-bold text-xs italic">/fix</div>
+                        <p class="text-xs text-gray-400"><b class="text-white">Depuración de Logs:</b> Eliminación de "Stack Traces" y errores cíclicos que saturan el disco de tu host.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="precios" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="card-holy p-8 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Nivel 1</h4>
+                    <h3 class="text-2xl font-black uppercase mb-4 text-gray-400">CARBÓN</h3>
+                    <div class="text-4xl font-black text-yellow-400 mb-6">$15.00</div>
+                    <ul class="text-[10px] space-y-3 text-gray-500 mb-8 uppercase font-bold">
+                        <li><i class="fas fa-check text-yellow-400 mr-2"></i> Optimización Paper</li>
+                        <li><i class="fas fa-check text-yellow-400 mr-2"></i> Fix de Lag Base</li>
+                        <li><i class="fas fa-check text-yellow-400 mr-2"></i> 1 Modalidad</li>
+                    </ul>
+                </div>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=Nivel+Carbon&amount=15.00&currency_code=USD" class="btn-main w-full py-4 text-[10px] text-center">Adquirir</a>
+            </div>
+
+            <div class="card-holy p-8 border-gray-600 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Nivel 2</h4>
+                    <h3 class="text-2xl font-black uppercase mb-4 text-gray-300">PIEDRA</h3>
+                    <div class="text-4xl font-black text-yellow-400 mb-6">$35.00</div>
+                    <ul class="text-[10px] space-y-3 text-gray-500 mb-8 uppercase font-bold">
+                        <li><i class="fas fa-check text-yellow-400 mr-2"></i> LuckPerms Full Setup</li>
+                        <li><i class="fas fa-check text-yellow-400 mr-2"></i> Diseño de Scoreboard</li>
+                        <li><i class="fas fa-check text-yellow-400 mr-2"></i> Soporte 7 días</li>
+                    </ul>
+                </div>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=Gancinomaikel@gmail.com&item_name=Nivel+Piedra&amount=35.00&currency_code=USD" class="btn-main w-full py-4 text-[10px] text-center">Adquirir</a>
+            </div>
+
+            <div class="card-holy p-8 border-yellow-400 scale-105 relative z-10 bg-[#161616] flex flex-col justify-between">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-400 text-black px-4 py-1 rounded-full text-[8px] font-black uppercase">Más Vendido</div>
+                <div>
+                    <h4 class="text-xs font-bold text-yellow-500 uppercase tracking-widest mb-4">Nivel 3</h4>
+                    <h3 class="text-2xl font-black uppercase mb-4">DIAMANTE</h3>
+                    <div class="text-4xl font-black text-white mb-6">$60.00</div>
+                    <ul class="text-[10px] space-y-3 text-gray-400 mb-8 uppercase font-bold">
+                        <li><i class="fas fa-star text-yellow-400 mr-2"></i> Setup de BoxPvP/Survival</li>
+                        <li><i class="fas fa-star text-yellow-400 mr-2"></i> Anticheat Configurado</li>
+                        <li><i class="fas fa-star text-yellow-400 mr-2"></i> Soporte Prioritario</li>
+                    </ul>
+                </div>
+                <a href="<body class="pb-20">
 
     <nav class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
         <div class="text-xl font-black italic tracking-tighter uppercase">
