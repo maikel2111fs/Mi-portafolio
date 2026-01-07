@@ -3,38 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Servicios Profesionales</title>
+    <title>MAIK DEV | Catálogo Global</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
+        /* Navbar */
+        .nav-link { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #666; transition: 0.3s; }
+        .nav-link:hover { color: #facc15; }
 
-        .nav-link {
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: #666;
+        /* Títulos */
+        .section-header { margin-bottom: 4rem; }
+        .section-title { font-size: clamp(40px, 8vw, 80px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.9; }
+        .section-subtitle { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #facc15; letter-spacing: 3px; margin-bottom: 10px; display: block; }
+
+        /* Grid de 12 planes */
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+        /* Card Estilo Holy */
+        .card-plan { 
+            background: #0a0a0a; 
+            border: 1px solid #1a1a1a; 
+            border-radius: 1.5rem; 
+            padding: 2rem; 
             transition: 0.3s;
+            display: flex;
+            flex-direction: column;
         }
+        .card-plan:hover { border-color: #facc15; transform: translateY(-5px); background: #0f0f0f; }
 
-        .nav-link:hover { color: #fff; }
+        .plan-name { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #444; margin-bottom: 5px; }
+        .plan-price { font-size: 32px; font-weight: 900; margin-bottom: 15px; }
+        .plan-price span { color: #facc15; font-size: 18px; margin-right: 2px; }
 
-        .section-title {
-            font-size: 64px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-style: italic;
-            line-height: 1;
+        .feature { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #777; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .feature i { color: #facc15; font-size: 12px; }
+
+        .btn-buy { 
+            background: #facc15; color: #000; font-weight: 900; text-transform: uppercase; 
+            font-size: 10px; padding: 12px; border-radius: 8px; text-align: center; 
+            margin-top: auto; transition: 0.2s; 
         }
-
-        .section-subtitle {
+        .btn-        .section-subtitle {
             font-size: 10px;
             font-weight: 900;
             text-transform: uppercase;
