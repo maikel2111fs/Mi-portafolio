@@ -3,48 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Servicios Profesionales de Minecraft</title>
+    <title>MAIK DEV | Minecraft Network Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
         
-        nav { background: rgba(0,0,0,0.95); border-bottom: 1px solid #1a1a1a; backdrop-filter: blur(10px); position: fixed; top: 0; width: 100%; z-index: 9999; }
-        .nav-link { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #555; transition: 0.3s; }
-        .nav-link:hover { color: #facc15; }
+        /* Navbar */
+        nav { background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); border-bottom: 1px solid #1a1a1a; position: fixed; top: 0; width: 100%; z-index: 9999; }
 
-        /* SECCIÓN MAIK - PRESENTACIÓN */
-        .hero { padding: 180px 20px 80px 20px; text-align: center; background: radial-gradient(circle at center, #111 0%, #000 80%); }
-        .hero-tag { background: #facc15; color: #000; font-size: 10px; font-weight: 900; padding: 6px 18px; border-radius: 50px; text-transform: uppercase; display: inline-block; margin-bottom: 25px; }
-        .hero-title { font-size: clamp(35px, 9vw, 85px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.85; margin-bottom: 30px; }
-        .hero-desc { max-width: 800px; margin: 0 auto; color: #a1a1a1; font-size: 18px; line-height: 1.6; margin-bottom: 45px; }
-        .hero-btn { background: #fff; color: #000; font-weight: 900; text-transform: uppercase; padding: 20px 45px; border-radius: 12px; font-size: 13px; transition: 0.3s; display: inline-block; }
-        .hero-btn:hover { background: #facc15; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(250, 204, 21, 0.2); }
+        /* HERO PRESENTACIÓN */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+            background: radial-gradient(circle at center, #1a1a00 0%, #000 80%);
+            padding: 20px;
+        }
+        .hero-tag { color: #facc15; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+        .hero-title { font-size: clamp(40px, 10vw, 100px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.8; margin-bottom: 20px; }
+        .hero-desc { max-width: 800px; color: #888; font-size: 18px; margin-bottom: 50px; line-height: 1.6; }
 
-        .main-container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
-        .header-section { margin-bottom: 45px; border-left: 5px solid #facc15; padding-left: 25px; margin-top: 100px; }
-        .title-large { font-size: 55px; font-weight: 900; text-transform: uppercase; font-style: italic; }
+        /* RUEDA / SELECTOR DE MODALIDADES */
+        .mode-selector { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+            width: 100%; 
+            max-width: 1100px; 
+        }
+        .mode-card { 
+            background: #0a0a0a; 
+            border: 1px solid #222; 
+            padding: 30px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.4s;
+            text-align: center;
+        }
+        .mode-card:hover { 
+            border-color: #facc15; 
+            background: #facc15; 
+            transform: translateY(-10px);
+        }
+        .mode-card i { font-size: 30px; margin-bottom: 15px; color: #facc15; }
+        .mode-card h3 { font-size: 14px; font-weight: 900; text-transform: uppercase; color: #fff; }
+        .mode-card:hover i, .mode-card:hover h3 { color: #000; }
 
-        /* GRID Y CARDS */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card-plan { background: #080808; border: 1px solid #1a1a1a; border-radius: 24px; padding: 35px; display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
-        .card-plan:hover { border-color: #facc15; transform: translateY(-12px); background: #0c0c0c; }
+        /* SECCIONES DE PLANES */
+        .main-container { max-width: 1400px; margin: 0 auto; padding: 100px 20px; }
+        .section-header { margin-bottom: 50px; border-left: 6px solid #facc15; padding-left: 25px; }
+        .title-large { font-size: 60px; font-weight: 900; text-transform: uppercase; font-style: italic; }
+
+        /* GRID DE 12 PLANES */
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; margin-bottom: 120px; }
+        .card-plan { background: #080808; border: 1px solid #1a1a1a; border-radius: 24px; padding: 35px; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
+        .card-plan:hover { border-color: #facc15; background: #0c0c0c; }
         
-        .p-name { font-size: 22px; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; color: #facc15; }
-        .p-price { font-size: 45px; font-weight: 900; margin-bottom: 25px; letter-spacing: -2px; }
-        .p-price span { color: #facc15; font-size: 22px; margin-right: 4px; }
+        .p-name { font-size: 20px; font-weight: 900; color: #facc15; text-transform: uppercase; margin-bottom: 10px; }
+        .p-price { font-size: 40px; font-weight: 900; margin-bottom: 20px; }
+        .p-price span { color: #facc15; font-size: 18px; }
         
-        .feature-item { font-size: 11px; font-weight: 700; color: #8a8a8a; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .feature-item i { color: #facc15; font-size: 14px; }
+        .feature-item { font-size: 11px; font-weight: 700; color: #777; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .feature-item i { color: #facc15; }
+        .extra-service { color: #fff; font-weight: 900; }
 
-        .btn-buy { background: #1a1a1a; color: #fff; font-weight: 900; text-transform: uppercase; font-size: 11px; padding: 16px; border-radius: 12px; text-align: center; margin-top: auto; transition: 0.3s; border: 1px solid #333; }
+        .btn-buy { background: #1a1a1a; color: #fff; font-weight: 900; text-transform: uppercase; font-size: 11px; padding: 16px; border-radius: 12px; text-align: center; margin-top: auto; border: 1px solid #333; transition: 0.3s; }
         .btn-buy:hover { background: #facc15; color: #000; border-color: #facc15; }
-        
-        .highlight { border: 2px solid #facc15; background: linear-gradient(145deg, #0f0f00, #080808); }
-        .popular-badge { position: absolute; top: 20px; right: -30px; background: #facc15; color: #000; font-size: 9px; font-weight: 900; padding: 5px 40px; transform: rotate(45deg); text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -56,73 +87,54 @@
                 <span class="text-xl font-black uppercase italic tracking-tighter">MAIK <span class="text-gray-500 font-normal">DEV</span></span>
             </div>
             <div class="hidden md:flex gap-10">
-                <a href="#boxpvp" class="nav-link">BoxPvP</a>
-                <a href="#survival" class="nav-link">Survival</a>
-                <a href="#lobby" class="nav-link">Lobby</a>
-                <a href="#config" class="nav-link">Configuración</a>
+                <a href="#boxpvp" class="text-[10px] font-black uppercase hover:text-yellow-400">BoxPvP</a>
+                <a href="#survival" class="text-[10px] font-black uppercase hover:text-yellow-400">Survival</a>
+                <a href="#lobby" class="text-[10px] font-black uppercase hover:text-yellow-400">Lobby</a>
+                <a href="#config" class="text-[10px] font-black uppercase hover:text-yellow-400">Config</a>
             </div>
         </div>
     </nav>
 
     <header class="hero">
-        <span class="hero-tag">Desarrollador & Configurador Senior</span>
-        <h1 class="hero-title">Soluciones de alto rendimiento <br> por <span class="text-yellow-400">Maik Dev</span></h1>
+        <span class="hero-tag">Expert Developer</span>
+        <h1 class="hero-title">MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
         <p class="hero-desc">
-            Me especializo en convertir ideas en servidores de Minecraft exitosos. 
-            Desde la optimización técnica hasta la creación de mecánicas personalizadas. 
-            Calidad profesional, seguridad garantizada y soporte técnico de primer nivel.
+            Ofrezco soluciones integrales para servidores de Minecraft: Configuración profesional, 
+            diseño de logos exclusivos y gestión completa de tiendas Tebex. 
+            Selecciona una modalidad para ver los planes:
         </p>
-        <a href="#boxpvp" class="hero-btn">Explorar Modalidades</a>
+
+        <div class="mode-selector">
+            <a href="#boxpvp" class="mode-card">
+                <i class="fas fa-skull"></i>
+                <h3>BoxPvP</h3>
+            </a>
+            <a href="#survival" class="mode-card">
+                <i class="fas fa-tree"></i>
+                <h3>Survival</h3>
+            </a>
+            <a href="#lobby" class="mode-card">
+                <i class="fas fa-door-open"></i>
+                <h3>Lobby</h3>
+            </a>
+            <a href="#config" class="mode-card">
+                <i class="fas fa-cogs"></i>
+                <h3>Config</h3>
+            </a>
+        </div>
     </header>
 
     <div class="main-container">
-
         <script>
-            const levelNames = ["Madera", "Piedra", "Carbón", "Hierro", "Lapislázuli", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
+            const levelNames = ["Madera", "Piedra", "Carbón", "Hierro", "Lapis", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
             
-            // Precios ajustados para absorber comisiones e impuestos
             const sections = [
-                { id: "boxpvp", title: "BOXPVP", base: 15, step: 10, perks: ["Full Setup Minas", "CombatLog & Anticheat", "Kits Balanceados", "Economía Avanzada"] },
-                { id: "survival", title: "SURVIVAL", base: 20, step: 12, perks: ["Protecciones Pro", "Jobs & Economía", "Menú de Warps", "Skills Custom RPG"] },
-                { id: "lobby", title: "LOBBY", base: 10, step: 5, perks: ["Selector Animado", "NPCs Interactivos", "Gadgets & Cosméticos", "Optimización Carga"] },
-                { id: "config", title: "CONFIG", base: 10, step: 8, perks: ["Optimización de RAM", "Seguridad Anti-Exploit", "Instalación Plugins", "Limpieza de Database"] }
+                { id: "boxpvp", title: "BOXPVP", base: 25, step: 10, perks: ["Setup Minas", "CombatLog", "Economía"] },
+                { id: "survival", title: "SURVIVAL", base: 30, step: 12, perks: ["Protecciones", "Jobs/Misiones", "Mundo RPG"] },
+                { id: "lobby", title: "LOBBY", base: 15, step: 5, perks: ["Selector Pro", "NPCs Info", "Gadgets Fun"] },
+                { id: "config", title: "CONFIG", base: 15, step: 8, perks: ["Optimización", "Seguridad", "Setup Plugins"] }
             ];
 
             sections.forEach(sec => {
                 document.write(`
-                    <section id="${sec.id}">
-                        <div class="header-section">
-                            <h2 class="title-large">${sec.title}</h2>
-                        </div>
-                        <div class="plans-grid">
-                `);
-
-                levelNames.forEach((lvl, i) => {
-                    const price = (sec.base + (i * sec.step)).toFixed(2);
-                    const isLast = i === 11;
-                    document.write(`
-                        <div class="card-plan ${isLast ? 'highlight' : ''}">
-                            ${isLast ? '<div class="popular-badge">Top Tier</div>' : ''}
-                            <p class="text-[10px] font-black text-gray-600 mb-1 uppercase tracking-widest">NIVEL ${i + 1}</p>
-                            <h3 class="p-name">${lvl}</h3>
-                            <div class="p-price"><span>$</span>${price}</div>
-                            <ul class="mb-8 flex-grow">
-                                ${sec.perks.map(p => `<li class="feature-item"><i class="fas fa-check"></i> ${p}</li>`).join('')}
-                                ${i >= 6 ? `<li class="feature-item"><i class="fas fa-plus-circle"></i> Soporte Prioritario</li>` : ''}
-                            </ul>
-                            <a href="#" class="btn-buy">Contratar Servicio</a>
-                        </div>
-                    `);
-                });
-                document.write(`</div></section>`);
-            });
-        </script>
-
-    </div>
-
-    <footer class="py-20 text-center border-t border-white/5 opacity-40 text-[10px] font-black uppercase tracking-[0.6em]">
-        Maik Dev &copy; 2026 — Ingeniería de Minecraft Profesional
-    </footer>
-
-</body>
-</html>
+                    <section id="${sec
