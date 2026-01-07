@@ -12,10 +12,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
         
-        /* Navbar */
         nav { background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); border-bottom: 1px solid #1a1a1a; position: fixed; top: 0; width: 100%; z-index: 9999; }
 
-        /* HERO PRESENTACIÓN */
+        /* HERO - PRESENTACIÓN */
         .hero { 
             height: 100vh; 
             display: flex; 
@@ -26,45 +25,43 @@
             background: radial-gradient(circle at center, #1a1a00 0%, #000 80%);
             padding: 20px;
         }
-        .hero-tag { color: #facc15; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
         .hero-title { font-size: clamp(40px, 10vw, 100px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.8; margin-bottom: 20px; }
         .hero-desc { max-width: 800px; color: #888; font-size: 18px; margin-bottom: 50px; line-height: 1.6; }
 
-        /* RUEDA / SELECTOR DE MODALIDADES */
+        /* RUEDA DE MODALIDADES */
         .mode-selector { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
             gap: 20px; 
             width: 100%; 
-            max-width: 1100px; 
+            max-width: 1000px; 
         }
         .mode-card { 
             background: #0a0a0a; 
             border: 1px solid #222; 
-            padding: 30px; 
+            padding: 40px 20px; 
             border-radius: 20px; 
             cursor: pointer; 
-            transition: 0.4s;
-            text-align: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
         }
         .mode-card:hover { 
             border-color: #facc15; 
-            background: #facc15; 
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.05);
+            background: #111;
         }
-        .mode-card i { font-size: 30px; margin-bottom: 15px; color: #facc15; }
-        .mode-card h3 { font-size: 14px; font-weight: 900; text-transform: uppercase; color: #fff; }
-        .mode-card:hover i, .mode-card:hover h3 { color: #000; }
+        .mode-card i { font-size: 40px; margin-bottom: 15px; color: #facc15; }
+        .mode-card h3 { font-size: 14px; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: 1px; }
 
-        /* SECCIONES DE PLANES */
+        /* SECCIONES */
         .main-container { max-width: 1400px; margin: 0 auto; padding: 100px 20px; }
-        .section-header { margin-bottom: 50px; border-left: 6px solid #facc15; padding-left: 25px; }
+        .section-header { margin-bottom: 50px; border-left: 6px solid #facc15; padding-left: 25px; margin-top: 50px; }
         .title-large { font-size: 60px; font-weight: 900; text-transform: uppercase; font-style: italic; }
 
-        /* GRID DE 12 PLANES */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; margin-bottom: 120px; }
-        .card-plan { background: #080808; border: 1px solid #1a1a1a; border-radius: 24px; padding: 35px; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
-        .card-plan:hover { border-color: #facc15; background: #0c0c0c; }
+        /* CARDS */
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; margin-bottom: 100px; }
+        .card-plan { background: #080808; border: 1px solid #1a1a1a; border-radius: 24px; padding: 35px; display: flex; flex-direction: column; transition: 0.3s; }
+        .card-plan:hover { border-color: #facc15; }
         
         .p-name { font-size: 20px; font-weight: 900; color: #facc15; text-transform: uppercase; margin-bottom: 10px; }
         .p-price { font-size: 40px; font-weight: 900; margin-bottom: 20px; }
@@ -74,8 +71,22 @@
         .feature-item i { color: #facc15; }
         .extra-service { color: #fff; font-weight: 900; }
 
-        .btn-buy { background: #1a1a1a; color: #fff; font-weight: 900; text-transform: uppercase; font-size: 11px; padding: 16px; border-radius: 12px; text-align: center; margin-top: auto; border: 1px solid #333; transition: 0.3s; }
-        .btn-buy:hover { background: #facc15; color: #000; border-color: #facc15; }
+        /* BOTÓN WHATSAPP */
+        .btn-whatsapp { 
+            background: #25D366; 
+            color: #000; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            padding: 16px; 
+            border-radius: 12px; 
+            text-align: center; 
+            margin-top: auto; 
+            text-decoration: none;
+            transition: 0.3s;
+            display: block;
+        }
+        .btn-whatsapp:hover { background: #fff; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -86,22 +97,16 @@
                 <div class="bg-yellow-400 text-black font-black px-2 py-1 rounded">M</div>
                 <span class="text-xl font-black uppercase italic tracking-tighter">MAIK <span class="text-gray-500 font-normal">DEV</span></span>
             </div>
-            <div class="hidden md:flex gap-10">
-                <a href="#boxpvp" class="text-[10px] font-black uppercase hover:text-yellow-400">BoxPvP</a>
-                <a href="#survival" class="text-[10px] font-black uppercase hover:text-yellow-400">Survival</a>
-                <a href="#lobby" class="text-[10px] font-black uppercase hover:text-yellow-400">Lobby</a>
-                <a href="#config" class="text-[10px] font-black uppercase hover:text-yellow-400">Config</a>
-            </div>
         </div>
     </nav>
 
     <header class="hero">
-        <span class="hero-tag">Expert Developer</span>
-        <h1 class="hero-title">MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
+        <span class="text-yellow-400 font-black text-[10px] tracking-[5px] uppercase mb-4">Maik Developer & Designer</span>
+        <h1 class="hero-title">CONSTRUYAMOS TU <br> <span class="text-yellow-400">NETWORK PRO</span></h1>
         <p class="hero-desc">
-            Ofrezco soluciones integrales para servidores de Minecraft: Configuración profesional, 
-            diseño de logos exclusivos y gestión completa de tiendas Tebex. 
-            Selecciona una modalidad para ver los planes:
+            Desarrollo técnico, Diseño de Logos y Configuración de Tiendas Tebex.
+            Trato directo y personalizado para evitar comisiones e impuestos excesivos.
+            Selecciona una categoría:
         </p>
 
         <div class="mode-selector">
@@ -126,6 +131,9 @@
 
     <div class="main-container">
         <script>
+            // CAMBIA ESTE NÚMERO POR TU WHATSAPP REAL (Incluye código de país, ej: 54911...)
+            const miTelefono = "1234567890"; 
+            
             const levelNames = ["Madera", "Piedra", "Carbón", "Hierro", "Lapis", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
             
             const sections = [
@@ -137,4 +145,22 @@
 
             sections.forEach(sec => {
                 document.write(`
-                    <section id="${sec
+                    <section id="${sec.id}">
+                        <div class="section-header">
+                            <h2 class="title-large">${sec.title}</h2>
+                        </div>
+                        <div class="plans-grid">
+                `);
+
+                levelNames.forEach((lvl, i) => {
+                    const price = (sec.base + (i * sec.step)).toFixed(2);
+                    const mensaje = encodeURIComponent(`Hola Maik! Me interesa el Plan ${lvl} de la modalidad ${sec.title} por $${price}. ¿Cómo podemos empezar?`);
+                    
+                    document.write(`
+                        <div class="card-plan ${i === 11 ? 'border-2 border-yellow-400' : ''}">
+                            <p class="text-[9px] font-black text-gray-600 mb-1">NIVEL ${i + 1}</p>
+                            <h3 class="p-name">${lvl}</h3>
+                            <div class="p-price"><span>$</span>${price}</div>
+                            <ul class="mb-8 flex-grow">
+                                ${sec.perks.map(p => `<li class="feature-item"><i class="fas fa-check"></i> ${p}</li>`).join('')}
+                                ${i >= 3 ? `<li class="feature-item extra-service
