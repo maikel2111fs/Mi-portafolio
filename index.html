@@ -3,51 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Full-Stack Systems</title>
+    <title>MAIK DEV | Minecraft Services Ecuador</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* FONDO ANIMADO */
         #canvas-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
-        /* HERO */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; z-index: 10; position: relative; }
-        .hero-title { font-size: clamp(40px, 8vw, 90px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.8; margin-bottom: 20px; text-shadow: 0 0 20px rgba(250, 204, 21, 0.3); }
-        .hero-desc { max-width: 700px; color: #888; font-size: 16px; margin-bottom: 40px; }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 20px; z-index: 10; position: relative; }
+        .hero-title { font-size: clamp(40px, 8vw, 90px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.8; margin-bottom: 30px; }
+        
+        .hero-desc { max-width: 850px; color: #aaa; font-size: 17px; margin-bottom: 30px; line-height: 1.8; text-align: center; }
+        .hero-desc b { color: #facc15; }
+        .ecuador-flag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 50px; border: 1px solid rgba(250,204,21,0.3); margin-bottom: 20px; font-size: 12px; font-weight: 900; color: #facc15; text-transform: uppercase; }
 
-        /* RUEDA INTERACTIVA */
-        .mode-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; width: 100%; max-width: 900px; }
-        .mode-card { background: rgba(10,10,10,0.8); border: 1px solid #222; padding: 40px 20px; border-radius: 24px; cursor: pointer; transition: 0.4s; backdrop-filter: blur(10px); text-align: center; }
-        .mode-card:hover { border-color: #facc15; transform: translateY(-10px) scale(1.05); box-shadow: 0 10px 30px rgba(250, 204, 21, 0.2); }
+        /* MÉTODOS DE PAGO HERO */
+        .payment-tags { display: flex; gap: 20px; margin-bottom: 50px; }
+        .pay-tag { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #666; display: flex; align-items: center; gap: 8px; border: 1px solid #222; padding: 8px 15px; border-radius: 10px; }
+        .pay-tag i { color: #facc15; }
+
+        /* RUEDA SELECTORA */
+        .mode-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; }
+        .mode-card { background: rgba(15,15,15,0.7); border: 1px solid #333; padding: 40px 20px; border-radius: 30px; cursor: pointer; transition: 0.5s; backdrop-filter: blur(15px); text-align: center; }
+        .mode-card:hover { border-color: #facc15; transform: translateY(-15px); background: rgba(20,20,0,0.4); }
         .mode-card i { font-size: 40px; margin-bottom: 15px; color: #facc15; }
         .mode-card h3 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* MODAL DE PLANES (ESTA ES LA RUEDA FUNCIONANDO) */
-        .plans-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; overflow-y: auto; padding: 50px 20px; backdrop-filter: blur(10px); }
-        .modal-inner { max-width: 1400px; margin: 0 auto; position: relative; }
-        .close-plans { position: fixed; top: 20px; right: 40px; font-size: 30px; cursor: pointer; color: #facc15; z-index: 1100; font-weight: 900; }
+        /* MODAL DE PLANES */
+        .plans-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 1000; overflow-y: auto; padding: 60px 20px; backdrop-filter: blur(20px); }
+        .modal-inner { max-width: 1400px; margin: 0 auto; }
+        .close-plans { position: fixed; top: 30px; right: 50px; font-size: 18px; cursor: pointer; color: #000; background: #facc15; padding: 10px 25px; border-radius: 12px; font-weight: 900; z-index: 1100; }
 
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; }
-        .card-plan { background: #080808; border: 1px solid #1a1a1a; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; transition: 0.3s; }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; margin-top: 50px; }
+        .card-plan { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; transition: 0.3s; }
         .card-plan:hover { border-color: #facc15; }
         
-        .p-price { font-size: 35px; font-weight: 900; margin: 15px 0; }
-        .p-price span { color: #facc15; font-size: 18px; }
-        .feature-item { font-size: 10px; font-weight: 700; color: #777; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+        .p-price { font-size: 40px; font-weight: 900; margin: 15px 0; color: #fff; }
+        .p-price span { color: #facc15; font-size: 20px; margin-right: 5px; }
+        .feature-item { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
+        .feature-item i { color: #facc15; }
 
-        /* FORMULARIO FINAL */
+        /* FORMULARIO */
         #finalForm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .form-content { background: #0a0a0a; border: 1px solid #facc15; padding: 40px; border-radius: 20px; max-width: 450px; width: 100%; }
-        .form-input { width: 100%; background: #151515; border: 1px solid #333; padding: 12px; border-radius: 8px; color: #fff; margin-bottom: 15px; outline: none; }
-        .btn-send { width: 100%; background: #facc15; color: #000; font-weight: 900; padding: 15px; border-radius: 8px; text-transform: uppercase; cursor: pointer; }
-        
-        .btn-buy-trigger { background: #fff; color: #000; font-weight: 900; padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; margin-top: auto; font-size: 10px; text-transform: uppercase; }
-        .btn-buy-trigger:hover { background: #facc15; }
+        .form-content { background: #0d0d0d; border: 1px solid #facc15; padding: 40px; border-radius: 30px; max-width: 500px; width: 100%; }
+        .form-input { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 20px; outline: none; }
+        .btn-send { width: 100%; background: #facc15; color: #000; font-weight: 900; padding: 20px; border-radius: 12px; text-transform: uppercase; cursor: pointer; }
+        .btn-buy-trigger { background: #fff; color: #000; font-weight: 900; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; margin-top: auto; font-size: 12px; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -55,54 +60,72 @@
     <canvas id="canvas-particles"></canvas>
 
     <header class="hero">
+        <div class="ecuador-flag">
+            <img src="https://flagcdn.com/w40/ec.png" width="20" alt="Ecuador">
+            Directly from Ecuador
+        </div>
         <h1 class="hero-title">MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
-        <p class="hero-desc">Soluciones integrales de Minecraft, Branding y Desarrollo Web. Selecciona una categoría para explorar los planes profesionales.</p>
+        
+        <div class="hero-desc">
+            ¡Hola! Soy <b>Maik</b>, un desarrollador apasionado originario de <b>Ecuador</b> con años de experiencia liderando proyectos técnicos en Minecraft. 
+            Me especializo en la arquitectura de redes complejas, asegurando que cada servidor que toco sea una obra maestra de <b>rendimiento y estabilidad</b>. 
+            No solo configuro archivos, construyo marcas digitales completas integrando <b>GFX de alto nivel</b> y <b>desarrollo web exclusivo</b>. 
+            Mi compromiso es elevar la competitividad de tu proyecto, ofreciendo un soporte de élite y soluciones de pago seguras mediante <b>PayPal</b> y <b>Banco Pichincha</b>. 
+            Si buscas calidad sin compromisos y un trato directo desde Ecuador, estás en el lugar correcto.
+        </div>
+
+        <div class="payment-tags">
+            <div class="pay-tag"><i class="fab fa-paypal"></i> PayPal Global</div>
+            <div class="pay-tag"><i class="fas fa-university"></i> Banco Pichincha (EC)</div>
+        </div>
         
         <div class="mode-selector">
             <div class="mode-card" onclick="openPlans('boxpvp')"><i class="fas fa-skull"></i><h3>BoxPvP</h3></div>
             <div class="mode-card" onclick="openPlans('survival')"><i class="fas fa-tree"></i><h3>Survival</h3></div>
             <div class="mode-card" onclick="openPlans('lobby')"><i class="fas fa-door-open"></i><h3>Lobby</h3></div>
-            <div class="mode-card" onclick="openPlans('config')"><i class="fas fa-code"></i><h3>Web & Tech</h3></div>
+            <div class="mode-card" onclick="openPlans('config')"><i class="fas fa-code"></i><h3>Tech & Web</h3></div>
         </div>
     </header>
 
     <div id="plansModal" class="plans-modal">
-        <span class="close-plans" onclick="closePlans()">&times; CERRAR</span>
+        <span class="close-plans" onclick="closePlans()"><i class="fas fa-times"></i> CERRAR</span>
         <div class="modal-inner">
-            <h2 id="modalTitle" class="text-6xl font-black italic uppercase text-yellow-400 mb-4">MODALIDAD</h2>
+            <h2 id="modalTitle" class="text-6xl font-black italic uppercase text-yellow-400 mb-2">MODALIDAD</h2>
+            <p class="text-gray-500 font-bold mb-10 uppercase tracking-[3px]">Precios competitivos hasta un máximo de $80 USD</p>
             <div id="modalGrid" class="plans-grid"></div>
         </div>
     </div>
 
     <div id="finalForm">
         <div class="form-content">
-            <h3 class="text-2xl font-black text-yellow-400 mb-4 uppercase text-center">Finalizar Pedido</h3>
+            <h3 class="text-2xl font-black text-yellow-400 mb-2 uppercase text-center">Orden de Trabajo</h3>
+            <p class="text-center text-gray-500 text-[10px] uppercase font-black mb-6 italic">Aceptamos PayPal & Pichincha</p>
+            
             <form action="https://formspree.io/f/TU_ID_AQUI" method="POST">
                 <input type="text" name="Nombre" placeholder="Tu Nombre" class="form-input" required>
                 <input type="text" name="Discord" placeholder="Usuario de Discord" class="form-input" required>
-                <input type="email" name="Email" placeholder="Tu Correo Electrónico" class="form-input" required>
-                <input type="text" id="inputPlan" name="Plan_Elegido" class="form-input bg-zinc-900 border-none text-yellow-500 font-bold" readonly>
+                <input type="email" name="Email" placeholder="Tu Email" class="form-input" required>
+                <input type="text" id="inputPlan" name="Plan_Elegido" class="form-input bg-zinc-900 border-none text-yellow-500 font-black" readonly>
                 
-                <div class="flex gap-2 mb-6">
-                    <input type="checkbox" id="checkTerms" required>
-                    <label for="checkTerms" class="text-[10px] text-gray-500 uppercase font-bold">
-                        Acepto términos y condiciones. Entiendo que al ser un producto digital NO HAY REEMBOLSOS.
+                <div class="flex gap-3 mb-8 items-start text-left">
+                    <input type="checkbox" id="checkTerms" class="mt-1" required>
+                    <label for="checkTerms" class="text-[11px] text-gray-400 leading-tight uppercase font-bold">
+                        Acepto que este es un servicio digital de Maik Dev. No existen reembolsos. Pago mediante <b>PayPal</b> o <b>Transferencia Pichincha</b>.
                     </label>
                 </div>
                 
-                <button type="submit" class="btn-send">Enviar Pedido y Contactar</button>
-                <p class="text-center text-[9px] text-gray-600 mt-4 cursor-pointer" onclick="closeForm()">VOLVER ATRÁS</p>
+                <button type="submit" class="btn-send">Confirmar Pedido</button>
+                <p class="text-center text-[10px] text-gray-600 mt-6 cursor-pointer font-bold uppercase hover:text-white" onclick="closeForm()">Volver</p>
             </form>
         </div>
     </div>
 
     <script>
-        // CONFIGURACIÓN DE MODALIDADES
         const sections = {
-            boxpvp: { title: "BoxPvP Premium", base: 30, step: 15, perks: ["Setup Minas", "CombatLog", "Economía Pro"] },
-            survival: { title: "Survival RPG", base: 40, step: 20, perks: ["Protecciones", "Misiones", "Skills RPG"] },
-            lobby: { title: "Lobby & Hub", base: 20, step: 10, perks: ["Selector Pro", "NPCs Info", "Cosméticos"] },
-            config: { title: "Web & Tech", base: 25, step: 15, perks: ["Optimización", "Setup Plugins", "Diseño Web"] }
+            boxpvp: { title: "BoxPvP Elite", start: 25, end: 80, perks: ["Setup Minas", "Anticheat", "Economía"] },
+            survival: { title: "Survival RPG", start: 30, end: 80, perks: ["Misiones", "Protecciones", "Skills"] },
+            lobby: { title: "Lobby & Hub", start: 15, end: 60, perks: ["Selector 3D", "NPCs Info", "Cosméticos"] },
+            config: { title: "Web & Tech", start: 20, end: 80, perks: ["Optimización", "Setup Plugins", "Web Design"] }
         };
 
         const levels = ["Madera", "Piedra", "Carbón", "Hierro", "Lapis", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
@@ -112,35 +135,39 @@
             document.getElementById('modalTitle').innerText = sec.title;
             const grid = document.getElementById('modalGrid');
             grid.innerHTML = '';
+            const increment = (sec.end - sec.start) / (levels.length - 1);
 
             levels.forEach((lvl, i) => {
-                const price = (sec.base + (i * sec.step)).toFixed(2);
+                const price = (sec.start + (i * increment)).toFixed(2);
                 grid.innerHTML += `
                     <div class="card-plan">
-                        <p class="text-[9px] text-gray-600 font-black">NIVEL ${i+1}</p>
-                        <h3 class="text-xl font-black text-yellow-400 uppercase">${lvl}</h3>
+                        <p class="text-[10px] text-gray-600 font-black mb-1 uppercase tracking-widest">NIVEL ${i+1}</p>
+                        <h3 class="text-2xl font-black text-yellow-400 uppercase italic">${lvl}</h3>
                         <div class="p-price"><span>$</span>${price}</div>
-                        <ul class="mb-6 flex-grow">
+                        <ul class="mb-10 flex-grow">
                             ${sec.perks.map(p => `<li class="feature-item"><i class="fas fa-check"></i> ${p}</li>`).join('')}
-                            ${i >= 3 ? `<li class="feature-item text-white"><i class="fas fa-paint-brush"></i> Logo Profesional</li>` : ''}
-                            ${i >= 6 ? `<li class="feature-item text-white"><i class="fas fa-shopping-cart text-yellow-400"></i> Tienda Tebex</li>` : ''}
-                            ${i >= 9 ? `<li class="feature-item text-white"><i class="fas fa-globe text-yellow-400"></i> Diseño Web</li>` : ''}
+                            ${i >= 3 ? `<li class="feature-item text-white font-bold"><i class="fas fa-paint-brush"></i> Logo GFX Elite</li>` : ''}
+                            ${i >= 7 ? `<li class="feature-item text-white font-bold"><i class="fas fa-globe text-yellow-400"></i> Landing Page Web</li>` : ''}
                         </ul>
-                        <div class="btn-buy-trigger" onclick="openForm('${lvl}', '${sec.title}', '${price}')">Elegir Plan</div>
+                        <div class="btn-buy-trigger" onclick="openForm('${lvl}', '${sec.title}', '${price}')">Solicitar</div>
                     </div>
                 `;
             });
             document.getElementById('plansModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
-        function closePlans() { document.getElementById('plansModal').style.display = 'none'; }
+        function closePlans() { 
+            document.getElementById('plansModal').style.display = 'none'; 
+            document.body.style.overflow = 'auto';
+        }
+
         function openForm(lvl, mod, p) {
-            document.getElementById('inputPlan').value = `${mod} - Plan ${lvl} ($${p})`;
+            document.getElementById('inputPlan').value = `${mod} - ${lvl} ($${p})`;
             document.getElementById('finalForm').style.display = 'flex';
         }
         function closeForm() { document.getElementById('finalForm').style.display = 'none'; }
 
-        // SISTEMA DE PARTÍCULAS DEL FONDO
         const canvas = document.getElementById('canvas-particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -152,25 +179,19 @@
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
             }
             draw() {
-                ctx.fillStyle = 'rgba(250, 204, 21, 0.5)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillStyle = 'rgba(250, 204, 21, 0.4)';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
         function init() { for (let i = 0; i < 100; i++) particles.push(new Particle()); }
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
