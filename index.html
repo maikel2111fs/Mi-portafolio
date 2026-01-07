@@ -3,167 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Licencia Oficial & Portfolio</title>
+    <title>MAIK DEV | Portfolio Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* FONDO DE VIDEO MINECRAFT SHADERS */
-        .video-container {
+        /* FONDO DE VIDEO REAL */
+        .video-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; overflow: hidden;
-        }
-        .video-container iframe {
-            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            filter: brightness(0.3) blur(1px);
+            z-index: -1; object-fit: cover; filter: brightness(0.3) blur(2px);
         }
 
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; }
-        .hero-title { font-size: clamp(40px, 8vw, 80px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.8; margin-bottom: 10px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .text-yellow { color: #facc15; }
-
-        /* SELLO DE LICENCIA */
-        .license-badge {
-            background: linear-gradient(135deg, #facc15 0%, #a16207 100%);
-            color: black; padding: 5px 15px; border-radius: 5px; font-weight: 900;
-            font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(250,204,21,0.5);
+        .main-hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
+        
+        .license-badge { 
+            background: linear-gradient(90deg, #facc15, #a16207); color: #000; 
+            padding: 8px 20px; border-radius: 5px; font-weight: 900; font-size: 11px; 
+            text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px;
         }
 
-        .section-label { color: #facc15; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; font-size: 11px; margin-top: 30px; margin-bottom: 15px; background: rgba(0,0,0,0.6); padding: 5px 20px; border-radius: 50px; border: 1px solid rgba(250,204,21,0.3); }
+        h1 { font-size: clamp(50px, 10vw, 100px); font-weight: 900; font-style: italic; line-height: 0.8; margin-bottom: 40px; }
 
-        /* PROMOS */
-        .promo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; max-width: 1200px; padding: 20px; }
-        .promo-card { background: rgba(10,10,10,0.9); border: 1px solid #333; padding: 20px; border-radius: 20px; position: relative; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
-        .promo-card:hover { border-color: #ff0055; transform: scale(1.05); }
-        .stock-tag { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #ff0055; font-size: 8px; font-weight: 900; padding: 2px 10px; border-radius: 50px; }
+        /* BOTONES CATEGORÍAS */
+        .nav-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; width: 100%; max-width: 1100px; }
+        .nav-card { 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+            padding: 30px; border-radius: 20px; cursor: pointer; transition: 0.3s; backdrop-filter: blur(15px);
+        }
+        .nav-card:hover { background: #facc15; color: #000; transform: translateY(-10px); }
+        .nav-card i { font-size: 30px; margin-bottom: 15px; display: block; }
+        .nav-card span { font-weight: 900; text-transform: uppercase; font-size: 12px; }
+
+        /* MODALES */
+        .modal-view { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; overflow-y: auto; padding: 60px 20px; }
+        .close-modal { position: fixed; top: 25px; right: 25px; background: #facc15; color: #000; padding: 12px 30px; border-radius: 10px; font-weight: 900; cursor: pointer; z-index: 1100; border: none; }
+
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: 50px auto; }
+        .p-card { background: #0a0a0a; border: 1px solid #222; padding: 30px; border-radius: 25px; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
+        .p-card:hover { border-color: #facc15; }
+        
+        .p-price { font-size: 45px; font-weight: 900; color: #facc15; margin: 15px 0; }
+        .p-stock { background: #ff0055; color: #fff; font-size: 10px; font-weight: 900; padding: 4px 12px; border-radius: 5px; position: absolute; top: 20px; right: 20px; }
+
+        .feat-list { list-style: none; text-align: left; margin-bottom: 25px; }
+        .feat-list li { font-size: 11px; text-transform: uppercase; font-weight: 800; color: #aaa; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .feat-list li i { color: #facc15; font-size: 14px; }
 
         /* FORMULARIO */
-        #finalForm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .form-content { background: #0d0d0d; border: 1px solid #facc15; padding: 30px; border-radius: 30px; max-width: 450px; width: 100%; text-align: center; }
-        .form-input { width: 100%; background: #151515; border: 1px solid #333; padding: 12px; border-radius: 10px; color: #fff; margin-bottom: 15px; font-size: 14px; }
+        #formOrder { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .form-box { background: #0d0d0d; border: 1px solid #facc15; padding: 40px; border-radius: 30px; max-width: 450px; width: 100%; text-align: center; }
+        .f-input { width: 100%; background: #151515; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; }
         
-        .payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .pay-opt { background: #1a1a1a; border: 1px solid #333; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 9px; font-weight: 900; text-transform: uppercase; }
-        .pay-opt.active { border-color: #facc15; background: rgba(250,204,21,0.1); }
+        .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .pay-btn { background: #1a1a1a; padding: 12px; border-radius: 10px; cursor: pointer; font-size: 10px; font-weight: 900; border: 1px solid #333; }
+        .pay-btn.active { border-color: #facc15; background: rgba(250,204,21,0.1); color: #facc15; }
 
-        .btn-send { width: 100%; background: #facc15; color: #000; font-weight: 900; padding: 15px; border-radius: 10px; text-transform: uppercase; cursor: pointer; }
-        
-        /* TERMINOS */
-        .terms-link { font-size: 9px; color: #666; cursor: pointer; margin-top: 15px; text-decoration: underline; }
+        .btn-buy { background: #facc15; color: #000; width: 100%; padding: 15px; border-radius: 12px; font-weight: 900; text-transform: uppercase; cursor: pointer; border: none; }
     </style>
 </head>
 <body>
 
-    <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/S_8qM9v-Rno?autoplay=1&mute=1&controls=0&loop=1&playlist=S_8qM9v-Rno" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    <video autoplay muted loop playsinline class="video-bg">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-forest-landscape-seen-from-the-air-at-sunset-39726-large.mp4" type="video/mp4">
+    </video>
+
+    <div class="main-hero">
+        <div class="license-badge"><i class="fas fa-crown mr-2"></i> Licencia Oficial Maik Developer</div>
+        <h1>MAIK <span class="text-yellow-400">DEV</span></h1>
+        
+        <div class="nav-menu">
+            <div class="nav-card" onclick="showModal('boxpvp')"><i class="fas fa-skull"></i><span>BoxPvP</span></div>
+            <div class="nav-card" onclick="showModal('survival')"><i class="fas fa-tree"></i><span>Survival</span></div>
+            <div class="nav-card" onclick="showModal('setups')"><i class="fas fa-server"></i><span>Setups</span></div>
+            <div class="nav-card" onclick="showModal('opti')" style="border-color: #00f2ff;"><i class="fas fa-bolt" style="color: #00f2ff;"></i><span>Optimización</span></div>
+            <div class="nav-card" onclick="showModal('promos')" style="border-color: #ff0055;"><i class="fas fa-fire" style="color: #ff0055;"></i><span>Promociones</span></div>
+        </div>
     </div>
 
-    <header class="hero">
-        <div class="license-badge"><i class="fas fa-certificate mr-2"></i>Licencia Oficial Maik Developer</div>
-        <h1 class="hero-title">MAIK <span class="text-yellow">DEVELOPER</span></h1>
-        
-        <div class="section-label">Configuraciones desde $5</div>
-        <div class="mode-selector flex gap-4">
-            <button onclick="openPlans('boxpvp')" class="bg-white/10 px-6 py-3 rounded-xl hover:bg-white/20">BoxPvP</button>
-            <button onclick="openPlans('survival')" class="bg-white/10 px-6 py-3 rounded-xl hover:bg-white/20">Survival</button>
-            <button onclick="openPlans('terabusing')" class="bg-white/10 px-6 py-3 rounded-xl hover:bg-white/20">Setup</button>
+    <div id="modalProducts" class="modal-view">
+        <button class="close-modal" onclick="closeModal()">CERRAR</button>
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 id="modalTitle" class="text-6xl font-black italic uppercase text-yellow-400">PRODUCTOS</h2>
+            <div id="productGrid" class="grid-layout"></div>
         </div>
+    </div>
 
-        <div class="section-label">10 MEGA PROMOS (MESCLADAS)</div>
-        <div class="promo-grid" id="promoContainer"></div>
-
-        <div class="mt-10 opacity-50 text-[10px] uppercase font-bold tracking-widest">
-            © 2024 Maik Dev - Todos los derechos reservados
-        </div>
-    </header>
-
-    <div id="finalForm">
-        <div class="form-content">
-            <h3 class="text-xl font-black text-yellow-400 mb-2 uppercase italic">ADQUIRIR PRODUCTO</h3>
-            <p class="text-[9px] text-gray-500 mb-4 uppercase">Al comprar obtienes una Licencia Oficial de Maik Developer</p>
+    <div id="formOrder">
+        <div class="form-box">
+            <h3 class="text-2xl font-black text-yellow-400 mb-2 uppercase italic">Solicitar Pedido</h3>
+            <p class="text-[9px] text-gray-500 mb-6 uppercase tracking-widest">Se otorgará una Licencia Oficial tras el pago</p>
             
             <form action="https://formspree.io/f/TU_ID_AQUI" method="POST">
-                <input type="text" name="Nombre" placeholder="Tu Nombre" class="form-input" required>
-                <input type="text" name="Discord" placeholder="Usuario Discord" class="form-input" required>
-                <input type="hidden" id="metodoPagoInput" name="Metodo_Pago" value="No seleccionado">
-                <input type="text" id="inputPlan" name="Plan" class="form-input bg-zinc-900 border-none text-yellow-500 font-bold text-center" readonly>
+                <input type="text" name="Nombre" placeholder="Tu Nombre Completo" class="f-input" required>
+                <input type="text" name="Discord" placeholder="Usuario de Discord" class="f-input" required>
+                <input type="text" id="finalItem" name="Plan" class="f-input text-yellow-500 font-bold border-none bg-zinc-900 text-center" readonly>
+                <input type="hidden" id="methodValue" name="Metodo" value="PayPal">
                 
-                <div class="payment-methods">
-                    <div class="pay-opt" onclick="setPay(this, 'PayPal')">PayPal</div>
-                    <div class="pay-opt" onclick="setPay(this, 'Binance')">Binance</div>
-                    <div class="pay-opt" onclick="setPay(this, 'Ecuador')">Banco Ec</div>
-                    <div class="pay-opt" onclick="setPay(this, 'Gmail')">Gmail/Discord</div>
+                <div class="pay-grid">
+                    <div class="pay-btn active" onclick="selectPay(this, 'PayPal')">PAYPAL</div>
+                    <div class="pay-btn" onclick="selectPay(this, 'Binance')">BINANCE</div>
+                    <div class="pay-btn" onclick="selectPay(this, 'Ecuador')">BANCO EC</div>
+                    <div class="pay-btn" onclick="selectPay(this, 'Gmail')">GMAIL/OTRO</div>
                 </div>
 
-                <button type="submit" class="btn-send">Enviar y Pagar</button>
-                
-                <div class="terms-link" onclick="alert('CONDICIONES:\n1. No hay reembolsos tras la entrega.\n2. La licencia es intransferible.\n3. Soporte técnico incluido por 7 días.\n4. No se permite la reventa del producto.')">
-                    Ver Términos y Condiciones
-                </div>
-                <p class="mt-4 text-[10px] text-gray-400 cursor-pointer uppercase font-bold" onclick="closeForm()">Cancelar</p>
+                <button type="submit" class="btn-buy shadow-lg shadow-yellow-500/20">Confirmar Compra</button>
+                <p class="mt-4 text-[10px] text-gray-600 cursor-pointer font-bold uppercase" onclick="document.getElementById('formOrder').style.display='none'">Volver</p>
             </form>
         </div>
     </div>
 
     <script>
-        const promos = [
-            { id: 1, price: 5, stock: 10, items: ["Lobby Simple", "NPCs"] },
-            { id: 2, price: 10, stock: 8, items: ["BoxPvP Basico", "Items"] },
-            { id: 3, price: 15, stock: 7, items: ["Survival RPG", "Clanes"] },
-            { id: 4, price: 20, stock: 6, items: ["Velocity Setup", "DDoS"] },
-            { id: 5, price: 25, stock: 5, items: ["BoxPvP + Opti", "Celdas"] },
-            { id: 6, price: 30, stock: 5, items: ["Network Sync", "MySQL"] },
-            { id: 7, price: 35, stock: 4, items: ["Terabusing Pro", "Proxy"] },
-            { id: 8, price: 40, stock: 3, items: ["Mega BoxPvP", "Bosses"] },
-            { id: 9, price: 45, stock: 2, items: ["Full Network", "VIP Shop"] },
-            { id: 10, price: 50, stock: 1, items: ["SUPREMO PACK", "Todo Mezclado"] }
+        // CONFIGURACIÓN DE LAS 10 PROMOCIONES (Suben $5 cada una)
+        const promoList = [
+            { name: "Promo Starter", price: 5, stock: 10, items: ["Lobby Simple", "NPC Selector", "Licencia Oficial"] },
+            { name: "Promo Box Miner", price: 10, stock: 8, items: ["BoxPvP 5 Minas", "Scoreboard", "Licencia Oficial"] },
+            { name: "Promo Survival RPG", price: 15, stock: 7, items: ["Survival Base", "Clanes", "Licencia Oficial"] },
+            { name: "Promo Network Proxy", price: 20, stock: 6, items: ["Velocity Setup", "Anti-DDoS", "Licencia Oficial"] },
+            { name: "Promo Extreme Opti", price: 25, stock: 5, items: ["Optimización Extrema", "20 TPS", "Licencia Oficial"] },
+            { name: "Promo Box Full", price: 30, stock: 5, items: ["BoxPvP Completo", "Eventos", "Licencia Oficial"] },
+            { name: "Promo Mega Network", price: 35, stock: 4, items: ["Lobby + Survival", "MySQL", "Licencia Oficial"] },
+            { name: "Promo Terabusing", price: 40, stock: 3, items: ["Setup Terabusing", "Hosting Opti", "Licencia Oficial"] },
+            { name: "Promo Global VIP", price: 45, stock: 2, items: ["Toda la Network", "Tienda Web", "Licencia Oficial"] },
+            { name: "Promo MAIK SUPREMO", price: 50, stock: 1, items: ["TODO LO ANTERIOR", "Soporte VIP", "Licencia Oficial"] }
         ];
 
-        function renderPromos() {
-            const container = document.getElementById('promoContainer');
-            container.innerHTML = '';
-            promos.forEach(p => {
-                container.innerHTML += `
-                    <div class="promo-card" onclick="selectPromo(${p.id})">
-                        <div class="stock-tag">${p.stock} EN STOCK</div>
-                        <div class="text-2xl font-black mb-1">$${p.price}</div>
-                        <ul class="text-[9px] text-gray-500 font-bold list-none">
-                            ${p.items.map(i => `<li>• ${i}</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-            });
+        const optiList = [
+            { name: "Opti Básica", price: 5, items: ["Limpieza de Lag", "20 TPS", "Archivos Base"] },
+            { name: "Opti Normal", price: 10, items: ["Spark Monitor", "JVM Flags", "Pre-Generación"] },
+            { name: "Opti Extrema", price: 15, items: ["Anti-DDoS Java", "Optimización RAM", "Soporte 24/7"] }
+        ];
+
+        const baseLevels = ["Madera", "Piedra", "Carbón", "Hierro", "Lapis", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
+
+        function showModal(type) {
+            const grid = document.getElementById('productGrid');
+            const title = document.getElementById('modalTitle');
+            grid.innerHTML = '';
+            
+            if(type === 'promos') {
+                title.innerText = "10 MEGA PROMOCIONES";
+                promoList.forEach((p, idx) => {
+                    grid.innerHTML += `
+                        <div class="p-card border-pink-600">
+                            <div class="p-stock">${p.stock} STOCK</div>
+                            <h4 class="text-xl font-black uppercase">${p.name}</h4>
+                            <div class="p-price">$${p.price}.00</div>
+                            <ul class="feat-list">
+                                ${p.items.map(i => `<li><i class="fas fa-fire text-pink-500"></i> ${i}</li>`).join('')}
+                            </ul>
+                            <button class="btn-buy" onclick="buyPromo(${idx})">Comprar Ahora</button>
+                        </div>
+                    `;
+                });
+            } else if(type === 'opti') {
+                title.innerText = "SISTEMA DE OPTIMIZACIÓN";
+                optiList.forEach(p => {
+                    grid.innerHTML += `
+                        <div class="p-card border-cyan-500">
+                            <h4 class="text-xl font-black uppercase">${p.name}</h4>
+                            <div class="p-price">$${p.price}.00</div>
+                            <ul class="feat-list">
+                                ${p.items.map(i => `<li><i class="fas fa-bolt text-cyan-400"></i> ${i}</li>`).join('')}
+                            </ul>
+                            <button class="btn-buy" onclick="openOrder('${p.name}', ${p.price})">Mejorar Servidor</button>
+                        </div>
+                    `;
+                });
+            } else {
+                title.innerText = `PLANES ${type.toUpperCase()}`;
+                baseLevels.forEach((lvl, i) => {
+                    const price = (5 + (i * 7)).toFixed(2);
+                    grid.innerHTML += `
+                        <div class="p-card">
+                            <h4 class="text-xl font-black uppercase">${lvl}</h4>
+                            <div class="p-price">$${price}</div>
+                            <ul class="feat-list">
+                                <li><i class="fas fa-check"></i> Setup ${type}</li>
+                                <li><i class="fas fa-check"></i> Calidad ${lvl}</li>
+                                <li><i class="fas fa-check"></i> Licencia Maik Dev</li>
+                            </ul>
+                            <button class="btn-buy" onclick="openOrder('${type} ${lvl}', ${price})">Adquirir</button>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('modalProducts').style.display = 'block';
         }
 
-        function selectPromo(id) {
-            const p = promos.find(x => x.id === id);
-            if(p.stock > 0) {
-                p.stock--;
-                renderPromos();
-                openForm(`PROMO NIVEL ${p.id}`, p.price);
-            } else { alert("STOCK AGOTADO"); }
+        function buyPromo(idx) {
+            if(promoList[idx].stock > 0) {
+                promoList[idx].stock--;
+                showModal('promos');
+                openOrder(promoList[idx].name, promoList[idx].price);
+            } else { alert("¡Stock Agotado!"); }
         }
 
-        function setPay(el, method) {
-            document.querySelectorAll('.pay-opt').forEach(opt => opt.classList.remove('active'));
+        function openOrder(name, price) {
+            document.getElementById('finalItem').value = `${name} ($${price})`;
+            document.getElementById('formOrder').style.display = 'flex';
+        }
+
+        function selectPay(el, val) {
+            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            document.getElementById('metodoPagoInput').value = method;
+            document.getElementById('methodValue').value = val;
         }
 
-        function openForm(n, p) { 
-            document.getElementById('inputPlan').value = `${n} ($${p})`; 
-            document.getElementById('finalForm').style.display = 'flex'; 
-        }
-
-        function closeForm() { document.getElementById('finalForm').style.display = 'none'; }
-        function openPlans(name) { openForm(name, 5); }
-
-        renderPromos();
+        function closeModal() { document.getElementById('modalProducts').style.display = 'none'; }
     </script>
 </body>
 </html>
