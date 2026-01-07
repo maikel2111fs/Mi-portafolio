@@ -25,4 +25,104 @@
         .hero-btn:hover { background: #facc15; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(250, 204, 21, 0.2); }
 
         .main-container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
-        .header-section { margin-bottom: 45px; border-left: 5px solid #facc15; padding-left: 25px; margin-top:
+        .header-section { margin-bottom: 45px; border-left: 5px solid #facc15; padding-left: 25px; margin-top: 100px; }
+        .title-large { font-size: 55px; font-weight: 900; text-transform: uppercase; font-style: italic; }
+
+        /* GRID Y CARDS */
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card-plan { background: #080808; border: 1px solid #1a1a1a; border-radius: 24px; padding: 35px; display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+        .card-plan:hover { border-color: #facc15; transform: translateY(-12px); background: #0c0c0c; }
+        
+        .p-name { font-size: 22px; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; color: #facc15; }
+        .p-price { font-size: 45px; font-weight: 900; margin-bottom: 25px; letter-spacing: -2px; }
+        .p-price span { color: #facc15; font-size: 22px; margin-right: 4px; }
+        
+        .feature-item { font-size: 11px; font-weight: 700; color: #8a8a8a; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .feature-item i { color: #facc15; font-size: 14px; }
+
+        .btn-buy { background: #1a1a1a; color: #fff; font-weight: 900; text-transform: uppercase; font-size: 11px; padding: 16px; border-radius: 12px; text-align: center; margin-top: auto; transition: 0.3s; border: 1px solid #333; }
+        .btn-buy:hover { background: #facc15; color: #000; border-color: #facc15; }
+        
+        .highlight { border: 2px solid #facc15; background: linear-gradient(145deg, #0f0f00, #080808); }
+        .popular-badge { position: absolute; top: 20px; right: -30px; background: #facc15; color: #000; font-size: 9px; font-weight: 900; padding: 5px 40px; transform: rotate(45deg); text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="max-w-7xl mx-auto px-10 py-6 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-yellow-400 text-black font-black px-2 py-1 rounded">M</div>
+                <span class="text-xl font-black uppercase italic tracking-tighter">MAIK <span class="text-gray-500 font-normal">DEV</span></span>
+            </div>
+            <div class="hidden md:flex gap-10">
+                <a href="#boxpvp" class="nav-link">BoxPvP</a>
+                <a href="#survival" class="nav-link">Survival</a>
+                <a href="#lobby" class="nav-link">Lobby</a>
+                <a href="#config" class="nav-link">Configuración</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <span class="hero-tag">Desarrollador & Configurador Senior</span>
+        <h1 class="hero-title">Soluciones de alto rendimiento <br> por <span class="text-yellow-400">Maik Dev</span></h1>
+        <p class="hero-desc">
+            Me especializo en convertir ideas en servidores de Minecraft exitosos. 
+            Desde la optimización técnica hasta la creación de mecánicas personalizadas. 
+            Calidad profesional, seguridad garantizada y soporte técnico de primer nivel.
+        </p>
+        <a href="#boxpvp" class="hero-btn">Explorar Modalidades</a>
+    </header>
+
+    <div class="main-container">
+
+        <script>
+            const levelNames = ["Madera", "Piedra", "Carbón", "Hierro", "Lapislázuli", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
+            
+            // Precios ajustados para absorber comisiones e impuestos
+            const sections = [
+                { id: "boxpvp", title: "BOXPVP", base: 15, step: 10, perks: ["Full Setup Minas", "CombatLog & Anticheat", "Kits Balanceados", "Economía Avanzada"] },
+                { id: "survival", title: "SURVIVAL", base: 20, step: 12, perks: ["Protecciones Pro", "Jobs & Economía", "Menú de Warps", "Skills Custom RPG"] },
+                { id: "lobby", title: "LOBBY", base: 10, step: 5, perks: ["Selector Animado", "NPCs Interactivos", "Gadgets & Cosméticos", "Optimización Carga"] },
+                { id: "config", title: "CONFIG", base: 10, step: 8, perks: ["Optimización de RAM", "Seguridad Anti-Exploit", "Instalación Plugins", "Limpieza de Database"] }
+            ];
+
+            sections.forEach(sec => {
+                document.write(`
+                    <section id="${sec.id}">
+                        <div class="header-section">
+                            <h2 class="title-large">${sec.title}</h2>
+                        </div>
+                        <div class="plans-grid">
+                `);
+
+                levelNames.forEach((lvl, i) => {
+                    const price = (sec.base + (i * sec.step)).toFixed(2);
+                    const isLast = i === 11;
+                    document.write(`
+                        <div class="card-plan ${isLast ? 'highlight' : ''}">
+                            ${isLast ? '<div class="popular-badge">Top Tier</div>' : ''}
+                            <p class="text-[10px] font-black text-gray-600 mb-1 uppercase tracking-widest">NIVEL ${i + 1}</p>
+                            <h3 class="p-name">${lvl}</h3>
+                            <div class="p-price"><span>$</span>${price}</div>
+                            <ul class="mb-8 flex-grow">
+                                ${sec.perks.map(p => `<li class="feature-item"><i class="fas fa-check"></i> ${p}</li>`).join('')}
+                                ${i >= 6 ? `<li class="feature-item"><i class="fas fa-plus-circle"></i> Soporte Prioritario</li>` : ''}
+                            </ul>
+                            <a href="#" class="btn-buy">Contratar Servicio</a>
+                        </div>
+                    `);
+                });
+                document.write(`</div></section>`);
+            });
+        </script>
+
+    </div>
+
+    <footer class="py-20 text-center border-t border-white/5 opacity-40 text-[10px] font-black uppercase tracking-[0.6em]">
+        Maik Dev &copy; 2026 — Ingeniería de Minecraft Profesional
+    </footer>
+
+</body>
+</html>
