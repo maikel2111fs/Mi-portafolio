@@ -23,39 +23,40 @@
             box-shadow: 0 0 50px rgba(250,204,21,0.5); border: 4px solid #fff; 
             animation: pulse 2s infinite; 
         }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         .license-badge { background: linear-gradient(90deg, #facc15, #ff8800); color: #000; padding: 10px 30px; border-radius: 50px; font-weight: 900; font-size: 11px; text-transform: uppercase; margin-bottom: 20px; border: 2px solid #fff; }
         
-        h1 { font-size: clamp(50px, 10vw, 100px); font-weight: 900; font-style: italic; line-height: 0.8; margin-bottom: 20px; text-shadow: 0 0 30px rgba(250,204,21,0.5); }
+        h1 { font-size: clamp(50px, 10vw, 100px); font-weight: 900; font-style: italic; line-height: 0.8; margin-bottom: 20px; }
         
-        /* PRESENTACIÓN ECUADOR */
         .bio-container { max-width: 850px; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 30px; border: 1px solid rgba(250,204,21,0.3); margin-bottom: 30px; backdrop-filter: blur(10px); }
         .bio-container b { color: #facc15; }
 
-        /* MÉTODOS DE PAGO */
         .methods-bar { background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; border: 1px solid #333; }
-        .methods-bar span { font-size: 10px; font-weight: 900; color: #facc15; }
+        .methods-bar span { font-size: 10px; font-weight: 900; color: #facc15; text-transform: uppercase; }
 
         .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
         .nav-card { background: rgba(20,20,20,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 35px; border-radius: 25px; cursor: pointer; transition: 0.4s; backdrop-filter: blur(10px); }
         .nav-card:hover { border-color: #facc15; transform: translateY(-10px); }
 
-        /* SECCIÓN MAIK DESARROLLA (IMAGEN 2) */
-        .dev-section { padding: 80px 20px; background: rgba(0,0,0,0.4); width: 100%; }
-        .dev-panel-box { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 300px 1fr; gap: 40px; text-align: left; }
-        .dev-menu-btn { background: #151515; padding: 15px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #222; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
-        .dev-menu-btn:hover { border-color: #facc15; color: #facc15; }
-        .panel-display { background: #0d0d0d; border-radius: 20px; border: 1px solid #222; padding: 40px; position: relative; }
-        .panel-badge { background: #facc15; color: #000; padding: 5px 15px; border-radius: 5px; font-weight: 900; position: absolute; top: -15px; right: 40px; }
+        /* SECCIÓN MAIK DESARROLLA / CONFIGURACIONES */
+        .maik-dev-section { padding: 80px 20px; background: rgba(0,0,0,0.8); border-top: 1px solid #222; }
+        .panel-mockup { max-width: 1100px; margin: 40px auto; background: #0a0a0a; border: 1px solid #222; border-radius: 20px; display: grid; grid-template-columns: 250px 1fr; overflow: hidden; }
+        .panel-sidebar { background: #111; padding: 20px; border-right: 1px solid #222; }
+        .panel-item { padding: 12px; font-size: 12px; font-weight: bold; border-radius: 8px; margin-bottom: 5px; cursor: pointer; display: flex; align-items: center; gap: 10px; color: #666; }
+        .panel-item.active { background: #facc15; color: #000; }
+        .panel-content { padding: 40px; text-align: left; position: relative; }
 
-        /* MODALES Y CARDS */
-        .modal-view { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 1000; overflow-y: auto; padding: 60px 20px; }
-        .p-card { background: #0a0a0a; border: 1px solid #222; padding: 35px; border-radius: 35px; text-align: left; transition: 0.3s; }
-        .p-price { font-size: 45px; font-weight: 900; color: #facc15; margin: 15px 0; }
-        .feat-list { list-style: none; font-size: 11px; font-weight: 700; color: #999; margin-bottom: 30px; }
-        .btn-buy { background: linear-gradient(45deg, #facc15, #ffaa00); color: #000; width: 100%; padding: 20px; border-radius: 18px; font-weight: 900; cursor: pointer; border: none; }
+        /* MODALES */
+        .modal-view { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; overflow-y: auto; padding: 60px 20px; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; max-width: 1400px; margin: 40px auto; }
+        .p-card { background: #0c0c0c; border: 1px solid #222; padding: 35px; border-radius: 30px; text-align: left; transition: 0.3s; }
+        .p-card:hover { border-color: #facc15; }
+        .p-price { font-size: 40px; font-weight: 900; color: #facc15; margin: 10px 0; }
+        .feat-list { list-style: none; font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; margin-bottom: 25px; }
+        .feat-list li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
         
+        .btn-buy { background: linear-gradient(45deg, #facc15, #ffaa00); color: #000; width: 100%; padding: 18px; border-radius: 15px; font-weight: 900; cursor: pointer; border: none; }
         .close-btn { position: fixed; top: 25px; right: 25px; background: #facc15; color: #000; padding: 12px 30px; border-radius: 12px; font-weight: 900; cursor: pointer; z-index: 1100; border: none; }
     </style>
 </head>
@@ -68,51 +69,54 @@
 
     <div class="hero">
         <div class="maik-logo">M</div>
-        <div class="license-badge"><i class="fas fa-crown mr-2"></i> LICENCIA OFICIAL MAIK DEVELOPER</div>
+        <div class="license-badge"><i class="fas fa-shield-alt mr-2"></i> LICENCIA OFICIAL MAIK DEVELOPER</div>
         <h1>MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
         
         <div class="bio-container">
-            <b>¡Hola! Soy Maik, desarrollador de Ecuador 🇪🇨.</b> Especialista en configuraciones de Minecraft de alto rendimiento. Mi misión es entregarte servidores que <b>simplemente funcionan</b>, con optimización garantizada de <b>20 TPS</b> y seguridad total. Cada setup lleva mi sello de calidad y soporte técnico directo para que tú solo te preocupes por tu comunidad.
+            <b>¡Saludos! Soy Maik, desarrollador profesional de Ecuador 🇪🇨.</b> Me especializo en arquitecturas de servidores de alto rendimiento. Mi trabajo garantiza **20 TPS constantes**, seguridad anti-exploits y una optimización superior. No solo instalo plugins, diseño experiencias que simplemente funcionan bajo cualquier carga. Cada setup incluye mi **Licencia de Autor** y soporte técnico especializado.
         </div>
 
         <div class="methods-bar">
             <span><i class="fab fa-paypal"></i> PAYPAL</span>
-            <span><i class="fab fa-bitcoin"></i> BINANCE</span>
+            <span><i class="fab fa-bitcoin"></i> BINANCE (USDT)</span>
             <span><i class="fas fa-university"></i> BANCO PICHINCHA</span>
             <span><i class="fas fa-university"></i> BANCO GUAYAQUIL</span>
             <span><i class="fas fa-exchange-alt"></i> AIRTM</span>
         </div>
         
         <div class="nav-grid">
-            <div class="nav-card" onclick="openModal('boxpvp')"><i class="fas fa-skull text-4xl mb-4 text-yellow-400"></i><br><b>BoxPvP</b></div>
-            <div class="nav-card" onclick="openModal('survival')"><i class="fas fa-tree text-4xl mb-4 text-yellow-400"></i><br><b>Survival</b></div>
-            <div class="nav-card" onclick="openModal('setup')"><i class="fas fa-server text-4xl mb-4 text-yellow-400"></i><br><b>Network/Setup</b></div>
-            <div class="nav-card" onclick="openModal('opti')" style="border-color: #00f2ff;"><i class="fas fa-bolt text-4xl mb-4 text-cyan-400"></i><br><b>Tips 20 TPS</b></div>
-            <div class="nav-card" onclick="openModal('promo')" style="border-color: #ff0055;"><i class="fas fa-fire text-4xl mb-4 text-pink-500"></i><br><b>Mega Promos</b></div>
+            <div class="nav-card" onclick="openModal('boxpvp')"><i class="fas fa-skull text-4xl mb-4 text-yellow-400"></i><br><b>BOXPVP</b></div>
+            <div class="nav-card" onclick="openModal('survival')"><i class="fas fa-tree text-4xl mb-4 text-yellow-400"></i><br><b>SURVIVAL</b></div>
+            <div class="nav-card" onclick="openModal('lobby')"><i class="fas fa-door-open text-4xl mb-4 text-yellow-400"></i><br><b>LOBBIES</b></div>
+            <div class="nav-card" onclick="openModal('server')"><i class="fas fa-network-wired text-4xl mb-4 text-yellow-400"></i><br><b>NETWORKS</b></div>
+            <div class="nav-card" onclick="openModal('opti')" style="border-color: #00f2ff;"><i class="fas fa-bolt text-4xl mb-4 text-cyan-400"></i><br><b>20 TPS TIPS</b></div>
+            <div class="nav-card" onclick="openModal('promo')" style="border-color: #ff0055;"><i class="fas fa-fire text-4xl mb-4 text-pink-500"></i><br><b>MEGA PROMOS</b></div>
         </div>
     </div>
 
-    <section class="dev-section">
+    <section class="maik-dev-section">
         <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-4xl font-black italic mb-12">UN PANEL QUE SIMPLEMENTE <span class="bg-yellow-400 text-black px-4 italic">FUNCIONA</span></h2>
+            <h2 class="text-4xl font-black italic mb-2 uppercase">MAIK <span class="text-yellow-400">DESARROLLA</span></h2>
+            <p class="text-gray-500 text-sm tracking-widest uppercase mb-10">Configuraciones de alto nivel</p>
             
-            <div class="dev-panel-box">
-                <div>
-                    <div class="dev-menu-btn"><i class="fas fa-globe"></i> Subdominios</div>
-                    <div class="dev-menu-btn"><i class="fas fa-flag"></i> Custom Flags</div>
-                    <div class="dev-menu-btn"><i class="fas fa-code-branch"></i> Versiones</div>
-                    <div class="dev-menu-btn text-yellow-400 border-yellow-400"><i class="fas fa-database"></i> Base de Datos</div>
-                    <div class="dev-menu-btn"><i class="fas fa-puzzle-piece"></i> Instalador de Plugins</div>
-                    <div class="dev-menu-btn"><i class="fas fa-box-open"></i> Mods y Modpacks</div>
-                    <div class="dev-menu-btn"><i class="fas fa-list"></i> Server Properties</div>
+            <div class="panel-mockup">
+                <div class="panel-sidebar">
+                    <div class="panel-item"><i class="fas fa-globe"></i> Subdominios</div>
+                    <div class="panel-item"><i class="fas fa-flag"></i> Custom Flags</div>
+                    <div class="panel-item active"><i class="fas fa-database"></i> Base de Datos</div>
+                    <div class="panel-item"><i class="fas fa-puzzle-piece"></i> Instalador de Plugins</div>
+                    <div class="panel-item"><i class="fas fa-list"></i> Server Properties</div>
                 </div>
-                
-                <div class="panel-display">
-                    <div class="panel-badge">MAIK DESARROLLA</div>
-                    <h3 class="text-2xl font-bold mb-4 uppercase"><i class="fas fa-database text-yellow-400 mr-2"></i> Base de Datos</h3>
-                    <p class="text-gray-400 mb-6">Gestiona bases de datos más fácil que ordenar tu inventario en Minecraft. MySQL, MariaDB y más, todo configurado desde un solo lugar para una sincronización perfecta.</p>
-                    <div class="w-full h-64 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center justify-center">
-                        <i class="fas fa-terminal text-yellow-400 text-5xl opacity-20"></i>
+                <div class="panel-content">
+                    <div class="absolute top-5 right-5 bg-yellow-400 text-black px-3 py-1 rounded text-[10px] font-black uppercase">Sistema Activo</div>
+                    <h3 class="text-2xl font-black italic uppercase mb-4">Optimización de Datos</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Implementamos bases de datos MySQL y MariaDB con indexación avanzada para evitar lag al guardar inventarios, rangos o estadísticas. La sincronización es instantánea entre todos tus servidores de la red.
+                    </p>
+                    <div class="bg-black/50 p-4 border border-zinc-800 rounded-lg font-mono text-xs text-yellow-500">
+                        > DB Connection: SUCCESSFUL <br>
+                        > Query Speed: 0.002ms <br>
+                        > Sincronización Global: OK
                     </div>
                 </div>
             </div>
@@ -122,29 +126,30 @@
     <div id="modalProducts" class="modal-view">
         <button class="close-btn" onclick="closeModal()">CERRAR</button>
         <div class="max-w-7xl mx-auto text-center">
-            <h2 id="modalTitle" class="text-6xl font-black italic text-yellow-400 mb-10">PLANES</h2>
-            <div id="gridCards" class="grid-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <h2 id="modalTitle" class="text-6xl font-black italic uppercase text-yellow-400 mb-10 tracking-tighter">CATÁLOGO</h2>
+            <div id="gridCards" class="grid-cards"></div>
         </div>
     </div>
 
     <script>
         const features = {
-            boxpvp: ["Minas Base", "Items Simples", "Celdas", "Ranks", "Pociones", "Bosses", "Eventos", "Minas VIP", "Tienda", "Anti-Dupe"],
-            survival: ["Protecciones", "Economía", "Subastas", "Clanes", "Misiones", "Items RPG", "Dungeons", "Skills", "Jobs", "Optimización"],
-            setup: ["Velocity Proxy", "Lobby Setup", "Seguridad Bot", "MySQL DB", "Sincronización", "Ranks Sync", "Firewall", "Anti-DDoS", "TabList", "Pre-Gen"]
+            boxpvp: ["5 Minas Base", "Items Simples", "Celdas", "Ranks", "Pociones", "Bosses", "Eventos", "Minas VIP", "Tienda", "Anticheat", "Trade Pro", "Opti Full", "Mina Oro", "Cajas Llaves", "Dungeons", "Combat Tag", "Hologramas", "NPCs", "Kits", "Anti-Dupe"],
+            survival: ["Protecciones", "Economía", "Subastas", "Clanes", "Misiones", "Items RPG", "Dungeons", "Skills", "Jobs", "Mundo Recursos", "Tienda", "Soporte", "Mascotas", "Nether/End", "Chat Color", "Eventos Pesca", "Bodas", "Fly Spawn", "BattlePass", "Chunk Opti"],
+            lobby: ["NPCs", "Hologramas", "Selector Pro", "Skins", "Parkour", "Scoreboard", "Cosméticos", "Music", "Efectos", "Anti-Lag", "Seguridad", "Velocidad", "Gadgets", "Jump Pads", "Chat Global", "Block Protect", "Welcome MSGs", "Hide Players", "Fly Staff", "Portales"],
+            server: ["Velocity Proxy", "Lobby Setup", "Seguridad Bot", "Sincronización", "MySQL DB", "Auto Ads", "TabList Pro", "Ranks Sync", "Global Chat", "DDoS Protect", "Mantenimiento", "Backups Auto", "Logs Discord", "Staff Chat", "Filtro Chat", "Geo-Block", "VPN Blocker", "Firewall Pro", "Monitor RAM"]
         };
 
         const promoPool = [
-            {n: "$5 - Lobby + NPCs", p: 5, i: ["Lobby Simple", "NPCs Interactivos"]},
-            {n: "$10 - BoxPvP Básico", p: 10, i: ["BoxPvP Setup", "Items Custom"]},
-            {n: "$15 - Survival RPG", p: 15, i: ["Clanes", "Misiones", "Dungeons"]},
-            {n: "$20 - Velocity Setup", p: 20, i: ["Proxy", "DDoS Protect", "Anti-Bot"]},
-            {n: "$25 - BoxPvP + Opti", p: 25, i: ["BoxPvP Pro", "Celdas", "Lag Fix"]},
-            {n: "$30 - Network Sync", p: 30, i: ["MySQL", "Ranks Global", "Lobby"]},
-            {n: "$35 - Terabusing Pro", p: 35, i: ["Proxy", "Anti-Exploit", "Velocity"]},
-            {n: "$40 - Mega BoxPvP", p: 40, i: ["Bosses", "Top Kills", "Minas"]},
-            {n: "$45 - Full Network", p: 45, i: ["VIP Shop", "3 Modalidades", "Sync"]},
-            {n: "$50 - SUPREMO PACK", p: 50, i: ["Todo Mezclado", "Soporte 24/7", "Licencia VIP"]}
+            {n: "Pack $5", p: 5, i: ["Lobby NPCs", "Selector Pro"]},
+            {n: "Pack $10", p: 10, i: ["BoxPvP Base", "Items Custom"]},
+            {n: "Pack $15", p: 15, i: ["Survival RPG", "Clanes Pro"]},
+            {n: "Pack $20", p: 20, i: ["Velocity Sync", "DDoS Protect"]},
+            {n: "Pack $25", p: 25, i: ["BoxPvP VIP", "Celdas", "Dungeons"]},
+            {n: "Pack $30", p: 30, i: ["Network Full", "MySQL Sync"]},
+            {n: "Pack $35", p: 35, i: ["Survival + BoxPvP", "Opti 20 TPS"]},
+            {n: "Pack $40", p: 40, i: ["Super Network", "Global Chat"]},
+            {n: "Pack $45", p: 45, i: ["Full Custom", "Soporte VIP"]},
+            {n: "Pack $50", p: 50, i: ["LICENCIA SUPREMA", "Todo Incluido"]}
         ];
 
         function openModal(type) {
@@ -156,13 +161,15 @@
             if(type === 'promo') {
                 promoPool.forEach(p => grid.innerHTML += createCard(p.n, p.p, p.i, true));
             } else if(type === 'opti') {
-                grid.innerHTML += createCard("Opti Tips 20 TPS", 5, ["Guía de JVM Flags", "Spark Monitor", "Lag Detection"]);
-                grid.innerHTML += createCard("Opti Pro 20 TPS", 15, ["Limpieza de Chunks", "Entity Tracker", "20 TPS Estables"]);
+                grid.innerHTML += createCard("Opti Tips 20 TPS", 5, ["Spark Report", "JVM Flags", "Clear Lag"]);
+                grid.innerHTML += createCard("Opti Extreme", 15, ["Kernel Opti", "20 TPS Estables", "Anti-Lag Pro"]);
             } else {
-                const lvls = ["Madera", "Hierro", "Diamante", "Supremo"];
+                const lvls = ["Madera", "Hierro", "Diamante", "SUPREMO"];
                 lvls.forEach((l, i) => {
-                    const list = (features[type] || []).slice(0, (i + 1) * 3);
-                    grid.innerHTML += createCard(`${type.toUpperCase()} ${l}`, 10 + (i*15), list, false);
+                    const price = 5 + (i * 15);
+                    const count = (i + 1) * 5;
+                    const list = features[type].slice(0, count);
+                    grid.innerHTML += createCard(`${type.toUpperCase()} ${l}`, price, list, false);
                 });
             }
             document.getElementById('modalProducts').style.display = 'block';
@@ -171,13 +178,13 @@
         function createCard(name, price, list, isPromo) {
             return `
                 <div class="p-card ${isPromo ? 'border-pink-600' : ''}">
-                    <h4 class="text-xl font-bold uppercase">${name}</h4>
-                    <div class="p-price">$${price}</div>
+                    <h4 class="text-xl font-black uppercase text-white">${name}</h4>
+                    <div class="p-price">$${price}.00</div>
                     <ul class="feat-list">
-                        ${list.map(f => `<li><i class="fas fa-check-circle text-yellow-400 mr-2"></i> ${f}</li>`).join('')}
+                        ${list.map(f => `<li><i class="fas fa-check-circle text-yellow-400"></i> ${f}</li>`).join('')}
                     </ul>
-                    <div class="text-[9px] text-red-500 font-bold mb-4 uppercase">No hay reembolsos | Licencia Oficial</div>
-                    <button class="btn-buy" onclick="alert('Contactando a Maik...')">Comprar Ahora</button>
+                    <div class="text-[9px] text-red-500 font-bold mb-4">NO REEMBOLSOS | LICENCIA OFICIAL</div>
+                    <button class="btn-buy">Adquirir</button>
                 </div>
             `;
         }
