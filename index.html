@@ -3,83 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Custom Items & Systems</title>
+    <title>MAIK DEV | Minecraft Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        #canvas-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 20px; z-index: 10; position: relative; }
-        .hero-title { font-size: clamp(40px, 8vw, 80px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.8; margin-bottom: 30px; }
-        .hero-desc { max-width: 850px; color: #aaa; font-size: 16px; margin-bottom: 30px; line-height: 1.8; }
         
-        .ecuador-flag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 50px; border: 1px solid rgba(250,204,21,0.3); margin-bottom: 20px; font-size: 11px; font-weight: 900; color: #facc15; text-transform: uppercase; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+        }
 
-        .section-label { color: #facc15; font-weight: 900; text-transform: uppercase; letter-spacing: 5px; font-size: 11px; margin-top: 40px; margin-bottom: 20px; }
-        .mode-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
-        .mode-card { background: rgba(15,15,15,0.7); border: 1px solid #333; padding: 30px 15px; border-radius: 25px; cursor: pointer; transition: 0.4s; backdrop-filter: blur(15px); }
-        .mode-card:hover { border-color: #facc15; transform: translateY(-10px); }
+        /* FONDO ANIMADO DE MINECRAFT */
+        .mc-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 110%; /* Un poco más ancho para el movimiento */
+            height: 110%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.alphacoders.com/133/1331006.png'); /* Imagen de paisaje con shaders */
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            filter: blur(4px);
+            animation: moveBg 20s linear infinite alternate;
+        }
+
+        @keyframes moveBg {
+            from { transform: translate(-2%, -2%); }
+            to { transform: translate(0, 0); }
+        }
+
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 40px 20px; 
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+        }
+
+        .hero-title { font-size: clamp(40px, 8vw, 80px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.8; margin-bottom: 20px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        
+        .ecuador-flag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.6); padding: 8px 18px; border-radius: 50px; border: 1px solid #facc15; margin-bottom: 20px; font-size: 11px; font-weight: 900; color: #facc15; text-transform: uppercase; backdrop-filter: blur(10px); }
+
+        .section-label { color: #facc15; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; font-size: 11px; margin-top: 35px; margin-bottom: 15px; background: rgba(0,0,0,0.4); padding: 5px 15px; border-radius: 5px; }
+
+        .mode-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; width: 100%; max-width: 1100px; }
+        
+        .mode-card { 
+            background: rgba(0,0,0,0.7); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            padding: 25px 10px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            backdrop-filter: blur(15px); 
+        }
+        .mode-card:hover { border-color: #facc15; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .mode-card i { font-size: 30px; margin-bottom: 10px; color: #facc15; }
         .mode-card h3 { font-size: 11px; font-weight: 900; text-transform: uppercase; }
 
-        .promo-card { border: 1px dashed #facc15; background: rgba(250, 204, 21, 0.1); }
-
-        .plans-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; overflow-y: auto; padding: 60px 20px; }
+        /* MODALES */
+        .plans-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; overflow-y: auto; padding: 60px 20px; }
         .close-plans { position: fixed; top: 30px; right: 50px; cursor: pointer; color: #000; background: #facc15; padding: 10px 20px; border-radius: 10px; font-weight: 900; z-index: 1100; }
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: 50px auto; }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1400px; margin: 40px auto; }
         
-        .card-plan { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 30px; display: flex; flex-direction: column; transition: 0.3s; }
-        .card-plan:hover { border-color: #facc15; box-shadow: 0 10px 30px rgba(250,204,21,0.1); }
-        .p-price { font-size: 35px; font-weight: 900; margin: 10px 0; color: #facc15; }
-        
-        .feature-list { font-size: 10px; text-transform: uppercase; font-weight: 800; color: #888; margin-bottom: 20px; }
+        .card-plan { background: #0a0a0a; border: 1px solid #222; border-radius: 20px; padding: 25px; display: flex; flex-direction: column; transition: 0.3s; }
+        .card-plan:hover { border-color: #facc15; background: #0f0f0f; }
+        .p-price { font-size: 32px; font-weight: 900; margin: 10px 0; color: #facc15; }
+        .feature-list { font-size: 10px; text-transform: uppercase; font-weight: 800; color: #888; margin-bottom: 20px; list-style: none; }
         .feature-list li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
         .feature-list li i { color: #facc15; }
 
+        /* FORMULARIO */
         #finalForm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .form-content { background: #0d0d0d; border: 1px solid #facc15; padding: 40px; border-radius: 30px; max-width: 450px; width: 100%; text-align: center; }
         .form-input { width: 100%; background: #151515; border: 1px solid #333; padding: 12px; border-radius: 10px; color: #fff; margin-bottom: 15px; outline: none; }
         .btn-send { width: 100%; background: #facc15; color: #000; font-weight: 900; padding: 15px; border-radius: 10px; text-transform: uppercase; cursor: pointer; }
-        .btn-buy { background: #fff; color: #000; font-weight: 900; padding: 12px; border-radius: 10px; text-align: center; cursor: pointer; margin-top: auto; font-size: 11px; text-transform: uppercase; }
+        .btn-buy { background: #fff; color: #000; font-weight: 900; padding: 10px; border-radius: 10px; text-align: center; cursor: pointer; margin-top: auto; font-size: 10px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas-particles"></canvas>
+    <div class="mc-background"></div>
 
     <header class="hero">
         <div class="ecuador-flag">
             <img src="https://flagcdn.com/w40/ec.png" width="20" alt="EC"> Maik Dev Ecuador
         </div>
         <h1 class="hero-title">MAIK <span class="text-yellow-400">DEVELOPER</span></h1>
-        <p class="hero-desc">
-            Experto en <b>Custom Items, Pociones Únicas y Sistemas de Rooms</b>. 
-            Transformo tu servidor en una experiencia de élite con configuraciones que nadie más tiene.
-            <br>Aceptamos <b>PayPal</b> y <b>Banco Pichincha</b>.
-        </p>
-
-        <div class="section-label">Configuraciones de Élite</div>
+        
+        <div class="section-label">Configuración & Backend</div>
         <div class="mode-selector">
-            <div class="mode-card" onclick="openPlans('boxpvp')"><i class="fas fa-skull"></i><h3>BoxPvP</h3></div>
-            <div class="mode-card" onclick="openPlans('survival')"><i class="fas fa-tree"></i><h3>Survival</h3></div>
-            <div class="mode-card" onclick="openPlans('lobby')"><i class="fas fa-door-open"></i><h3>Lobby</h3></div>
-            <div class="mode-card" onclick="openPlans('config')"><i class="fas fa-code"></i><h3>Tech & Web</h3></div>
+            <div class="mode-card" onclick="openPlans('tech')"><i class="fas fa-network-wired"></i><h3>Velocity & Hosting</h3></div>
+            <div class="mode-card" onclick="openPlans('lobby')"><i class="fas fa-door-open"></i><h3>Lobby & NPCs</h3></div>
+            <div class="mode-card" onclick="openPlans('boxpvp')"><i class="fas fa-skull"></i><h3>BoxPvP Custom</h3></div>
+            <div class="mode-card" onclick="openPlans('survival')"><i class="fas fa-map"></i><h3>Survival /ah</h3></div>
         </div>
 
-        <div class="section-label">Packs Especiales</div>
+        <div class="section-label">Rendimiento (20 TPS)</div>
         <div class="mode-selector">
-            <div class="mode-card promo-card" onclick="openPromo(20)"><i class="fas fa-magic"></i><h3>Custom Pack $20</h3></div>
-            <div class="mode-card promo-card" onclick="openPromo(40)"><i class="fas fa-gem"></i><h3>Full Custom $40</h3></div>
+            <div class="mode-card" style="border-color:#00f2ff" onclick="openOpti('Básico', 5)"><i class="fas fa-tachometer-alt" style="color:#00f2ff"></i><h3>Básico $5</h3></div>
+            <div class="mode-card" style="border-color:#00f2ff" onclick="openOpti('Normal', 10)"><i class="fas fa-microchip" style="color:#00f2ff"></i><h3>Normal $10</h3></div>
+            <div class="mode-card" style="border-color:#00f2ff" onclick="openOpti('Extremo', 15)"><i class="fas fa-rocket" style="color:#00f2ff"></i><h3>Extremo $15</h3></div>
         </div>
     </header>
 
     <div id="plansModal" class="plans-modal">
         <span class="close-plans" onclick="closePlans()">VOLVER</span>
         <div class="max-w-7xl mx-auto">
-            <h2 id="modalTitle" class="text-5xl font-black italic text-yellow-400 uppercase mb-8">SERVICIOS</h2>
+            <h2 id="modalTitle" class="text-5xl font-black italic text-yellow-400 uppercase mb-8">MODALIDAD</h2>
             <div id="modalGrid" class="plans-grid"></div>
         </div>
     </div>
@@ -88,12 +129,11 @@
         <div class="form-content">
             <h3 class="text-2xl font-black text-yellow-400 mb-6 uppercase italic">Confirmar Orden</h3>
             <form action="https://formspree.io/f/TU_ID_AQUI" method="POST">
-                <input type="text" name="Nombre" placeholder="Nombre" class="form-input" required>
-                <input type="text" name="Discord" placeholder="Discord Tag" class="form-input" required>
-                <input type="text" id="inputPlan" name="Plan" class="form-input bg-zinc-900 border-none text-yellow-500 font-black text-center" readonly>
-                <p class="text-[10px] text-gray-500 mb-6 uppercase font-black tracking-widest">Pichincha • PayPal • No Reembolsos</p>
-                <button type="submit" class="btn-send">Iniciar Proyecto</button>
-                <p class="mt-4 text-xs text-gray-600 cursor-pointer font-bold" onclick="closeForm()">CANCELAR</p>
+                <input type="text" name="Nombre" placeholder="Tu Nombre" class="form-input" required>
+                <input type="text" name="Discord" placeholder="Usuario Discord" class="form-input" required>
+                <input type="text" id="inputPlan" name="Plan" class="form-input bg-zinc-900 border-none text-yellow-500 font-bold text-center" readonly>
+                <button type="submit" class="btn-send">Solicitar Ahora</button>
+                <p class="mt-4 text-[10px] text-gray-600 cursor-pointer font-bold uppercase" onclick="closeForm()">Cancelar</p>
             </form>
         </div>
     </div>
@@ -102,18 +142,18 @@
         const levels = ["Madera", "Piedra", "Carbón", "Hierro", "Lapis", "Redstone", "Oro", "Diamante", "Esmeralda", "Obsidiana", "Netherite", "SUPREMO"];
         
         const configs = {
-            boxpvp: ["Setup Minas c/ Reset", "Custom Items (Habilidades)", "Pociones Únicas", "Sistema de Rooms (Celdas)", "CombatLog & AntiFly", "Economía Balanceada", "Efectos Visuales al Morir"],
-            survival: ["Rooms de Protecciones", "Items Custom RPG", "Sistema de Clanes", "Economía con Adobe", "Crates Animadas", "Jobs & Misiones", "Pociones de Alquimia Custom"],
-            lobby: ["Selector de Servidores", "NPCs con Pociones", "Rooms de Info", "Sistema de Queue", "Tablón Animado", "Protección de Mapas", "Cosméticos Custom"],
-            config: ["Anti-Bot & Seguridad", "Setup Velocity/Bungee", "Rooms de Staff", "Web Landing Page", "Tienda Tebex", "Optimización de RAM", "Base de Datos SQL"]
+            tech: ["Proxy Velocity Setup", "Configuración de Hosting", "Bases de Datos MySQL", "Seguridad Anti-DDoS", "Panel Pterodactyl", "Gestión de Puertos", "Optimización Backend"],
+            lobby: ["Menús (/menu)", "NPCs Interconectados", "Selector de Servidores", "Hologramas Pro", "Scoreboard", "Sistema de Colas", "Estadísticas Globales"],
+            boxpvp: ["Minas c/ Reset", "Items Custom", "Pociones", "Rooms de Celdas", "Subastas (/ah)", "Menú Estadísticas", "NPCs Tradeo"],
+            survival: ["Subastas (/ah)", "Rooms Protecciones", "Menús Estadísticas", "Sistema de Clanes", "Economía Adobe", "Items RPG", "Misiones Custom"]
         };
 
         function openPlans(key) {
             const mod = {
-                boxpvp: { t: "BoxPvP Custom", start: 5, end: 80, items: configs.boxpvp },
-                survival: { t: "Survival Custom", start: 10, end: 80, items: configs.survival },
-                lobby: { t: "Lobby Custom", start: 5, end: 60, items: configs.lobby },
-                config: { t: "Tech & Web", start: 15, end: 80, items: configs.config }
+                tech: { t: "Velocity & Hosting", start: 10, end: 80, items: configs.tech },
+                lobby: { t: "Lobby & Menús", start: 5, end: 60, items: configs.lobby },
+                boxpvp: { t: "BoxPvP Elite", start: 5, end: 80, items: configs.boxpvp },
+                survival: { t: "Survival RPG", start: 10, end: 80, items: configs.survival }
             }[key];
 
             document.getElementById('modalTitle').innerText = mod.t;
@@ -125,12 +165,10 @@
                 const price = (mod.start + (i * inc)).toFixed(2);
                 grid.innerHTML += `
                     <div class="card-plan">
-                        <h4 class="text-white font-black text-xl uppercase italic mb-1">${lvl}</h4>
+                        <h4 class="text-white font-black text-lg uppercase mb-1">${lvl}</h4>
                         <div class="p-price"><span>$</span>${price}</div>
                         <ul class="feature-list flex-grow">
                             ${mod.items.slice(0, 3 + Math.floor(i/3)).map(x => `<li><i class="fas fa-check"></i>${x}</li>`).join('')}
-                            ${i >= 5 ? `<li><i class="fas fa-bolt"></i>Items Custom v2</li>` : ''}
-                            ${i >= 9 ? `<li><i class="fas fa-flask"></i>Pociones Full Custom</li>` : ''}
                         </ul>
                         <div class="btn-buy" onclick="openForm('${mod.t} ${lvl}', ${price})">Adquirir</div>
                     </div>`;
@@ -138,23 +176,18 @@
             document.getElementById('plansModal').style.display = 'block';
         }
 
-        function openPromo(val) {
+        function openOpti(type, price) {
             const grid = document.getElementById('modalGrid');
             grid.innerHTML = '';
-            document.getElementById('modalTitle').innerText = `OFERTA FLASH`;
-            const content = val === 20 ? 
-                ["Pack de 10 Items Custom", "Sistema de Pociones Únicas", "5 Rooms configuradas", "Logo GFX Básico", "Optimización General"] :
-                ["Todo lo de $20", "Network Full Config", "Texturas para Items", "Tienda Tebex + Web", "Soporte de por vida"];
+            document.getElementById('modalTitle').innerText = `Optimización ${type}`;
+            const perks = ["Limpieza de Lag", "Ajuste de Archivos", "20 TPS Estables", "Optimización de Memoria"];
             
-            grid.innerHTML = `
-                <div class="card-plan border-yellow-400 border-2 mx-auto col-span-full max-w-lg">
-                    <h4 class="text-white font-black text-3xl uppercase italic mb-4">PACK PERSONALIZADO</h4>
-                    <div class="p-price"><span>$</span>${val}.00</div>
-                    <ul class="feature-list text-sm space-y-3 mb-8">
-                        ${content.map(x => `<li class="text-gray-200"><i class="fas fa-star text-yellow-400"></i>${x}</li>`).join('')}
-                    </ul>
-                    <div class="btn-buy" onclick="openForm('OFERTA CUSTOM', ${val})">Obtener Promoción</div>
-                </div>`;
+            grid.innerHTML = `<div class="card-plan border-cyan-400 border-2 mx-auto col-span-full max-w-sm">
+                <h4 class="text-white font-black text-2xl uppercase mb-2">${type} Pack</h4>
+                <div class="p-price" style="color:#00f2ff"><span>$</span>${price}.00</div>
+                <ul class="feature-list mb-8">${perks.map(p => `<li><i class="fas fa-bolt" style="color:#00f2ff"></i>${p}</li>`).join('')}</ul>
+                <div class="btn-buy" onclick="openForm('Opti ${type}', ${price})">Comprar</div>
+            </div>`;
             document.getElementById('plansModal').style.display = 'block';
         }
 
@@ -164,19 +197,6 @@
             document.getElementById('finalForm').style.display = 'flex'; 
         }
         function closeForm() { document.getElementById('finalForm').style.display = 'none'; }
-
-        // PARTÍCULAS
-        const canvas = document.getElementById('canvas-particles');
-        const ctx = canvas.getContext('2d');
-        let parts = [];
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        class P {
-            constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.v = Math.random()*0.2; }
-            draw() { ctx.fillStyle = "rgba(250,204,21,0.25)"; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); this.x+=this.v; if(this.x>canvas.width)this.x=0; }
-        }
-        for(let i=0; i<100; i++) parts.push(new P());
-        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); parts.forEach(p=>p.draw()); requestAnimationFrame(anim); }
-        anim();
     </script>
 </body>
 </html>
