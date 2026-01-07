@@ -3,38 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Dev | Servicios de Configuración</title>
+    <title>MAIK DEV | Servicios Profesionales</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        :root { --yellow: #facc15; --bg: #000; --card: #0a0a0a; --border: #1a1a1a; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; scroll-behavior: smooth; }
         
-        .card-service { background: var(--card); border: 1px solid var(--border); border-radius: 1.5rem; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
-        .card-service:hover { border-color: var(--yellow); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
-        .btn-buy { background: var(--yellow); color: #000; font-weight: 900; text-transform: uppercase; font-size: 10px; padding: 12px; border-radius: 8px; text-align: center; margin-top: 1.5rem; transition: 0.2s; }
-        .btn-buy:hover { transform: scale(1.03); box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-        .section-header { margin-bottom: 3rem; border-left: 4px solid var(--yellow); padding-left: 1.5rem; }
-        .price-tag { font-size: 2.2rem; font-weight: 900; color: #fff; margin: 1rem 0; }
-        .price-tag span { color: var(--yellow); }
+        .nav-link {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #666;
+            transition: 0.3s;
+        }
 
-        .feature-item { font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; }
-        .feature-item i { color: var(--yellow); }
+        .nav-link:hover { color: #fff; }
+
+        .section-title {
+            font-size: 64px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            line-height: 1;
+        }
+
+        .section-subtitle {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #facc15;
+            letter-spacing: 2px;
+            border-left: 3px solid #facc15;
+            padding-left: 10px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-plan {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            transition: 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card-plan:hover {
+            border-color: #facc15;
+            transform: translateY(-10px);
+        }
+
+        .price {
+            font-size: 48px;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .price span { color: #facc15; }
+
+        .btn-acquire {
+            background: #facc15;
+            color: #000;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: auto;
+            transition: 0.2s;
+        }
+
+        .btn-acquire:hover {
+            transform: scale(1.05);
+            background: #fff;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #888;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .feature-item i { color: #facc15; }
+
+        /* Estilo especial para el plan destacado */
+        .featured-border { border: 2px solid #facc15; }
+        .featured-bg { background: #facc15; color: #000; }
+        .featured-bg .price, .featured-bg .feature-item { color: #000; }
+        .featured-bg .feature-item i { color: #000; }
+        .featured-bg .btn-acquire { background: #000; color: #fff; }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-black border-b border-white/5 py-3 text-center text-[10px] font-black uppercase tracking-[0.3em] text-yellow-400">
-        Configuraciones Profesionales — Maik Systems v4.0 — 2026
-    </div>
+    <nav class="flex justify-between items-center px-10 py-8 sticky top-0 bg-black/80 backdrop-blur-md z-50">
+        <div class="flex items-center gap-3">
+            <div class="bg-yellow-400 text-black font-black p-2 rounded text-lg leading-none">M</div>
+            <span class="text-xl font-black tracking-tighter uppercase">MAIK <span class="text-gray-500">DEV</span></span>
+        </div>
+        <div class="hidden md:flex gap-8">
+            <a href="#boxpvp" class="nav-link">BoxPvP</a>
+            <a href="#survival" class="nav-link">Survival</a>
+            <a href="#lobby" class="nav-link">Lobby</a>
+            <a href="#config" class="nav-link">Configuración</a>
+        </div>
+    </nav>
 
-    <nav class="flex justify-between items-center px-10 py-6 border-b border-white/5 sticky top-0 bg-black/90 backdrop-blur-md z-50">
-        <div class="flex items-center gap-2">
-            <div class="bg-yellow-400 text-black px-2 py-1 font-black rounded text-xl">M</div>
-            <span class="text-xl font-black italic tracking-tighter uppercase">MAIK <span class="text-gray-600 font-normal">DEV</span></span>
+    <main class="max-w-7xl mx-auto px-6">
+
+        <section id="boxpvp" class="py-20">
+            <span class="section-subtitle">Modalidad Combate</span>
+            <h2 class="section-title">BOX<span class="text-yellow-400">PVP</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                <div class="card-plan">
+                    <h3 class="text-xs font-black uppercase text-gray-500">BoxPvP Inicial</h3>
+                    <div class="price"><span>$</span>15.00</div>
+                    <div class="mb-8">
+                        <div class="feature-item"><i class="fas fa            <span class="text-xl font-black italic tracking-tighter uppercase">MAIK <span class="text-gray-600 font-normal">DEV</span></span>
         </div>
         <div class="hidden lg:flex gap-8 text-[10px] font-black uppercase text-gray-400">
             <a href="#boxpvp" class="hover:text-yellow-400">BoxPvP</a>
