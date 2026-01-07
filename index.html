@@ -7,34 +7,29 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #0d1117; color: #e6edf3; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
-        .plan-card { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; }
-        .plan-card:hover { border-color: #58a6ff; transform: translateY(-5px); }
-        .blue-gradient { background: linear-gradient(135deg, #1f6feb 0%, #0d419d 100%); }
-        .gold-border { border: 2px solid #d4af37 !important; shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        body { background-color: #0b0e14; color: #e6edf3; font-family: 'Inter', 'Segoe UI', sans-serif; scroll-behavior: smooth; }
+        .jaula-premium { 
+            background: linear-gradient(145deg, #161b22 0%, #0d1117 100%);
+            border: 1px solid #30363d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .jaula-premium:hover { 
+            border-color: #58a6ff; 
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .btn-pay {
+            background: linear-gradient(90deg, #1f6feb 0%, #09419d 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-pay:hover { filter: brightness(1.2); box-shadow: 0 0 20px rgba(31, 111, 235, 0.4); }
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, #30363d, transparent); margin: 4rem 0; }
     </style>
 </head>
 <body>
 
-    <nav class="max-w-7xl mx-auto p-5 flex justify-between items-center sticky top-0 z-50 bg-[#0d1117]/90 backdrop-blur-md border-b border-gray-800">
-        <div class="text-xl font-black uppercase text-white">MAIK <span class="text-blue-500">DESARROLLADOR</span></div>
-        <a href="#agendar" class="bg-blue-600 px-6 py-2 rounded-full text-xs font-black hover:bg-blue-500 transition text-white">AGENDAR CITA</a>
-    </nav>
-
-    <header class="text-center py-16 px-4">
-        <h1 class="text-4xl md:text-6xl font-black mb-4 uppercase">Soluciones <span class="text-blue-500">Profesionales</span></h1>
-        <p class="text-gray-400 max-w-2xl mx-auto text-sm italic">Configuración de Minecraft, Diseño y Desarrollo Web de alto nivel.</p>
-    </header>
-
-    <section class="max-w-[1400px] mx-auto px-6 pb-20">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            
-            <div class="plan-card p-6 rounded-2xl">
-                <div>
-                    <h3 class="text-[10px] font-bold text-gray-500 uppercase">Nivel 1</h3>
-                    <h2 class="text-2xl font-black mb-1">CARBÓN</h2>
-                    <div class="text-xl font-bold text-blue-400 mb-4">$5,00</div>
-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
+    <nav class="fixed top-0 w-full z-50 bg-[#0b0e14]/90 backdrop-blur-lg border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-                    <ul class="text-xs space-y-2 text-gray-400 border-t border-gray-800 pt-4">
                         <li><i class="fas fa-check text-blue-500 mr-2"></i>Optimización Básica de Lag</li>
                         <li><i class="fas fa-check text-blue-500 mr-2"></i>Limpieza de Logs Inicial</li>
                     </ul>
