@@ -3,46 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | OFFICIAL SERVICES 2026</title>
+    <title>MAIK DEV | PREMIUM CONFIGURATOR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .bg-stars { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #111 0%, #000 100%); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
+        .bg-stars { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #111 0%, #000 100%); opacity: 0.6; }
         
         /* BOTONES FLOTANTES */
-        .ws-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(37,211,102,0.4); z-index: 9999; text-decoration: none; border: 2px solid #fff; }
-        .ws-badge { position: absolute; top: -10px; right: -20px; background: #fff; color: #000; font-size: 9px; padding: 3px 8px; border-radius: 10px; font-weight: 900; text-transform: uppercase; border: 1px solid #25d366; }
+        .ws-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: #fff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 9999; border: 3px solid #fff; box-shadow: 0 0 20px #25d366; }
+        .ws-badge { position: absolute; top: -5px; right: -15px; background: #fff; color: #000; font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 900; box-shadow: 0 5px 10px rgba(0,0,0,0.5); }
 
-        .nav-buttons { position: fixed; bottom: 30px; right: 30px; display: none; flex-direction: column; gap: 10px; z-index: 8000; }
-        .btn-nav { background: #facc15; color: #000; padding: 12px 20px; border-radius: 12px; font-weight: 900; cursor: pointer; border: 2px solid #fff; text-transform: uppercase; font-size: 11px; text-align: center; }
+        .nav-buttons { position: fixed; bottom: 30px; right: 30px; display: none; flex-direction: column; gap: 12px; z-index: 8000; }
+        .btn-nav { background: #facc15; color: #000; padding: 15px 25px; border-radius: 15px; font-weight: 900; cursor: pointer; border: 2px solid #fff; text-transform: uppercase; font-size: 12px; text-align: center; transition: 0.3s; }
+        .btn-nav:hover { transform: scale(1.05); }
+
+        /* HERO */
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; background: linear-gradient(to bottom, transparent, #000); }
+        .license-card { border: 2px solid #facc15; padding: 20px 40px; border-radius: 20px; background: rgba(250, 204, 21, 0.1); margin-bottom: 30px; box-shadow: 0 0 30px rgba(250, 204, 21, 0.2); }
+        .main-menu-btn { background: #facc15; color: #000; padding: 25px 60px; border-radius: 20px; font-weight: 900; font-size: 26px; cursor: pointer; text-transform: uppercase; border: 4px solid #fff; box-shadow: 0 10px 0 #b45309; transition: 0.2s; }
+        .main-menu-btn:active { transform: translateY(5px); box-shadow: 0 5px 0 #b45309; }
 
         /* SECCIONES */
-        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .license-card { border: 2px solid #facc15; padding: 15px 30px; border-radius: 15px; background: rgba(250, 204, 21, 0.05); margin-bottom: 25px; }
-        .main-menu-btn { background: #facc15; color: #000; padding: 20px 40px; border-radius: 15px; font-weight: 900; font-size: 22px; cursor: pointer; text-transform: uppercase; border: 3px solid #fff; }
+        .section-container { display: none; padding: 100px 20px; max-width: 1500px; margin: 0 auto; }
+        .section-container.active { display: block; animation: fadeIn 0.8s ease; }
+        .plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+        .plan-card { background: #0a0a0a; border: 1px solid #222; border-radius: 35px; padding: 40px; display: flex; flex-direction: column; transition: 0.4s; position: relative; }
+        .plan-card:hover { border-color: #facc15; background: #0f0f0f; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .price-tag { font-size: 60px; font-weight: 900; color: #facc15; font-style: italic; text-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); }
+        .feature { font-size: 11px; font-weight: 700; color: #ddd; text-transform: uppercase; border-bottom: 1px solid #1a1a1a; padding: 10px 0; display: flex; align-items: center; gap: 12px; line-height: 1.4; }
+        .feature i { color: #facc15; font-size: 14px; }
 
-        .full-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.99); z-index: 9000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .full-overlay.active { display: flex; }
-        .grid-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 600px; }
-        .menu-item { background: #0a0a0a; border: 2px solid #222; padding: 20px; border-radius: 20px; text-align: center; cursor: pointer; }
-
-        .section-container { display: none; padding: 80px 20px; max-width: 1400px; margin: 0 auto; animation: fadeInUp 0.5s; }
-        .section-container.active { display: block; }
-        .plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .plan-card { background: #080808; border: 1px solid #1a1a1a; border-radius: 30px; padding: 35px; transition: 0.3s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-        .plan-card:hover { border-color: #facc15; transform: translateY(-5px); }
-        .price-tag { font-size: 50px; font-weight: 900; color: #facc15; font-style: italic; line-height: 1; margin-bottom: 10px; }
-        .feature { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; border-bottom: 1px solid #151515; padding: 8px 0; display: flex; align-items: center; gap: 10px; }
-
-        /* MODAL */
-        .payment-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: #000; border: 2px solid #facc15; padding: 40px; border-radius: 40px; width: 100%; max-width: 500px; text-align: center; }
-        .form-input { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; font-weight: bold; }
-        
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .form-input { width: 100%; background: #111; border: 2px solid #222; padding: 18px; border-radius: 15px; color: #fff; margin-bottom: 20px; font-size: 14px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -51,128 +46,183 @@
 
     <a href="https://wa.me/593987749885" target="_blank" class="ws-float">
         <i class="fab fa-whatsapp"></i>
-        <div class="ws-badge">Soporte 24/7</div>
+        <div class="ws-badge">ONLINE 24/7</div>
     </a>
 
     <div id="navGroup" class="nav-buttons">
-        <div class="btn-nav" onclick="toggleMenu()"><i class="fas fa-th-large mr-2"></i> Cambiar Sección</div>
-        <div class="btn-nav" style="background: #fff;" onclick="goHome()"><i class="fas fa-home mr-2"></i> Volver al Inicio</div>
+        <div class="btn-nav" onclick="toggleMenu()"><i class="fas fa-grid-2 mr-2"></i> SECCIONES</div>
+        <div class="btn-nav" style="background: #fff;" onclick="goHome()"><i class="fas fa-home mr-2"></i> INICIO</div>
     </div>
 
     <div id="home" class="hero">
         <div class="license-card">
-            <p class="text-[10px] font-black text-yellow-500 uppercase">Maik Dev Verified License</p>
-            <p class="text-xl font-bold italic uppercase">System Developer Professional</p>
+            <p class="text-xs font-black text-yellow-500 tracking-widest uppercase mb-1 text-center">Software & Game Design</p>
+            <p class="text-2xl font-black italic uppercase text-center">MAIK DEV SPECIALIST</p>
         </div>
-        <h1 class="text-8xl font-black italic uppercase leading-none">MAIK <span class="text-yellow-400">DEV</span></h1>
-        <p class="max-w-2xl mt-6 text-gray-400 font-bold uppercase text-xs tracking-[0.2em]">
-            BoxPvP • Survival • Lobby • Optimización • Logos • Web
+        <h1 class="text-9xl font-black italic uppercase leading-none tracking-tighter">MAIK <span class="text-yellow-400">DEV</span></h1>
+        <p class="max-w-3xl mt-8 text-gray-500 font-bold uppercase text-sm tracking-[0.3em] leading-relaxed">
+            Ecuador 🇪🇨 • BoxPvP • Survival • Lobby • Soporte • Diseño • Promociones
         </p>
-        <div class="mt-12 main-menu-btn" onclick="toggleMenu()">Entrar al Catálogo</div>
+        <div class="mt-16 main-menu-btn" onclick="toggleMenu()">VER CATÁLOGO PREMIUM</div>
     </div>
 
-    <div id="fullMenu" class="full-overlay">
-        <div class="absolute top-10 right-10 text-4xl cursor-pointer text-yellow-400" onclick="closeOverlay()">×</div>
-        <h2 class="text-3xl font-black text-yellow-400 uppercase mb-10 italic">Nuestros Servicios</h2>
-        <div class="grid-menu">
-            <div class="menu-item" onclick="openSection('boxpvp')"><i class="fas fa-box text-xl mb-2 text-yellow-400"></i><p class="font-black text-[9px]">BOXPVP</p></div>
-            <div class="menu-item" onclick="openSection('survival')"><i class="fas fa-tree text-xl mb-2 text-green-500"></i><p class="font-black text-[9px]">SURVIVAL</p></div>
-            <div class="menu-item" onclick="openSection('lobby')"><i class="fas fa-door-open text-xl mb-2 text-blue-500"></i><p class="font-black text-[9px]">LOBBY</p></div>
-            <div class="menu-item" onclick="openSection('soporte')"><i class="fas fa-headset text-xl mb-2 text-red-500"></i><p class="font-black text-[9px]">SOPORTE</p></div>
-            <div class="menu-item" onclick="openSection('diseno')"><i class="fas fa-paint-brush text-xl mb-2 text-purple-500"></i><p class="font-black text-[9px]">DISEÑO & WEB</p></div>
-            <div class="menu-item" onclick="openSection('promo')"><i class="fas fa-fire text-xl mb-2 text-pink-500"></i><p class="font-black text-[9px]">PROMOS</p></div>
-            <div class="menu-item col-span-2" onclick="openSection('otros')"><i class="fas fa-ticket-alt text-xl mb-2 text-white"></i><p class="font-black text-[9px]">OTROS / CREAR TICKET</p></div>
+    <div id="fullMenu" class="fixed inset-0 bg-black/98 z-[9000] hidden flex-col items-center justify-center p-6">
+        <div class="absolute top-10 right-10 text-5xl cursor-pointer text-yellow-400" onclick="closeOverlay()">×</div>
+        <h2 class="text-4xl font-black text-white uppercase mb-12 italic tracking-widest">SERVICIOS <span class="text-yellow-400">DISPONIBLES</span></h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl">
+            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-yellow-400 transition" onclick="openSection('boxpvp')"><i class="fas fa-box text-3xl text-yellow-400 mb-4"></i><p class="font-black text-xs">BOXPVP</p></div>
+            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-green-500 transition" onclick="openSection('survival')"><i class="fas fa-tree text-3xl text-green-500 mb-4"></i><p class="font-black text-xs">SURVIVAL</p></div>
+            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-blue-500 transition" onclick="openSection('lobby')"><i class="fas fa-door-open text-3xl text-blue-500 mb-4"></i><p class="font-black text-xs">LOBBY</p></div>
+            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-red-500 transition" onclick="openSection('soporte')"><i class="fas fa-headset text-3xl text-red-500 mb-4"></i><p class="font-black text-xs">SOPORTE</p></div>
+            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-purple-500 transition" onclick="openSection('diseno')"><i class="fas fa-paint-brush text-3xl text-purple-500 mb-4"></i><p class="font-black text-xs">DISEÑO</p></div>
+            <div class="bg-zinc-900 border-2 border-zinc-800 p-8 rounded-3xl text-center cursor-pointer hover:border-pink-500 transition" onclick="openSection('promo')"><i class="fas fa-fire text-3xl text-pink-500 mb-4"></i><p class="font-black text-xs">PROMOS</p></div>
+            <div class="bg-white text-black p-6 rounded-3xl text-center cursor-pointer font-black col-span-2 md:col-span-3 text-sm hover:bg-yellow-400 transition" onclick="openSection('otros')">CREAR TICKET PERSONALIZADO / OTROS TRABAJOS</div>
         </div>
     </div>
 
-    <section id="sec-boxpvp" class="section-container"><h2 class="text-4xl font-black text-center mb-12 text-yellow-400 italic">BOXPVP PLANS</h2><div class="plan-grid" id="grid-boxpvp"></div></section>
-    <section id="sec-survival" class="section-container"><h2 class="text-4xl font-black text-center mb-12 text-green-500 italic">SURVIVAL PRO</h2><div class="plan-grid" id="grid-survival"></div></section>
-    <section id="sec-lobby" class="section-container"><h2 class="text-4xl font-black text-center mb-12 text-blue-500 italic">LOBBY SYSTEMS</h2><div class="plan-grid" id="grid-lobby"></div></section>
-    <section id="sec-soporte" class="section-container"><h2 class="text-4xl font-black text-center mb-12 text-red-500 italic">TECHNICAL SUPPORT</h2><div class="plan-grid" id="grid-soporte"></div></section>
-    <section id="sec-diseno" class="section-container"><h2 class="text-4xl font-black text-center mb-12 text-purple-500 italic">DESIGN & WEB</h2><div class="plan-grid" id="grid-diseno"></div></section>
-    <section id="sec-promo" class="section-container"><h2 class="text-4xl font-black text-center mb-12 text-pink-500 italic">SPECIAL PROMOS</h2><div class="plan-grid" id="grid-promo"></div></section>
+    <section id="sec-boxpvp" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-yellow-400 italic">BOXPVP CONFIGURATION</h2><div class="plan-grid" id="grid-boxpvp"></div></section>
+    <section id="sec-survival" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-green-500 italic">SURVIVAL SYSTEMS</h2><div class="plan-grid" id="grid-survival"></div></section>
+    <section id="sec-lobby" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-blue-500 italic">LOBBY & CONNECTIVITY</h2><div class="plan-grid" id="grid-lobby"></div></section>
+    <section id="sec-soporte" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-red-500 italic">TECHNICAL SUPPORT</h2><div class="plan-grid" id="grid-soporte"></div></section>
+    <section id="sec-diseno" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-purple-500 italic">VISUAL DESIGN</h2><div class="plan-grid" id="grid-diseno"></div></section>
+    <section id="sec-promo" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-pink-500 italic">MEGA COMBOS MIX</h2><div class="plan-grid" id="grid-promo"></div></section>
     
     <section id="sec-otros" class="section-container">
-        <h2 class="text-4xl font-black text-center mb-12 text-white italic uppercase">Crear Ticket Especial</h2>
-        <div class="max-w-xl mx-auto bg-zinc-900/50 p-10 rounded-3xl border border-white/10">
-            <p class="text-gray-400 font-bold mb-6 text-xs uppercase tracking-widest text-center">Describe tu proyecto y te enviaré un presupuesto personalizado por correo.</p>
-            <input type="text" id="otherName" placeholder="Tu Nombre / Discord" class="form-input">
-            <textarea id="otherMsg" placeholder="¿Qué necesitas exactamente? (Ej: Una Network, Plugin propio, etc...)" class="form-input h-40"></textarea>
-            <button class="main-menu-btn w-full" onclick="sendTicket()">Enviar Ticket a Maik</button>
+        <h2 class="text-5xl font-black text-center mb-16 text-white italic">PROYECTOS ESPECIALES</h2>
+        <div class="max-w-2xl mx-auto bg-zinc-900 p-12 rounded-[40px] border-4 border-dashed border-zinc-700">
+            <p class="text-center text-gray-400 font-bold mb-8 uppercase text-xs tracking-widest">Si buscas una Network completa o algo que no está aquí, escribe directamente.</p>
+            <input type="text" id="otherName" placeholder="TU NOMBRE / DISCORD" class="form-input">
+            <textarea id="otherMsg" placeholder="CUÉNTAME LOS DETALLES DE TU PROYECTO..." class="form-input h-48"></textarea>
+            <button class="main-menu-btn w-full" onclick="sendTicket()">ENVIAR SOLICITUD A MAIK</button>
         </div>
     </section>
 
-    <div id="buyModal" class="payment-modal">
-        <div class="modal-content">
-            <div id="successMsg" style="display:none;">
-                <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
-                <h3 class="text-2xl font-black text-white italic mb-2">¡PEDIDO ENVIADO!</h3>
-                <p class="text-gray-400 font-bold text-xs">Maik se pondrá en contacto contigo pronto.</p>
-                <button class="main-menu-btn mt-8 py-3 text-sm px-10" onclick="location.reload()">Cerrar</button>
-            </div>
-            <div id="formContent">
-                <h3 id="planName" class="text-xl font-black text-yellow-400 uppercase italic"></h3>
-                <p id="planPrice" class="text-white font-black mb-6 text-2xl"></p>
-                <input type="text" id="custName" placeholder="Tu Nombre / Discord" class="form-input">
-                <select id="payMethod" class="form-input">
-                    <option value="PayPal">PayPal</option>
-                    <option value="Binance">Binance Pay</option>
-                    <option value="Transferencia">Banco (Ecuador 🇪🇨)</option>
-                </select>
-                <button class="main-menu-btn w-full py-4 text-lg" onclick="checkout()">Confirmar Compra</button>
-                <p class="mt-4 text-red-500 font-bold cursor-pointer text-xs uppercase" onclick="closeModal()">Cancelar</p>
-            </div>
+    <div id="buyModal" class="fixed inset-0 bg-black/98 z-[10000] hidden items-center justify-center p-6">
+        <div class="bg-zinc-900 border-4 border-yellow-400 p-10 rounded-[50px] max-w-lg w-full text-center">
+            <h3 id="planName" class="text-2xl font-black text-yellow-400 uppercase italic"></h3>
+            <p id="planPrice" class="text-white font-black text-5xl my-6"></p>
+            <input type="text" id="custName" placeholder="TU NOMBRE O DISCORD" class="form-input">
+            <button class="main-menu-btn w-full py-5 text-xl" onclick="checkout()">ORDENAR POR WHATSAPP</button>
+            <p class="mt-6 text-red-500 cursor-pointer text-xs font-black uppercase tracking-widest" onclick="document.getElementById('buyModal').style.display='none'">← REGRESAR</p>
         </div>
     </div>
 
     <script>
-        // DATA ÚNICA PARA CADA CATEGORÍA
-        const content = {
+        // DATA ULTRA DETALLADA - 24 ITEMS POR CATEGORÍA PARA CUBRIR 12 PLANES (2 POR PLAN)
+        const detailedSpecs = {
             boxpvp: [
-                {p:5, n:"Pack Starter", f:["Minas Básicas", "Kits de Inicio", "Scoreboard Simple"]},
-                {p:15, n:"Pack Junior", f:["MineResetLite Config", "ZNPCs Shop", "CombatLogX", "Hologramas"]},
-                {p:25, n:"Pack Advanced", f:["Rankup System", "PVP Crystals", "Cajas de Recompensa", "Tablist Animado"]},
-                {p:45, n:"Pack Pro", f:["Custom Mines HD", "Anti-Kill Farm", "DeluxeMenus", "Optimización TPS"]},
-                {p:65, n:"Pack Elite", f:["Economy Balance", "Vouchers", "Anuncios Auto", "Sistema de Ranks"]},
-                {p:80, n:"Pack Maik Dev", f:["Full Setup 1.20+", "Anti-Cheat VIP", "Soporte 30 Días", "Setup Tebex"]}
+                "Protección de Spawn (WorldGuard)", "Configuración de Minas A y B",
+                "Kits de Inicio Balanceados", "Scoreboard Animado (TitleManager)",
+                "Minas Automáticas (MineResetLite)", "NPCs de Venta (ZNPCs + ShopGUI)",
+                "Combate Anti-Log (CombatLogX)", "Hologramas HD (DecentHolograms)",
+                "Sistema de Ranks (Rankup)", "Cristales de Poder Custom",
+                "Cajas de Recompensas (ExcellentCrates)", "Tablist Personalizado con Logos",
+                "Minas de Evento Especiales", "Anti-Kill Farm (Prevención)",
+                "Menús Interactivos (DeluxeMenus)", "Optimización de TPS (LaggRemover)",
+                "Vouchers de Rango Canjeables", "Anuncios Globales Programados",
+                "Economía Avanzada (Vault)", "Soporte Técnico Post-Entrega",
+                "Anti-Cheat (Matrix/Grim) Config", "Skins Restorer para Usuarios",
+                "Sistema de Logeo (AuthMe SQL)", "Tienda Tebex/Buycraft Setup"
             ],
             survival: [
-                {p:5, n:"Base Survival", f:["Claims Lands", "EssentialsX", "Warps"]},
-                {p:20, n:"Survival Eco", f:["Tienda Virtual", "Subastas AH", "Sistema de Clanes"]},
-                {p:40, n:"Survival RPG", f:["Misiones", "McMMO", "Habilidades Custom", "Mochilas"]},
-                {p:60, n:"Survival Pro", f:["Mundo Pre-gen", "Mascotas", "Protección Avanzada", "Jobs"]},
-                {p:80, n:"Survival Ultimate", f:["Optimización Total", "Seguridad SQL", "Web Link", "Setup Tebex"]}
+                "Claims de Terrenos (Lands)", "EssentialsX Configuración Full",
+                "Warps de Comunidad", "Tienda Virtual Dinámica",
+                "Subastas de Jugadores (AH)", "Sistema de Clanes con Alianzas",
+                "Misiones Diarias (Quests)", "Habilidades RPG (McMMO)",
+                "Habilidades de Combate Custom", "Mochilas Virtuales (MinePacks)",
+                "Mundo Pre-generado (Chunky)", "Mascotas de Compañía",
+                "Sistema de Empleos (Jobs)", "Backups Diarios Automáticos",
+                "Base de Datos MySQL", "Integración con Tebex",
+                "Link de Servidor con Web", "Protección Anti-Griefing",
+                "Mensajes de Bienvenida Únicos", "Vanish Pro para Staff",
+                "Soporte 24/7 en Discord", "Optimización de Ram/CPU",
+                "Seguridad Anti-Exploits", "Chat Formateado por Rango"
             ],
             lobby: [
-                {p:5, n:"Simple Lobby", f:["Spawn Protect", "Join Messages"]},
-                {p:20, n:"Lobby Connect", f:["Selector de Server", "BungeeGuard", "SkinsRestorer"]},
-                {p:40, n:"Lobby Fun", f:["Gadgets", "Parkour System", "Pets Lobby", "Trampolines"]},
-                {p:70, n:"Network Lobby", f:["Anti-Bot Ultra", "AuthMe SQL", "Anuncios Globales", "Seguridad Capa 7"]}
+                "Spawn Fijo con Efectos", "Mensajes de Join/Quit",
+                "Selector de Servidores (Menus)", "BungeeCord/Velocity Setup",
+                "Skins para No-Premium", "AuthMe (Login Seguro)",
+                "Gadgets Diversos (Cosméticos)", "Parkour con Top Tiempos",
+                "Mascotas de Lobby", "Trampolines Impulsores",
+                "Protección Anti-Bots", "Anuncios Automáticos",
+                "Seguridad de Proxy", "Titles en Pantalla HD",
+                "Bossbar de Información", "NPCs de Selección Animados",
+                "Selector Pro con Texturas", "BungeeGuard (Seguridad Proxy)",
+                "Layout de Tablist Global", "Portales de Teletransporte",
+                "Música de Fondo (Noteblock)", "Scoreboard de Conexión",
+                "Welcome Message Animado", "Reglas en Menú Interactivo"
             ],
             soporte: [
-                {p:5, n:"Quick Fix", f:["Arreglo Error Único", "Limpieza Consola"]},
-                {p:15, n:"Perms Setup", f:["LuckPerms Completo", "Grupos y Pesos"]},
-                {p:30, n:"Safety Pack", f:["Backups Automáticos", "Protección Exploit", "Anti-Crash"]},
-                {p:50, n:"Perfomance Pro", f:["JVM Tuning Linux", "Fix Lag TPS", "Audit de Plugins"]}
+                "Corrección de Errores Java", "Limpieza de Consola",
+                "Permisos LuckPerms Pro", "Jerarquía de Grupos",
+                "Backups de Seguridad", "Instalación de MySQL",
+                "Protección Anti-Bot Layer 7", "Optimización de Archivos",
+                "Ajustes de JVM (Startup Scripts)", "Arreglo de Lag TPS",
+                "Auditoría de Plugins", "Seguridad de Panel (Pterodactyl)",
+                "Actualización de Versión", "Link con Discord (SRV)",
+                "Configuración Tebex Pro", "Web Hosting Setup",
+                "Fix de Plugins Antiguos", "Traducción al Español Full",
+                "Análisis de Logs Pesados", "Depuración de Scripts",
+                "Fix de Crashing de Server", "Cierre de Exploits Críticos",
+                "Ajustes de Host (Linux/Win)", "Asesoría VIP de Gestión"
             ],
             diseno: [
-                {p:10, n:"Logo Simple", f:["Logo PNG HD", "Icono Servidor"]},
-                {p:20, n:"Social Pack", f:["Banner Discord", "Banner Web", "Firma Animada"]},
-                {p:45, n:"Store Design", f:["Tienda Tebex Setup", "Diseño de Categorías", "UI Custom"]},
-                {p:80, n:"Web Developer", f:["Sitio Web HTML/CSS", "Hosting Setup", "SEO MC"]}
+                "Logo en PNG Alta Definición", "Icono de Servidor (64x64)",
+                "Banner para Discord", "Banner para Web/Foros",
+                "Diseño de Tienda Tebex", "Interfaz de Menús (UI)",
+                "Fondo Personalizado Web", "Firma Animada",
+                "Iconos para Rangos", "Sitio Web Básico (HTML)",
+                "SEO para Servidores", "Configuración de Hosting",
+                "Logo Animado (GIF)", "Banner para YouTube",
+                "Skin de Minecraft Custom", "Resource Pack Base",
+                "GUI de Menús Personalizada", "Tags de Chat Estéticos",
+                "CSS Custom para Web", "Portafolio Personal",
+                "Avatar para Redes Sociales", "Template de Anuncio",
+                "Wiki del Servidor Setup", "Panel Pterodactyl Skin"
             ]
         };
 
-        function toggleMenu() { document.getElementById('fullMenu').classList.add('active'); }
-        function closeOverlay() { document.getElementById('fullMenu').classList.remove('active'); }
-        function closeModal() { document.getElementById('buyModal').style.display = 'none'; }
-        
-        function goHome() {
+        function build() {
+            Object.keys(detailedSpecs).forEach(sec => {
+                const grid = document.getElementById('grid-' + sec);
+                for(let i=0; i<12; i++) {
+                    let p = (i === 0) ? 5 : Math.min(10 + (i*6.5), 80);
+                    let featuresCount = (i + 1) * 2;
+                    let myFeatures = detailedSpecs[sec].slice(0, featuresCount);
+                    grid.innerHTML += `
+                    <div class="plan-card">
+                        <div class="price-tag">$${Math.floor(p)}</div>
+                        <h4 class="font-black text-yellow-500 text-xs mb-6 uppercase tracking-widest">NIVEL PROFESIONAL #${i+1}</h4>
+                        <div class="flex-grow">
+                            ${myFeatures.map(f => `<div class="feature"><i class="fas fa-check-double"></i> ${f}</div>`).join('')}
+                        </div>
+                        <button class="main-menu-btn w-full mt-10 py-3 text-sm rounded-2xl" onclick="buy('${sec.toUpperCase()} NIVEL ${i+1}', ${Math.floor(p)})">ADQUIRIR PLAN</button>
+                    </div>`;
+                }
+            });
+
+            // MEGA COMBOS
+            const pg = document.getElementById('grid-promo');
+            const promos = [
+                {n:"COMBO STARTER MC", p:45, d:"BoxPvP Config + Logo PNG + Icono + Soporte 1 Sem."},
+                {n:"COMBO SURVIVAL PRO", p:70, d:"Survival Full + Tienda Tebex + Banner + Optimización"},
+                {n:"COMBO NETWORK TOTAL", p:80, d:"Lobby + BoxPvP + Survival + Soporte VIP + Web Base"}
+            ];
+            promos.forEach(c => {
+                pg.innerHTML += `<div class="plan-card border-pink-500 bg-pink-500/5"><div class="price-tag text-pink-500">$${c.p}</div><h4 class="text-white font-black mb-4 uppercase text-sm">${c.n}</h4><div class="feature"><i class="fas fa-star text-pink-500"></i> ${c.d}</div><button class="main-menu-btn w-full mt-10 py-3 text-sm border-pink-500" onclick="buy('${c.n}', ${c.p})">ORDENAR COMBO</button></div>`;
+            });
+        }
+
+        // FUNCIONES DE CONTROL
+        let curP, curPr;
+        function buy(n, p) { curP=n; curPr=p; document.getElementById('planName').innerText=n; document.getElementById('planPrice').innerText="$"+p+".00"; document.getElementById('buyModal').style.display='flex'; }
+        function toggleMenu() { document.getElementById('fullMenu').style.display = 'flex'; }
+        function closeOverlay() { document.getElementById('fullMenu').style.display = 'none'; }
+        function goHome() { 
             document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active'));
             document.getElementById('home').style.display = 'flex';
             document.getElementById('navGroup').style.display = 'none';
         }
-
         function openSection(id) {
             document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active'));
             document.getElementById('home').style.display = 'none';
@@ -180,53 +230,15 @@
             document.getElementById('navGroup').style.display = 'flex';
             closeOverlay(); window.scrollTo(0,0);
         }
-
-        function build() {
-            Object.keys(content).forEach(sec => {
-                const grid = document.getElementById('grid-' + sec);
-                content[sec].forEach((plan) => {
-                    grid.innerHTML += `<div class="plan-card">
-                        <div class="price-tag">$${plan.p}</div>
-                        <h4 class="font-black text-white text-xs mb-4 uppercase text-yellow-500">${plan.n}</h4>
-                        <div class="flex-grow">${plan.f.map(f => `<div class="feature"><i class="fas fa-check-circle text-yellow-400"></i> ${f}</div>`).join('')}</div>
-                        <button class="main-menu-btn w-full mt-8 py-3 text-sm rounded-xl" onclick="buy('${plan.n} (${sec.toUpperCase()})', ${plan.p})">Seleccionar Plan</button>
-                    </div>`;
-                });
-            });
-
-            // PROMOS
-            const pg = document.getElementById('grid-promo');
-            const promos = [
-                {n:"COMBO BOXPVP + LOGO", p:45, d:"Setup BoxPvP Completo + Logo HD", s:2},
-                {n:"SURVIVAL + TIENDA", p:75, d:"Setup Survival + Config Tebex Store", s:3},
-                {n:"NETWORK MAESTRA", p:80, d:"Lobby + BoxPvP + Survival + Soporte", s:1}
-            ];
-            promos.forEach(pr => {
-                pg.innerHTML += `<div class="plan-card border-pink-500/50"><div class="price-tag text-pink-500">$${pr.p}</div><h4 class="text-white font-black mb-2">${pr.n}</h4><div class="feature">${pr.d}</div><div class="text-[9px] text-pink-500 font-bold mt-4 uppercase">STOCK: ${pr.s} DISPONIBLES</div><button class="main-menu-btn w-full mt-6 py-2 text-xs" onclick="buy('${pr.n}', ${pr.p})">Comprar Promo</button></div>`;
-            });
-        }
-
-        let curP, curPr;
-        function buy(n, p) { curP=n; curPr=p; document.getElementById('planName').innerText=n; document.getElementById('planPrice').innerText="$"+p+".00 USD"; document.getElementById('formContent').style.display='block'; document.getElementById('successMsg').style.display='none'; document.getElementById('buyModal').style.display='flex'; }
-
         function checkout() {
-            const u = document.getElementById('custName').value;
-            const m = document.getElementById('payMethod').value;
-            if(!u) return alert("Escribe tu nombre.");
-            const body = `PEDIDO MAIK DEV\n----------------\nPlan: ${curP}\nPrecio: $${curPr}\nPago: ${m}\nCliente: ${u}`;
-            if(m === 'PayPal') window.open(`https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=gancinomaikel@gmail.com&item_name=${encodeURIComponent(curP)}&amount=${curPr}&currency_code=USD`);
-            else window.open(`https://wa.me/593987749885?text=${encodeURIComponent(body)}`);
-            document.getElementById('formContent').style.display='none';
-            document.getElementById('successMsg').style.display='block';
+            const u = document.getElementById('custName').value || "Interesado";
+            window.open(`https://wa.me/593987749885?text=Hola%20Maik!%20Soy%20${u},%20me%20interesa%20contratar:%20${curP}%20con%20valor%20de%20$${curPr}`);
         }
-
         function sendTicket() {
             const n = document.getElementById('otherName').value;
             const m = document.getElementById('otherMsg').value;
-            if(!n || !m) return alert("Completa los campos.");
-            window.location.href = `mailto:chimbayuliana@gmail.com?subject=TICKET ESPECIAL MAIK DEV&body=Cliente: ${n}%0D%0ADetalles: ${m}`;
+            window.location.href = `mailto:chimbayuliana@gmail.com?subject=TICKET_MAIKDEV&body=Nombre: ${n}%0AMensaje: ${m}`;
         }
-
         build();
     </script>
 </body>
