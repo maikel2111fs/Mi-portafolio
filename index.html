@@ -3,38 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | Catálogo Global</title>
+    <title>MAIK DEV | Catálogo Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         
-        /* Navbar */
-        .nav-link { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #666; transition: 0.3s; }
-        .nav-link:hover { color: #facc15; }
+        :root { --yellow: #facc15; --bg: #000; --card: #0a0a0a; --border: #1a1a1a; }
 
-        /* Títulos */
-        .section-header { margin-bottom: 4rem; }
-        .section-title { font-size: clamp(40px, 8vw, 80px); font-weight: 900; text-transform: uppercase; font-style: italic; line-height: 0.9; }
-        .section-subtitle { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #facc15; letter-spacing: 3px; margin-bottom: 10px; display: block; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* Grid de 12 planes */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        /* HEADER LIMPIO */
+        nav { background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .nav-link { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #666; transition: 0.3s; }
+        .nav-link:hover { color: var(--yellow); }
 
-        /* Card Estilo Holy */
-        .card-plan { 
-            background: #0a0a0a; 
-            border: 1px solid #1a1a1a; 
-            border-radius: 1.5rem; 
-            padding: 2rem; 
-            transition: 0.3s;
+        /* TÍTULOS ESTILO HOLY */
+        .section-tag { font-size: 10px; font-weight: 900; color: var(--yellow); letter-spacing: 2px; text-transform: uppercase; border-left: 3px solid var(--yellow); padding-left: 10px; }
+        .section-title { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; font-style: italic; line-height: 0.9; margin-bottom: 3rem; text-transform: uppercase; }
+
+        /* GRID RESPONSIVE PARA 12 PLANES */
+        .plans-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 100px;
+        }
+
+        /* CARDS SIN ERRORES VISUALES */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px;
             display: flex;
             flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .card-plan:hover { border-color: #facc15; transform: translateY(-5px); background: #0f0f0f; }
 
-        .plan-name { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #444; margin-bottom: 5px; }
+        .card:hover { border-color: var(--yellow); transform: translateY(-5px); }
+
+        .plan-level { color: #555; font-size: 11px; font-weight: 900; text-transform: uppercase; }
+        .plan-name { font-size: 24px; font-weight: 900; margin-bottom: 15px; }
+        .plan-price { font-size: 42px; font-weight: 900; margin-bottom: 25px; }
+        .plan-price span { color: var(--yellow); font-size: 20px; vertical-align: top; }
+
+        .feature { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 10px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        .feature i { color: var(--yellow); }
+
+        .btn-buy {
+            background: var(--yellow);
+            color: #000;
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin-top: auto;
+            transition: 0.2s;
+        }
+
+        .btn-buy:hover { background: #fff; transform: scale(1.03); }
+
+        /* HIGHLIGHT PARA PLAN DESTACADO */
+        .featured { border: 2px solid var(--yellow); background: radial-gradient(circle at top right, #1a1a00, #0a0a0a); }
+        .badge { background: var(--yellow); color: #000; font-size: 9px; font-weight: 900; padding: 4px 12px; border-radius: 20px; position: absolute; top: 20px; right: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="bg-yellow-400 text-black font-black px-2 py-1 rounded">M</div>
+            <span class="text-xl font-black tracking-tighter">MAIK <span class="text-gray-600">DEV</span></span>
+        </div>
+        <div class="hidden md:flex gap-8">
+            <a href="#boxpvp" class="nav-link">BoxPvP</a>
+            <a href="#survival" class="nav-link">Survival</a>
+            <a href="#lobby" class="nav-link">Lobby</a>
+            <a href="#config" class="nav-link">Config</a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-40">
+
+        <script>
+            function createPlans(id, tag, title, prefix, prices) {
+                document.write(`
+                    <section id="${id}">
+                        <p class="section-tag">${tag}</p>
+                        <h2 class="section-title">${title}</h2>
+                        <div class="plans-grid">
+                `);
+                
+                for (let i = 1; i <= 12; i++) {
+                    const isFeatured = i === 3 || i === 7 || i === 11;
+                    document.write(`
+                        <div class="card ${isFeatured ? 'featured' : ''}">
+                            ${isFeatured ? '<span class="badge">RECOMENDADO</span>' : ''}
+                            <p class="plan-level">NIVEL ${i}</p>
+                            <h3 class="plan-name">${prefix} ${i}</h3>
+                            <div class="plan-price"><span>$</span>${prices[i-1] || (i * 10)}.00</div>
+                            <div class="mb-8">
+                                <div class="feature"><i class="fas fa-check"></i> Configuración Optimizada</div>
+                                <div class="feature"><i class="fas fa-check"></i> Soporte Especializado</div>
+                                <div class="feature"><i class="fas fa-check"></i> Plugins Premium Setup</div>
+                            </div>
+                            <a href="#" class="btn-buy">Adquirir</a>
+                        </div>
+                    `);
+                }
+                document.write(`</div></section>`);
+            }
+
+            // SECCIÓN 1: BOXPVP
+            createPlans('boxpvp', 'Modalidad Combate', 'BOX<span class="text-yellow-400">PVP</span>', 'Plan Carbón', [15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100]);
+            
+            // SECCIÓN 2: SURVIVAL
+            createPlans('survival', 'Aventura RPG', 'SURVI<span class="text-yellow-400">VAL</span>', 'Survival Elite', [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150]);
+
+            // SECCIÓN 3: LOBBY
+            createPlans('lobby', 'Conexión Hub', 'LOB<span class="text-yellow-400">BY</span>', 'Lobby Pro', [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]);
+
+            // SECCIÓN 4: CONFIGURACIÓN
+            createPlans('config', 'Soporte Técnico', 'CON<span class="text-yellow-400">FIG</span>', 'Fix & Tech', [5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 80, 100]);
+        </script>
+
+    </main>
+
+    <footer class="py-20 text-center border-t border-white/5 opacity-50 text-[10px] font-black uppercase tracking-[0.5em]">
+        Maik Dev &copy; 2026 — Todos los derechos reservados
+    </footer>
+
+</body>
+</html>        .plan-name { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #444; margin-bottom: 5px; }
         .plan-price { font-size: 32px; font-weight: 900; margin-bottom: 15px; }
         .plan-price span { color: #facc15; font-size: 18px; margin-right: 2px; }
 
