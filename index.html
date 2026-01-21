@@ -3,169 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMAL EMPIRE | PRO V11</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <title>SMAL EMPIRE | MEGA CASINO V12</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD"></script>
     <style>
-        :root { --bg: #040609; --card: #0d1117; --accent: #00ff59; --gold: #f5d033; --text: #ffffff; --border: #21262d; }
+        :root { --bg: #020406; --card: #0d1117; --accent: #00ff59; --gold: #f5d033; --red: #ff4747; --text: #ffffff; --border: #21262d; }
+        * { box-sizing: border-box; transition: 0.2s; }
         body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
         
-        /* Sidebar Estilo Pro */
-        .sidebar { width: 280px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; }
-        .nav-item { padding: 20px; cursor: pointer; border-left: 4px solid transparent; color: #8b949e; font-weight: bold; }
-        .nav-item.active { background: #161b22; color: var(--accent); border-left-color: var(--accent); }
+        /* SIDEBAR */
+        .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; overflow-y: auto; }
+        .nav-item { padding: 15px 25px; cursor: pointer; color: #8b949e; font-weight: bold; border-left: 4px solid transparent; display: flex; align-items: center; gap: 10px; }
+        .nav-item:hover, .nav-item.active { background: #161b22; color: var(--accent); border-left-color: var(--accent); }
 
-        /* Main Area */
-        .main { flex: 1; padding: 40px; overflow-y: auto; background: radial-gradient(circle at top, #0f1a14, var(--bg)); }
-        .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.3s ease; }
+        /* MAIN */
+        .main { flex: 1; padding: 30px; overflow-y: auto; background: radial-gradient(circle at top right, #0a1f10, var(--bg)); }
+        .view { display: none; max-width: 1000px; margin: 0 auto; }
+        .view.active { display: block; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* UI COMPONENTS */
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 16px; padding: 20px; backdrop-filter: blur(10px); }
+        .btn { background: var(--accent); color: #000; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; }
+        .btn-gold { background: var(--gold); }
+        .grid-games { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
         
-        /* Componentes de Juego */
-        .glass { background: rgba(13, 25, 20, 0.6); border: 1px solid var(--border); border-radius: 15px; padding: 25px; margin-bottom: 20px; }
-        .btn { background: var(--accent); color: #000; border: none; padding: 15px 30px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; text-transform: uppercase; }
-        .btn:disabled { opacity: 0.5; }
+        /* AUTH */
+        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        input { background: #000; border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; }
 
-        .stat-card { border-left: 4px solid var(--gold); padding-left: 15px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Estilo para los Planes de 80 USD */
-        .plan-card { border: 2px solid var(--gold); text-align: center; padding: 20px; border-radius: 15px; }
+        /* GAMES & BOXES */
+        .box-card { text-align: center; border: 2px solid var(--gold); padding: 15px; border-radius: 12px; }
+        .item-card { background: #161b22; padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
 
-<div id="auth-screen" style="position:fixed; inset:0; background:var(--bg); z-index:100; display:flex; align-items:center; justify-content:center;">
-    <div class="glass" style="width:350px; text-align:center;">
+<div id="auth-screen">
+    <div class="glass" style="width: 350px; text-align: center;">
         <h1 style="font-family:'Orbitron'; color:var(--accent)">SMAL EMPIRE</h1>
-        <input type="text" id="username" placeholder="Usuario" style="width:100%; padding:12px; margin-bottom:10px; background:#000; border:1px solid var(--border); color:#fff;">
-        <button class="btn" onclick="app.login()">ENTRAR</button>
+        <div id="auth-form">
+            <input type="text" id="log-user" placeholder="Nombre de Usuario">
+            <input type="password" id="log-pass" placeholder="Contraseña">
+            <button class="btn" onclick="core.handleAuth('login')">INICIAR SESIÓN</button>
+            <button class="btn" style="background:transparent; color:white; margin-top:10px;" onclick="core.handleAuth('reg')">REGISTRARSE</button>
+        </div>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div style="padding:30px; text-align:center;">
-        <div id="u-ava" style="width:60px; height:60px; background:var(--accent); color:#000; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-weight:900; font-size:1.5rem;">?</div>
-        <div id="u-name" style="font-weight:800;">USUARIO</div>
-        <div style="color:var(--gold); font-size:1.4rem; font-weight:900; margin-top:10px;">🪙 <span id="u-bal">0</span></div>
+    <div style="padding:25px; text-align:center; border-bottom: 1px solid var(--border);">
+        <div id="u-ava" style="width:60px; height:60px; background:var(--accent); color:black; border-radius:15px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-weight:900; font-size:1.5rem;">?</div>
+        <div id="u-name" style="font-weight:800; letter-spacing:1px;">USUARIO</div>
+        <div style="color:var(--gold); font-weight:900; font-size:1.4rem;">🪙 <span id="u-bal">0</span></div>
     </div>
     <nav>
-        <div class="nav-item active" onclick="app.nav('lobby')">LOBBY</div>
-        <div class="nav-item" onclick="app.nav('slots')">🎰 SLOTS</div>
-        <div class="nav-item" onclick="app.nav('shop')">🛒 TIENDA (VIP)</div>
-        <div class="nav-item" id="admin-nav" style="display:none; color:var(--accent)" onclick="app.nav('admin')">🛠 PANEL MAESTRO</div>
-        <div class="nav-item" style="color:#ff4747; margin-top:auto" onclick="location.reload()">SALIR</div>
+        <div class="nav-item active" onclick="core.nav('lobby')">🏠 LOBBY</div>
+        <div class="nav-item" onclick="core.nav('games')">🎰 10 JUEGOS</div>
+        <div class="nav-item" onclick="core.nav('boxes')">🎁 CAJAS MISTERIOSAS</div>
+        <div class="nav-item" onclick="core.nav('inventory')">🎒 INVENTARIO</div>
+        <div class="nav-item" onclick="core.nav('trades')">🤝 TRADEOS</div>
+        <div class="nav-item" onclick="core.nav('shop')">💰 COMPRAR TOKENS</div>
+        <div id="adm-link" class="nav-item" style="display:none; color:var(--accent)" onclick="core.nav('admin')">🛠 ADMIN</div>
+        <div class="nav-item" style="color:var(--red); margin-top:auto" onclick="location.reload()">🚪 SALIR</div>
     </nav>
 </aside>
 
 <main class="main">
     <div id="v-lobby" class="view active">
-        <h1>BIENVENIDO AL IMPERIO</h1>
+        <h1 style="font-family:'Orbitron';">EL <span style="color:var(--accent)">IMPERIO</span> TE ESPERA</h1>
         <div class="glass">
-            <h3>Estado del Sistema</h3>
-            <p>Contratos API cargados (Zod/Drizzle Logic). Listo para transacciones.</p>
+            <h3>Novedades 2026</h3>
+            <p>Sistema de tradeo entre jugadores activo. Reclama tus items al correo oficial.</p>
         </div>
     </div>
 
-    <div id="v-slots" class="view">
-        <h1>🎰 SLOTS PRO</h1>
-        <div class="glass" style="display:flex; justify-content:center; gap:20px; font-size:4rem; margin-bottom:20px;">
-            <div id="r1">💎</div><div id="r2">💎</div><div id="r3">💎</div>
+    <div id="v-games" class="view">
+        <h1>SALA DE JUEGOS</h1>
+        <div class="grid-games" id="games-list">
+            </div>
+    </div>
+
+    <div id="v-boxes" class="view">
+        <h1>CAJAS MISTERIOSAS</h1>
+        <div class="grid-games" id="boxes-list"></div>
+    </div>
+
+    <div id="v-inventory" class="view">
+        <h1>MI INVENTARIO</h1>
+        <div id="inv-list"></div>
+    </div>
+
+    <div id="v-trades" class="view">
+        <h1>SISTEMA DE TRADEO</h1>
+        <div class="glass">
+            <input type="text" id="trade-user" placeholder="Nombre del otro jugador">
+            <button class="btn" onclick="core.createTrade()">INICIAR INTERCAMBIO</button>
         </div>
-        <button class="btn" id="spin-btn" onclick="app.playSlots()">APOSTAR 50 TOKENS</button>
+        <div id="pending-trades" style="margin-top:20px;"></div>
     </div>
 
     <div id="v-shop" class="view">
-        <h1>TIENDA ELITE</h1>
-        <div class="plan-card">
-            <h2>PAQUETE INVERSIONISTA</h2>
-            <p style="font-size:2rem; color:var(--gold);">80.00 USD</p>
-            <p>Incluye: 10,000 Tokens + Rango VIP</p>
-            <button class="btn" onclick="window.open('https://wa.me/593987749885?text=Hola, quiero el plan de 80 USD')">COMPRAR POR WHATSAPP</button>
-        </div>
+        <h1>TIENDA DE TOKENS (1 USD = 10 🪙)</h1>
+        <div id="paypal-button-container"></div>
     </div>
 
     <div id="v-admin" class="view">
         <h1>PANEL MAESTRO</h1>
         <div class="glass">
-            <h3>Gestión de Perfiles (Drizzle Schema)</h3>
-            <input type="text" id="adm-u" placeholder="Usuario" style="width:100%; padding:10px; margin-bottom:10px; background:#000; border:1px solid var(--border); color:#fff;">
-            <input type="number" id="adm-a" placeholder="Cantidad de Tokens" style="width:100%; padding:10px; margin-bottom:10px; background:#000; border:1px solid var(--border); color:#fff;">
-            <button class="btn" onclick="app.adminAdd()">CARGAR TOKENS</button>
+            <h3>Configurar Cajas</h3>
+            <input type="text" id="box-name" placeholder="Nombre de la Caja">
+            <input type="text" id="box-items" placeholder="Items (separados por coma)">
+            <input type="number" id="box-price" placeholder="Precio en Tokens">
+            <button class="btn" onclick="core.addBox()">AÑADIR CAJA</button>
         </div>
     </div>
 </main>
 
 <script>
-    // Siguiendo tu esquema de API Contract (Profile/Transaction)
-    const app = {
-        db: JSON.parse(localStorage.getItem('smal_empire_v11')) || {
-            profiles: [{userId: 'maestro', balance: 5000, isAdmin: true}],
-            transactions: []
-        },
-        user: null,
+// CONFIGURACIÓN Y LÓGICA CORE
+const core = {
+    db: JSON.parse(localStorage.getItem('smal_db_v12')) || {
+        users: [{u:'maestro', p:'Elite2026', bal:99999, inv:[], admin:true}],
+        boxes: [{name: 'Caja Inicial', price: 100, items: ['Reloj de Oro', 'Skins VIP', 'Token x500']}],
+        trades: []
+    },
+    currentUser: null,
+    
+    save() { localStorage.setItem('smal_db_v12', JSON.stringify(this.db)); this.updateUI(); },
 
-        login() {
-            const name = document.getElementById('username').value.trim().toLowerCase();
-            if(!name) return;
-            let profile = this.db.profiles.find(p => p.userId === name);
-            if(!profile) {
-                profile = { userId: name, balance: 1000, isAdmin: false, createdAt: new Date() };
-                this.db.profiles.push(profile);
-            }
-            this.user = profile;
-            document.getElementById('auth-screen').style.display = 'none';
-            if(profile.isAdmin) document.getElementById('admin-nav').style.display = 'block';
-            this.updateUI();
-            this.save();
-        },
+    handleAuth(type) {
+        const u = document.getElementById('log-user').value.toLowerCase();
+        const p = document.getElementById('log-pass').value;
+        if(!u || !p) return;
 
-        nav(viewId) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('v-' + viewId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        },
-
-        updateUI() {
-            document.getElementById('u-name').innerText = this.user.userId.toUpperCase();
-            document.getElementById('u-bal').innerText = Number(this.user.balance).toLocaleString();
-            document.getElementById('u-ava').innerText = this.user.userId[0].toUpperCase();
-        },
-
-        playSlots() {
-            if(this.user.balance < 50) return alert("Saldo insuficiente");
-            this.user.balance -= 50;
-            const reels = ['🍒', '💎', '🍋', '7️⃣', '🍇'];
-            const res = [reels[Math.floor(Math.random()*5)], reels[Math.floor(Math.random()*5)], reels[Math.floor(Math.random()*5)]];
-            
-            document.getElementById('r1').innerText = res[0];
-            document.getElementById('r2').innerText = res[1];
-            document.getElementById('r3').innerText = res[2];
-
-            if(res[0] === res[1] && res[1] === res[2]) {
-                const win = 500;
-                this.user.balance += win;
-                confetti();
-                alert("JACKPOT: +" + win);
-            }
-            this.save();
-        },
-
-        adminAdd() {
-            const target = document.getElementById('adm-u').value.toLowerCase();
-            const amount = parseInt(document.getElementById('adm-a').value);
-            const p = this.db.profiles.find(x => x.userId === target);
-            if(p) {
-                p.balance += amount;
-                this.save();
-                alert("Tokens cargados");
-            }
-        },
-
-        save() {
-            localStorage.setItem('smal_empire_v11', JSON.stringify(this.db));
-            this.updateUI();
+        let user = this.db.users.find(x => x.u === u);
+        if(type === 'login') {
+            if(user && user.p === p) this.startSession(user);
+            else alert("Datos incorrectos");
+        } else {
+            if(user) return alert("Usuario ya existe");
+            user = {u, p, bal:50, inv:[], admin:false};
+            this.db.users.push(user); this.save(); this.startSession(user);
         }
-    };
+    },
+
+    startSession(user) {
+        this.currentUser = user;
+        document.getElementById('auth-screen').style.display = 'none';
+        if(user.admin) document.getElementById('adm-link').style.display = 'flex';
+        this.nav('lobby');
+        this.renderGames();
+        this.renderBoxes();
+        this.updateUI();
+    },
+
+    nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('v-' + id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        if(id === 'inventory') this.renderInventory();
+    },
+
+    updateUI() {
+        if(!this.currentUser) return;
+        document.getElementById('u-name').innerText = this.currentUser.u.toUpperCase();
+        document.getElementById('u-bal').innerText = Math.floor(this.currentUser.bal);
+        document.getElementById('u-ava').innerText = this.currentUser.u[0].toUpperCase();
+    },
+
+    // --- SISTEMA DE 10 JUEGOS ---
+    renderGames() {
+        const games = [
+            {n: 'Slots', cost: 10}, {n: 'Ruleta', cost: 20}, {n: 'Minas', cost: 15},
+            {n: 'Crash', cost: 25}, {n: 'Dados', cost: 10}, {n: 'Cartas', cost: 30},
+            {n: 'Plinko', cost: 15}, {n: 'Torre', cost: 20}, {n: 'Rueda', cost: 10}, {n: 'Blackjack', cost: 50}
+        ];
+        const container = document.getElementById('games-list');
+        container.innerHTML = games.map(g => `
+            <div class="glass box-card">
+                <h3>${g.n}</h3>
+                <p>Costo: ${g.cost} 🪙</p>
+                <button class="btn" onclick="core.playGame('${g.n}', ${g.cost})">JUGAR</button>
+            </div>
+        `).join('');
+    },
+
+    playGame(name, cost) {
+        if(this.currentUser.bal < cost) return alert("Tokens insuficientes");
+        this.currentUser.bal -= cost;
+        const win = Math.random() > 0.6 ? cost * 2.5 : 0;
+        if(win > 0) {
+            this.currentUser.bal += win;
+            confetti();
+            alert(`¡Ganaste ${win} tokens en ${name}!`);
+        } else {
+            alert(`Perdiste en ${name}. ¡Suerte la próxima!`);
+        }
+        this.save();
+    },
+
+    // --- SISTEMA DE CAJAS ---
+    renderBoxes() {
+        const container = document.getElementById('boxes-list');
+        container.innerHTML = this.db.boxes.map((b, i) => `
+            <div class="glass box-card">
+                <h3>${b.name}</h3>
+                <p>Precio: ${b.price} 🪙</p>
+                <button class="btn btn-gold" onclick="core.openBox(${i})">ABRIR</button>
+            </div>
+        `).join('');
+    },
+
+    openBox(index) {
+        const box = this.db.boxes[index];
+        if(this.currentUser.bal < box.price) return alert("No tienes tokens");
+        this.currentUser.bal -= box.price;
+        const item = box.items[Math.floor(Math.random() * box.items.length)];
+        this.currentUser.inv.push({id: Date.now(), name: item});
+        alert(`¡Te salió: ${item}! Guardado en inventario.`);
+        this.save();
+    },
+
+    // --- INVENTARIO Y RECLAMO ---
+    renderInventory() {
+        const container = document.getElementById('inv-list');
+        container.innerHTML = this.currentUser.inv.length ? '' : '<p>Vacio</p>';
+        this.currentUser.inv.forEach((it, idx) => {
+            container.innerHTML += `
+                <div class="item-card">
+                    <span>${it.name}</span>
+                    <div>
+                        <button class="btn" style="width:auto; padding:5px 10px; background:var(--gold);" onclick="core.claimItem(${it.id})">RECLAMAR</button>
+                        <button class="btn" style="width:auto; padding:5px 10px; background:var(--red);" onclick="core.sellItem(${idx})">VENDER</button>
+                    </div>
+                </div>
+            `;
+        });
+    },
+
+    claimItem(id) {
+        const item = this.currentUser.inv.find(x => x.id === id);
+        const subject = encodeURIComponent(`RECLAMO DE ITEM: ${item.name}`);
+        const body = encodeURIComponent(`El usuario ${this.currentUser.u} quiere reclamar su ${item.name}. Por favor enviarlo.`);
+        window.open(`mailto:gancinomaikel@gmail.com?subject=${subject}&body=${body}`);
+        this.currentUser.inv = this.currentUser.inv.filter(x => x.id !== id);
+        this.save();
+        this.renderInventory();
+    },
+
+    sellItem(idx) {
+        this.currentUser.bal += 50; // Precio fijo de venta
+        this.currentUser.inv.splice(idx, 1);
+        this.save();
+        this.renderInventory();
+    },
+
+    // --- TIENDA PAYPAL ---
+    initPaypal() {
+        paypal.Buttons({
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                    purchase_units: [{ amount: { value: '10.00' } }] // Ejemplo 10 USD
+                });
+            },
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(details => {
+                    this.currentUser.bal += 100; // 10 USD = 100 Tokens
+                    this.save();
+                    alert('¡Compra exitosa! Se añadieron 100 tokens.');
+                });
+            }
+        }).render('#paypal-button-container');
+    }
+};
+
+// Inicializar tienda
+setTimeout(() => core.initPaypal(), 2000);
 </script>
 </body>
 </html>
