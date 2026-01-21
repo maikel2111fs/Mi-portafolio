@@ -2,61 +2,60 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>SMAL STAKE</title>
+<title>SMAL EMPIRE | Casino</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
+<script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD"></script>
 <style>
 :root{
---bg:#0f172a;--panel:#111827;--card:#1f2933;
---accent:#22c55e;--gold:#facc15;
---text:#e5e7eb;--dim:#94a3b8;--red:#ef4444;
+--bg:#020617;--panel:#0b1228;--card:#111936;
+--accent:#00e676;--gold:#facc15;
+--text:#e5e7eb;--muted:#9ca3af;--danger:#ef4444;
 }
-*{box-sizing:border-box;font-family:'Inter',sans-serif}
-body{margin:0;background:var(--bg);color:var(--text);display:flex;height:100vh}
-.sidebar{width:240px;background:var(--panel);padding:20px}
-.main{flex:1;padding:30px;overflow:auto}
-h1,h2{margin:0 0 15px}
-.card{background:var(--card);border-radius:14px;padding:20px;margin-bottom:15px}
-.btn{padding:10px 16px;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+*{box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{margin:0;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden;}
+.hidden{display:none;}
+input{width:100%;padding:12px;border-radius:10px;border:none;background:#020617;color:#fff;margin-bottom:12px}
+.btn{padding:12px;border:none;border-radius:10px;font-weight:800;cursor:pointer;width:100%}
 .green{background:var(--accent);color:#000}
 .gold{background:var(--gold);color:#000}
-.red{background:var(--red);color:#000}
-input,select{width:100%;padding:10px;border-radius:8px;border:none;background:#020617;color:#fff;margin-bottom:10px}
-.nav div{padding:10px;color:var(--dim);cursor:pointer}
-.nav div:hover{color:var(--accent)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px}
-.hidden{display:none}
-.mine{width:52px;height:52px;background:#020617;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer}
+.sidebar{width:240px;background:var(--panel);padding:20px;display:flex;flex-direction:column;}
+.main{flex:1;padding:30px;overflow-y:auto;}
+.nav div{padding:10px;border-radius:8px;color:var(--muted);cursor:pointer;margin-bottom:5px}
+.nav div:hover{background:#020617;color:var(--accent)}
+.card{background:var(--card);border-radius:16px;padding:20px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.mine{width:50px;height:50px;background:#020617;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .mine.safe{background:var(--accent);color:#000}
-.mine.bomb{background:var(--red)}
+.mine.bomb{background:var(--danger)}
+.slot-reel{width:60px;height:60px;background:#020617;display:flex;align-items:center;justify-content:center;font-size:2rem;border-radius:10px;margin:0 5px;}
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div id="auth" style="position:fixed;inset:0;background:#020617;display:flex;align-items:center;justify-content:center;z-index:99">
-<div class="card" style="width:340px;text-align:center">
-<h2 style="color:var(--accent)">SMAL STAKE</h2>
-<input id="user" placeholder="Usuario">
-<input id="pass" type="password" placeholder="Contraseña">
-<button class="btn green" onclick="login()">Entrar</button>
-<button class="btn gold" onclick="register()">Registrar</button>
-</div>
+<!-- AUTH -->
+<div id="auth">
+  <div class="card" style="width:360px;text-align:center">
+    <h1 style="color:var(--accent)">SMAL EMPIRE</h1>
+    <input id="user" placeholder="Usuario">
+    <input id="pass" type="password" placeholder="Contraseña">
+    <button class="btn green" onclick="login()">Entrar</button>
+    <button class="btn gold" onclick="register()">Registrarme</button>
+  </div>
 </div>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-<h2>SMAL</h2>
-<p id="uinfo"></p>
-<p>💰 <span id="ubal">0</span></p>
+<h2>🎰 SMAL</h2>
+<p id="uName">-</p>
+<p>💰 <span id="uBal">0</span> tokens</p>
 <div class="nav">
-<div onclick="view('games')">🎰 Juegos</div>
-<div onclick="view('boxes')">📦 Cajas</div>
-<div onclick="view('shop')">🛒 Tienda</div>
+<div onclick="view('games')">🎮 Juegos</div>
+<div onclick="view('shop')">💳 Comprar Tokens</div>
+<div onclick="view('boxes')">📦 Mystery Boxes</div>
 <div onclick="view('inv')">🎒 Inventario</div>
-<div id="adminBtn" onclick="view('admin')" class="hidden">🛠 Admin</div>
+<div id="adminNav" class="hidden" onclick="view('admin')">🛠 Admin Panel</div>
+<div onclick="view('market')">⚖️ Mercado</div>
 </div>
 </div>
 
@@ -67,23 +66,26 @@ input,select{width:100%;padding:10px;border-radius:8px;border:none;background:#0
 <div id="games">
 <h1>Juegos</h1>
 <div class="grid">
-<div class="card"><h3>Slots</h3><button class="btn green" onclick="slots()">Jugar</button></div>
-<div class="card"><h3>Plinko</h3><button class="btn green" onclick="plinko()">Jugar</button></div>
-<div class="card"><h3>Mines</h3><button class="btn green" onclick="mines()">Jugar</button></div>
+<div class="card"><h3>Slots</h3><button class="btn green" onclick="slots()">Jugar (10)</button><div id="slotArea" style="display:flex;justify-content:center;margin-top:10px;"></div></div>
+<div class="card"><h3>Plinko</h3><button class="btn green" onclick="plinko()">Jugar (5)</button></div>
+<div class="card"><h3>Mines</h3><button class="btn green" onclick="mines()">Jugar</button><div id="mineArea" style="margin-top:10px;"></div></div>
 </div>
-<div id="gameArea"></div>
-</div>
-
-<!-- BOXES -->
-<div id="boxes" class="hidden">
-<h1>Cajas</h1>
-<div id="boxList" class="grid"></div>
 </div>
 
 <!-- SHOP -->
 <div id="shop" class="hidden">
-<h1>Tienda</h1>
-<div id="shopList" class="grid"></div>
+<h1>Comprar Tokens</h1>
+<div class="card">
+<p><b>1 USD = 10 Tokens</b></p>
+<p>Compra segura con PayPal</p>
+<div id="paypal-button-container"></div>
+</div>
+</div>
+
+<!-- BOXES -->
+<div id="boxes" class="hidden">
+<h1>Mystery Boxes</h1>
+<div id="boxList" class="grid"></div>
 </div>
 
 <!-- INVENTORY -->
@@ -94,102 +96,163 @@ input,select{width:100%;padding:10px;border-radius:8px;border:none;background:#0
 
 <!-- ADMIN -->
 <div id="admin" class="hidden">
-<h1 style="color:var(--gold)">Admin</h1>
-
+<h1>Admin Panel</h1>
 <div class="card">
-<h3>Nueva Caja</h3>
-<input id="bname" placeholder="Nombre">
-<input id="bprice" type="number" placeholder="Precio">
-<input id="bitems" placeholder="Premios (coma)">
-<button class="btn green" onclick="createBox()">Crear</button>
-</div>
-
-<div class="card">
-<h3>Nuevo Producto</h3>
-<input id="sname" placeholder="Nombre">
-<input id="sprice" type="number" placeholder="Precio">
-<input id="sreward" type="number" placeholder="Tokens">
-<button class="btn gold" onclick="createShop()">Crear</button>
+<h3>Crear Mystery Box</h3>
+<input id="boxName" placeholder="Nombre de la caja">
+<input id="boxPrice" placeholder="Precio en Tokens">
+<textarea id="boxItems" placeholder="Item1,Item2,Item3"></textarea>
+<button class="btn green" onclick="createBox()">Publicar Caja</button>
 </div>
 </div>
 
+<!-- MARKET -->
+<div id="market" class="hidden">
+<h1>Mercado P2P</h1>
+<div id="marketList" class="grid"></div>
 </div>
 
 <script>
-let db=JSON.parse(localStorage.getItem("smalStake"))||{users:{},boxes:[],shop:[]};
-let current=null;
+// DB
+let db = JSON.parse(localStorage.getItem("smal_v6")) || {users:{}, boxes:[], market:[]};
+let current = null;
 
-function save(){localStorage.setItem("smalStake",JSON.stringify(db));}
+function save(){localStorage.setItem("smal_v6",JSON.stringify(db));}
 
+// AUTH
 function register(){
-if(db.users[user.value])return alert("Existe");
-db.users[user.value]={pass:pass.value,bal:100,inv:[],role:user.value==="admin"?"admin":"user"};
-save();alert("Creado");
+  let u = user.value; let p = pass.value;
+  if(!u||!p) return alert("Ingrese datos");
+  if(db.users[u]) return alert("Usuario ya existe");
+  db.users[u]={pass:p,bal:50,inv:[],admin:false};
+  save();
+  alert("Cuenta creada");
 }
-
 function login(){
-let u=db.users[user.value];
-if(!u||u.pass!==pass.value)return alert("Error");
-current=user.value;sessionStorage.setItem("u",current);init();
+  let u = user.value;
+  if(!db.users[u]||db.users[u].pass!==pass.value) return alert("Usuario o contraseña incorrectos");
+  current = u;
+  sessionStorage.setItem("currentUser",current);
+  init();
 }
-
 function init(){
-current=sessionStorage.getItem("u");if(!current)return;
-auth.style.display="none";
-let u=db.users[current];
-uinfo.innerText=current;
-ubal.innerText=u.bal;
-if(u.role==="admin")adminBtn.classList.remove("hidden");
-render();
+  current = sessionStorage.getItem("currentUser");
+  if(!current) return;
+  auth.style.display="none";
+  uName.innerText = current;
+  if(db.users[current].admin) adminNav.classList.remove("hidden");
+  render();
 }
 
-function view(v){
-["games","boxes","shop","inv","admin"].forEach(x=>document.getElementById(x).classList.add("hidden"));
-document.getElementById(v).classList.remove("hidden");
+function view(id){
+  ["games","shop","inv","admin","market","boxes"].forEach(x=>document.getElementById(x).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
 }
 
-function render(){renderBoxes();renderShop();renderInv();ubal.innerText=db.users[current].bal;save();}
+// RENDER
+function render(){
+  uBal.innerText=db.users[current].bal;
+  renderInv();
+  renderMarket();
+  renderBoxes();
+  save();
+}
 
+function renderInv(){
+  invList.innerHTML="";
+  db.users[current].inv.forEach((i,idx)=>{
+    invList.innerHTML+=`<div class="card">${i} <button class="btn gold" onclick="sellInv(${idx})">Vender</button></div>`;
+  });
+}
+function sellInv(idx){
+  let item = db.users[current].inv[idx];
+  let price = parseFloat(prompt("Precio en tokens?"));
+  if(!price) return;
+  db.market.push({n:item,p:price,v:current});
+  db.users[current].inv.splice(idx,1);
+  render();
+}
+
+// MARKET
+function renderMarket(){
+  marketList.innerHTML="";
+  db.market.forEach((m,idx)=>{
+    marketList.innerHTML+=`<div class="card">${m.n}<br>Vende: ${m.v}<br>Precio: ${m.p} <button class="btn green" onclick="buyMarket(${idx})">Comprar</button></div>`;
+  });
+}
+function buyMarket(idx){
+  let m = db.market[idx];
+  if(db.users[current].bal<m.p) return alert("No tienes suficiente saldo");
+  db.users[current].bal-=m.p;
+  db.users[current].inv.push(m.n);
+  db.market.splice(idx,1);
+  render();
+}
+
+// BOXES
+function renderBoxes(){
+  boxList.innerHTML="";
+  db.boxes.forEach((b,idx)=>{
+    boxList.innerHTML+=`<div class="card"><b>${b.n}</b><br>Precio: ${b.p}<br><button class="btn green" onclick="openBox(${idx})">Abrir</button></div>`;
+  });
+}
+function createBox(){
+  let n = boxName.value, p=parseFloat(boxPrice.value), items = boxItems.value.split(",");
+  if(!n||!p||items.length<1) return alert("Datos inválidos");
+  db.boxes.push({n,p,items});
+  renderBoxes(); alert("Caja creada");
+}
+function openBox(idx){
+  let b = db.boxes[idx];
+  if(db.users[current].bal<b.p) return alert("No tienes saldo");
+  db.users[current].bal -= b.p;
+  let prize = b.items[Math.floor(Math.random()*b.items.length)];
+  db.users[current].inv.push(prize);
+  alert("¡Obtuviste: "+prize+"!");
+  render();
+}
+
+// GAMES
 function slots(){
-let u=db.users[current];if(u.bal<10)return;
-u.bal-=10;
-let r=Math.random();
-if(r<0.03)u.bal+=200;
-else if(r<0.15)u.bal+=30;
-alert("Spin terminado");
-render();
+  let u=db.users[current]; if(u.bal<10)return alert("Sin saldo");
+  u.bal-=10;
+  let symbols=["🍎","🍒","🍏","7️⃣","💎"];
+  let r1=symbols[Math.floor(Math.random()*5)], r2=symbols[Math.floor(Math.random()*5)], r3=symbols[Math.floor(Math.random()*5)];
+  let area = document.getElementById("slotArea");
+  area.innerHTML=`<div class="slot-reel">${r1}</div><div class="slot-reel">${r2}</div><div class="slot-reel">${r3}</div>`;
+  if(r1==="7️⃣"&&r2==="7️⃣"&&r3==="7️⃣"){u.bal+=200; alert("JACKPOT +200");}
+  else if(r1===r2&&r2===r3){u.bal+=50; alert("Premio mayor +50");}
+  else if(r1===r2||r2===r3){u.bal+=15; alert("Par ganador +15");}
+  render();
 }
 
 function plinko(){
-let u=db.users[current];if(u.bal<5)return;
-u.bal-=5;
-let mult=[0,0.5,1,2,5][Math.floor(Math.random()*5)];
-u.bal+=5*mult;
-alert("x"+mult);
-render();
+  let u=db.users[current]; if(u.bal<5)return alert("Sin saldo");
+  u.bal-=5;
+  let m=[0.2,1.5,5,1.5,0.2][Math.floor(Math.random()*5)];
+  u.bal+=5*m;
+  alert("Multiplicador x"+m);
+  render();
 }
 
 function mines(){
-let u=db.users[current];let area=document.getElementById("gameArea");
-area.innerHTML="";let bombs=[Math.floor(Math.random()*25)];
-for(let i=0;i<25;i++){
-let d=document.createElement("div");d.className="mine";
-d.onclick=()=>{if(bombs.includes(i)){d.classList.add("bomb");area.innerHTML="";}
-else{d.classList.add("safe");u.bal+=2;render();}};
-area.appendChild(d);
+  let area=document.getElementById("mineArea");
+  area.innerHTML=""; area.style.display="grid"; area.style.gridTemplateColumns="repeat(5,50px)";
+  let u=db.users[current];
+  let bomb=Math.floor(Math.random()*25);
+  for(let i=0;i<25;i++){
+    let d=document.createElement("div");
+    d.className="mine";
+    d.onclick=()=>{if(i===bomb){d.classList.add("bomb");alert("Perdiste");area.innerHTML="";}else{d.classList.add("safe");u.bal+=2;render();}};
+    area.appendChild(d);
+  }
 }
-area.style.display="grid";area.style.gridTemplateColumns="repeat(5,52px)";
-}
 
-function createBox(){db.boxes.push({n:bname.value,p:+bprice.value,i:bitems.value.split(",")});render();}
-function renderBoxes(){boxList.innerHTML="";db.boxes.forEach((b,i)=>boxList.innerHTML+=`<div class="card"><h3>${b.n}</h3><p>${b.p}</p><button class="btn green" onclick="openBox(${i})">Abrir</button></div>`);}
-function openBox(i){let u=db.users[current],b=db.boxes[i];if(u.bal<b.p)return;u.bal-=b.p;let p=b.i[Math.floor(Math.random()*b.i.length)];u.inv.push(p);alert(p);render();}
-
-function createShop(){db.shop.push({n:sname.value,p:+sprice.value,r:+sreward.value});render();}
-function renderShop(){shopList.innerHTML="";db.shop.forEach((s,i)=>shopList.innerHTML+=`<div class="card"><h3>${s.n}</h3><p>${s.p}</p><button class="btn gold" onclick="buy(${i})">Comprar</button></div>`);}
-function buy(i){db.users[current].bal+=db.shop[i].r;render();}
-
-function renderInv(){invList.innerHTML="";db.users[current].inv.forEach(x=>invList.innerHTML+=`<div class="card">${x}</div>`);}
+// PAYPAL
+paypal.Buttons({
+  createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{value:"1.00"}}]}),
+  onApprove:(data,actions)=>actions.order.capture().then(()=>{db.users[current].bal+=10;render();alert("Pago completado. 10 tokens acreditados.");})
+}).render('#paypal-button-container');
 
 init();
 </script>
