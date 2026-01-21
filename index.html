@@ -1,260 +1,493 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>SMAL EMPIRE | Casino</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SMAL EMPIRE | ELITE V6 - Casino</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 <style>
-:root{
---bg:#020617;--panel:#0b1228;--card:#111936;
---accent:#00e676;--gold:#facc15;
---text:#e5e7eb;--muted:#9ca3af;--danger:#ef4444;
-}
-*{box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{margin:0;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden;}
-.hidden{display:none;}
-input{width:100%;padding:12px;border-radius:10px;border:none;background:#020617;color:#fff;margin-bottom:12px}
-.btn{padding:12px;border:none;border-radius:10px;font-weight:800;cursor:pointer;width:100%}
-.green{background:var(--accent);color:#000}
-.gold{background:var(--gold);color:#000}
-.sidebar{width:240px;background:var(--panel);padding:20px;display:flex;flex-direction:column;}
-.main{flex:1;padding:30px;overflow-y:auto;}
-.nav div{padding:10px;border-radius:8px;color:var(--muted);cursor:pointer;margin-bottom:5px}
-.nav div:hover{background:#020617;color:var(--accent)}
-.card{background:var(--card);border-radius:16px;padding:20px;margin-bottom:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
-.mine{width:50px;height:50px;background:#020617;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.mine.safe{background:var(--accent);color:#000}
-.mine.bomb{background:var(--danger)}
-.slot-reel{width:60px;height:60px;background:#020617;display:flex;align-items:center;justify-content:center;font-size:2rem;border-radius:10px;margin:0 5px;}
+  :root {
+    --bg: #040609; --card: #0d1117; --accent: #00ff59; --gold: #f5d033;
+    --text: #ffffff; --text-dim: #8b949e; --border: #21262d; --red: #ff4747;
+  }
+  * {
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+  }
+  /* Sidebar */
+  aside.sidebar {
+    width: 260px;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+  aside.sidebar .profile {
+    padding: 30px;
+    text-align: center;
+  }
+  #u-ava {
+    width: 65px;
+    height: 65px;
+    background: var(--accent);
+    color: black;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-weight: 900;
+    font-size: 1.8rem;
+    user-select: none;
+  }
+  #u-name {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+  #u-bal {
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 1.4rem;
+    margin-top: 10px;
+  }
+  nav {
+    display: flex;
+    flex-direction: column;
+  }
+  nav .nav-item {
+    padding: 15px 25px;
+    cursor: pointer;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    user-select: none;
+  }
+  nav .nav-item.active,
+  nav .nav-item:hover {
+    background: #161b22;
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  /* Main */
+  main.main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+    position: relative;
+    background: radial-gradient(circle at 50% 0%, #1a2c38, var(--bg));
+    max-height: 100vh;
+  }
+  .view {
+    display: none;
+    animation: fadeIn 0.4s ease;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .view.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  /* Glass card style */
+  .glass-card {
+    background: rgba(13, 17, 23, 0.85);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0,255,89,0.2);
+  }
+  /* Buttons */
+  .btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    user-select: none;
+  }
+  .btn-accent {
+    background: var(--accent);
+    color: #000;
+  }
+  .btn-gold {
+    background: var(--gold);
+    color: #000;
+  }
+  .btn-red {
+    background: var(--red);
+    color: #000;
+  }
+  /* Login form */
+  #login-container {
+    width: 320px;
+    margin: auto;
+    padding: 40px 30px;
+    background: var(--card);
+    border-radius: 25px;
+    box-shadow: 0 0 40px rgba(0,255,89,0.4);
+    user-select:none;
+  }
+  #login-container h2 {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 25px;
+    letter-spacing: 4px;
+  }
+  #login-container input[type=text],
+  #login-container input[type=password] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+  }
+  #login-container input::placeholder {
+    color: var(--text-dim);
+  }
+  /* Error message */
+  .error-msg {
+    color: var(--red);
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  /* Slot machine */
+  .slot-machine-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background: #161a1f;
+    padding: 40px;
+    border-radius: 30px;
+    border: 4px solid #2b2f36;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .reels-container {
+    display: flex;
+    gap: 15px;
+    background: #000;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid var(--border);
+  }
+  .reel {
+    width: 100px;
+    height: 120px;
+    background: #111;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    overflow: hidden;
+    border: 1px solid #333;
+    user-select:none;
+  }
+  .reel.spinning {
+    animation: blurSpin 0.1s infinite linear;
+  }
+  @keyframes blurSpin {
+    0% {
+      filter: blur(0);
+      transform: translateY(0);
+    }
+    50% {
+      filter: blur(10px);
+    }
+    100% {
+      filter: blur(0);
+      transform: translateY(5px);
+    }
+  }
+  /* Lever */
+  .lever-base {
+    width: 20px;
+    height: 150px;
+    background: #2b2f36;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    user-select:none;
+  }
+  .lever-arm {
+    width: 10px;
+    height: 100px;
+    background: #4a4e54;
+    position: absolute;
+    top: 0;
+    left: 5px;
+    border-radius: 5px;
+    transform-origin: bottom;
+    transition: 0.3s;
+  }
+  .lever-ball {
+    width: 40px;
+    height: 40px;
+    background: var(--red);
+    border-radius: 50%;
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    box-shadow: 0 0 15px var(--red);
+  }
+  .lever-base.pulled .lever-arm {
+    transform: rotateX(150deg);
+  }
+  /* Plinko */
+  .plinko-container {
+    background:#000;
+    width: 300px;
+    height: 400px;
+    border: 2px solid #333;
+    margin: 0 auto 30px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    user-select:none;
+  }
+  .plinko-ball {
+    width: 15px;
+    height: 15px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+  }
+  .plinko-pegs {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding: 20px;
+    opacity: 0.5;
+    color: var(--accent);
+    font-weight: 900;
+    user-select:none;
+  }
+  .plinko-multipliers {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  .mult-box {
+    width: 40px;
+    height: 30px;
+    border-radius: 5px;
+    font-weight: 900;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mult-red {
+    background:#ff3b3b;
+  }
+  .mult-yellow {
+    background:#ff9f43;
+  }
+  .mult-accent {
+    background: var(--accent);
+    color: black;
+  }
+  /* Mines game */
+  .mines-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    grid-template-rows: repeat(5, 50px);
+    gap: 7px;
+    justify-content: center;
+    margin: 20px auto;
+  }
+  .mine-cell {
+    width: 50px;
+    height: 50px;
+    background: #111;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: var(--accent);
+    cursor: pointer;
+    user-select:none;
+  }
+  .mine-cell.revealed {
+    background: #0a2;
+    cursor: default;
+  }
+  .mine-cell.bomb {
+    background: #a00;
+    color: var(--red);
+  }
+  /* Form for bets */
+  .bet-container {
+    margin: 15px auto 30px;
+    max-width: 300px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .bet-container label {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .bet-container input[type=number] {
+    width: 80px;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    text-align: center;
+  }
+  /* Inventory */
+  #inv-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+    gap: 15px;
+  }
+  /* Market */
+  #m-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 15px;
+  }
+  /* Admin */
+  #adm-btn {
+    display:none;
+    color: var(--gold);
+    cursor: pointer;
+    font-weight: 700;
+    padding: 15px 25px;
+  }
+  /* Responsive */
+  @media (max-width: 900px) {
+    aside.sidebar {
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    main.main {
+      padding: 15px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- AUTH -->
-<div id="auth">
-  <div class="card" style="width:360px;text-align:center">
-    <h1 style="color:var(--accent)">SMAL EMPIRE</h1>
-    <input id="user" placeholder="Usuario">
-    <input id="pass" type="password" placeholder="Contraseña">
-    <button class="btn green" onclick="login()">Entrar</button>
-    <button class="btn gold" onclick="register()">Registrarme</button>
+<!-- Login/Register Container -->
+<div id="login-screen" style="width:100vw; height:100vh; background: var(--bg); display: flex; align-items: center; justify-content: center;">
+  <div id="login-container">
+    <h2>SMAL EMPIRE</h2>
+    <input type="text" id="login-username" placeholder="Usuario" autocomplete="username" />
+    <input type="password" id="login-password" placeholder="Contraseña" autocomplete="current-password" />
+    <div class="error-msg" id="login-error"></div>
+    <button class="btn btn-accent" onclick="loginUser()">Entrar</button>
+    <button class="btn btn-gold" style="margin-top:10px;" onclick="showRegister()">Registrarme</button>
   </div>
 </div>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-<h2>🎰 SMAL</h2>
-<p id="uName">-</p>
-<p>💰 <span id="uBal">0</span> tokens</p>
-<div class="nav">
-<div onclick="view('games')">🎮 Juegos</div>
-<div onclick="view('shop')">💳 Comprar Tokens</div>
-<div onclick="view('boxes')">📦 Mystery Boxes</div>
-<div onclick="view('inv')">🎒 Inventario</div>
-<div id="adminNav" class="hidden" onclick="view('admin')">🛠 Admin Panel</div>
-<div onclick="view('market')">⚖️ Mercado</div>
-</div>
+<!-- Register Screen -->
+<div id="register-screen" style="display:none; width:100vw; height:100vh; background: var(--bg); display: flex; align-items: center; justify-content: center;">
+  <div id="login-container">
+    <h2>REGISTRARSE</h2>
+    <input type="text" id="reg-username" placeholder="Usuario" autocomplete="username" />
+    <input type="password" id="reg-password" placeholder="Contraseña" autocomplete="new-password" />
+    <input type="password" id="reg-password2" placeholder="Confirmar contraseña" autocomplete="new-password" />
+    <div class="error-msg" id="reg-error"></div>
+    <button class="btn btn-accent" onclick="registerUser()">Crear Cuenta</button>
+    <button class="btn btn-gold" style="margin-top:10px;" onclick="showLogin()">Volver al Login</button>
+  </div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- Main App -->
+<aside class="sidebar" style="display:none;">
+  <div class="profile">
+    <div id="u-ava">?</div>
+    <h3 id="u-name">-</h3>
+    <div>🪙 <span id="u-bal">0.00</span> tokens</div>
+    <div style="margin-top:5px; font-size:0.9rem; color: var(--accent); font-weight:700;">🎟️ Tiradas gratis: <span id="u-free">0</span></div>
+  </div>
+  <nav>
+    <div class="nav-item active" onclick="nav('home')">🏠 Inicio</div>
+    <div class="nav-item" onclick="nav('games')">🎰 Juegos</div>
+    <div class="nav-item" onclick="nav('boxes')">📦 Mystery Boxes</div>
+    <div class="nav-item" onclick="nav('shop')">🛒 Comprar Tokens</div>
+    <div class="nav-item" onclick="nav('inv')">🎒 Inventario</div>
+    <div class="nav-item" onclick="nav('market')">⚖️ Mercado P2P</div>
+    <div class="nav-item" id="adm-btn" onclick="nav('admin')">🛠 Panel Maestro</div>
+    <div class="nav-item" onclick="logout()">🚪 Salir</div>
+  </nav>
+</aside>
 
-<!-- GAMES -->
-<div id="games">
-<h1>Juegos</h1>
-<div class="grid">
-<div class="card"><h3>Slots</h3><button class="btn green" onclick="slots()">Jugar (10)</button><div id="slotArea" style="display:flex;justify-content:center;margin-top:10px;"></div></div>
-<div class="card"><h3>Plinko</h3><button class="btn green" onclick="plinko()">Jugar (5)</button></div>
-<div class="card"><h3>Mines</h3><button class="btn green" onclick="mines()">Jugar</button><div id="mineArea" style="margin-top:10px;"></div></div>
-</div>
-</div>
+<main class="main" style="display:none;">
+  <!-- Home -->
+  <section id="v-home" class="view active">
+    <h1 style="font-family: 'Orbitron'; margin-bottom: 20px;">LOBBY DEL <span style="color: var(--accent)">IMPERIO</span></h1>
+    <div class="glass-card" style="border-left: 5px solid var(--accent);">
+      <h3>Noticias Globales</h3>
+      <p>¡El sistema de comercio ya está activo! Vende tus premios a otros jugadores.</p>
+    </div>
+  </section>
 
-<!-- SHOP -->
-<div id="shop" class="hidden">
-<h1>Comprar Tokens</h1>
-<div class="card">
-<p><b>1 USD = 10 Tokens</b></p>
-<p>Compra segura con PayPal</p>
-<div id="paypal-button-container"></div>
-</div>
-</div>
+  <!-- Juegos -->
+  <section id="v-games" class="view">
+    <h1 style="font-family: 'Orbitron'; margin-bottom: 20px;">JUEGOS ELITE</h1>
 
-<!-- BOXES -->
-<div id="boxes" class="hidden">
-<h1>Mystery Boxes</h1>
-<div id="boxList" class="grid"></div>
-</div>
+    <div id="game-selection" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+      <div class="glass-card" onclick="openGame('SLOTS')" style="cursor:pointer; text-align:center;">
+        <h2>🎰 SLOTS FRUIT</h2>
+        <p>Jackpot 777</p>
+      </div>
+      <div class="glass-card" onclick="openGame('MINES')" style="cursor:pointer; text-align:center;">
+        <h2>💣 MINES</h2>
+        <p>Multiplicador x10</p>
+      </div>
+      <div class="glass-card" onclick="openGame('PLINKO')" style="cursor:pointer; text-align:center;">
+        <h2>🔵 PLINKO</h2>
+        <p>Caída de suerte</p>
+      </div>
+    </div>
 
-<!-- INVENTORY -->
-<div id="inv" class="hidden">
-<h1>Inventario</h1>
-<div id="invList" class="grid"></div>
-</div>
+    <div id="game-stage" style="display:none; text-align:center; padding-top:20px;">
+      <div id="game-content"></div>
+      <button class="btn btn-gold" style="margin-top:40px;" onclick="closeGame()">Volver al menú</button>
+    </div>
+  </section>
 
-<!-- ADMIN -->
-<div id="admin" class="hidden">
-<h1>Admin Panel</h1>
-<div class="card">
-<h3>Crear Mystery Box</h3>
-<input id="boxName" placeholder="Nombre de la caja">
-<input id="boxPrice" placeholder="Precio en Tokens">
-<textarea id="boxItems" placeholder="Item1,Item2,Item3"></textarea>
-<button class="btn green" onclick="createBox()">Publicar Caja</button>
-</div>
-</div>
-
-<!-- MARKET -->
-<div id="market" class="hidden">
-<h1>Mercado P2P</h1>
-<div id="marketList" class="grid"></div>
-</div>
-
-<script>
-// DB
-let db = JSON.parse(localStorage.getItem("smal_v6")) || {users:{}, boxes:[], market:[]};
-let current = null;
-
-function save(){localStorage.setItem("smal_v6",JSON.stringify(db));}
-
-// AUTH
-function register(){
-  let u = user.value; let p = pass.value;
-  if(!u||!p) return alert("Ingrese datos");
-  if(db.users[u]) return alert("Usuario ya existe");
-  db.users[u]={pass:p,bal:50,inv:[],admin:false};
-  save();
-  alert("Cuenta creada");
-}
-function login(){
-  let u = user.value;
-  if(!db.users[u]||db.users[u].pass!==pass.value) return alert("Usuario o contraseña incorrectos");
-  current = u;
-  sessionStorage.setItem("currentUser",current);
-  init();
-}
-function init(){
-  current = sessionStorage.getItem("currentUser");
-  if(!current) return;
-  auth.style.display="none";
-  uName.innerText = current;
-  if(db.users[current].admin) adminNav.classList.remove("hidden");
-  render();
-}
-
-function view(id){
-  ["games","shop","inv","admin","market","boxes"].forEach(x=>document.getElementById(x).classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-}
-
-// RENDER
-function render(){
-  uBal.innerText=db.users[current].bal;
-  renderInv();
-  renderMarket();
-  renderBoxes();
-  save();
-}
-
-function renderInv(){
-  invList.innerHTML="";
-  db.users[current].inv.forEach((i,idx)=>{
-    invList.innerHTML+=`<div class="card">${i} <button class="btn gold" onclick="sellInv(${idx})">Vender</button></div>`;
-  });
-}
-function sellInv(idx){
-  let item = db.users[current].inv[idx];
-  let price = parseFloat(prompt("Precio en tokens?"));
-  if(!price) return;
-  db.market.push({n:item,p:price,v:current});
-  db.users[current].inv.splice(idx,1);
-  render();
-}
-
-// MARKET
-function renderMarket(){
-  marketList.innerHTML="";
-  db.market.forEach((m,idx)=>{
-    marketList.innerHTML+=`<div class="card">${m.n}<br>Vende: ${m.v}<br>Precio: ${m.p} <button class="btn green" onclick="buyMarket(${idx})">Comprar</button></div>`;
-  });
-}
-function buyMarket(idx){
-  let m = db.market[idx];
-  if(db.users[current].bal<m.p) return alert("No tienes suficiente saldo");
-  db.users[current].bal-=m.p;
-  db.users[current].inv.push(m.n);
-  db.market.splice(idx,1);
-  render();
-}
-
-// BOXES
-function renderBoxes(){
-  boxList.innerHTML="";
-  db.boxes.forEach((b,idx)=>{
-    boxList.innerHTML+=`<div class="card"><b>${b.n}</b><br>Precio: ${b.p}<br><button class="btn green" onclick="openBox(${idx})">Abrir</button></div>`;
-  });
-}
-function createBox(){
-  let n = boxName.value, p=parseFloat(boxPrice.value), items = boxItems.value.split(",");
-  if(!n||!p||items.length<1) return alert("Datos inválidos");
-  db.boxes.push({n,p,items});
-  renderBoxes(); alert("Caja creada");
-}
-function openBox(idx){
-  let b = db.boxes[idx];
-  if(db.users[current].bal<b.p) return alert("No tienes saldo");
-  db.users[current].bal -= b.p;
-  let prize = b.items[Math.floor(Math.random()*b.items.length)];
-  db.users[current].inv.push(prize);
-  alert("¡Obtuviste: "+prize+"!");
-  render();
-}
-
-// GAMES
-function slots(){
-  let u=db.users[current]; if(u.bal<10)return alert("Sin saldo");
-  u.bal-=10;
-  let symbols=["🍎","🍒","🍏","7️⃣","💎"];
-  let r1=symbols[Math.floor(Math.random()*5)], r2=symbols[Math.floor(Math.random()*5)], r3=symbols[Math.floor(Math.random()*5)];
-  let area = document.getElementById("slotArea");
-  area.innerHTML=`<div class="slot-reel">${r1}</div><div class="slot-reel">${r2}</div><div class="slot-reel">${r3}</div>`;
-  if(r1==="7️⃣"&&r2==="7️⃣"&&r3==="7️⃣"){u.bal+=200; alert("JACKPOT +200");}
-  else if(r1===r2&&r2===r3){u.bal+=50; alert("Premio mayor +50");}
-  else if(r1===r2||r2===r3){u.bal+=15; alert("Par ganador +15");}
-  render();
-}
-
-function plinko(){
-  let u=db.users[current]; if(u.bal<5)return alert("Sin saldo");
-  u.bal-=5;
-  let m=[0.2,1.5,5,1.5,0.2][Math.floor(Math.random()*5)];
-  u.bal+=5*m;
-  alert("Multiplicador x"+m);
-  render();
-}
-
-function mines(){
-  let area=document.getElementById("mineArea");
-  area.innerHTML=""; area.style.display="grid"; area.style.gridTemplateColumns="repeat(5,50px)";
-  let u=db.users[current];
-  let bomb=Math.floor(Math.random()*25);
-  for(let i=0;i<25;i++){
-    let d=document.createElement("div");
-    d.className="mine";
-    d.onclick=()=>{if(i===bomb){d.classList.add("bomb");alert("Perdiste");area.innerHTML="";}else{d.classList.add("safe");u.bal+=2;render();}};
-    area.appendChild(d);
-  }
-}
-
-// PAYPAL
-paypal.Buttons({
-  createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{value:"1.00"}}]}),
-  onApprove:(data,actions)=>actions.order.capture().then(()=>{db.users[current].bal+=10;render();alert("Pago completado. 10 tokens acreditados.");})
-}).render('#paypal-button-container');
-
-init();
-</script>
-</body>
-</html>
+  <!-- Mystery
