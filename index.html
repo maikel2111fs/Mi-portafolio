@@ -1,386 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SMAL EMPIRE | MAESTRO V7</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMAL EMPIRE | ELITE V10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --bg: #040609; --card: #0d1117; --accent: #00ff59; --gold: #f5d033;
-            --text: #ffffff; --text-dim: #8b949e; --border: #21262d; --red: #ff4747;
+            --text: #ffffff; --border: #21262d; --red: #ff4747;
         }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s; }
-        body { background: var(--bg); color: var(--text); margin: 0; height: 100vh; display: flex; overflow: hidden; }
-        
-        /* Sidebar */
-        aside.sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
-        .profile { padding: 30px; text-align: center; border-bottom: 1px solid var(--border); }
-        #u-ava { width: 60px; height: 60px; background: var(--accent); color: #000; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: 900; font-size: 1.5rem; }
-        nav .nav-item { padding: 15px 25px; cursor: pointer; color: var(--text-dim); display: flex; align-items: center; gap: 10px; font-weight: 600; border-left: 4px solid transparent; }
-        nav .nav-item:hover, nav .nav-item.active { background: #161b22; color: var(--accent); border-left-color: var(--accent); }
+        body { background: var(--bg); color: var(--text); margin: 0; overflow: hidden; height: 100vh; display: flex; }
 
-        /* Main */
-        main.main { flex: 1; overflow-y: auto; padding: 40px; background: radial-gradient(circle at top, #112211, #040609); }
-        .view { display: none; max-width: 1000px; margin: 0 auto; animation: fadeIn 0.3s ease; }
-        .view.active { display: block; }
+        /* --- PANTALLA DE ACCESO --- */
+        #auth-overlay {
+            position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .auth-card {
+            background: var(--card); padding: 40px; border-radius: 20px;
+            border: 2px solid var(--accent); width: 100%; max-width: 380px; text-align: center;
+            box-shadow: 0 0 50px rgba(0, 255, 89, 0.2);
+        }
+        input { 
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; 
+            border: 1px solid var(--border); background: #000; color: #fff; text-align: center;
+        }
+        .btn { 
+            width: 100%; padding: 15px; border: none; border-radius: 10px; 
+            font-weight: 800; cursor: pointer; text-transform: uppercase;
+        }
+        .btn-main { background: var(--accent); color: #000; margin-bottom: 10px; }
+        .btn-wa { background: #25d366; color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 10px; font-size: 0.8rem; }
+
+        /* --- ESTRUCTURA PRINCIPAL --- */
+        #casino-ui { display: none; width: 100%; height: 100vh; flex-direction: row; }
+        .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        .main-view { flex: 1; overflow-y: auto; padding: 40px; background: radial-gradient(circle at top, #0f1a14, #040609); }
+        
+        .nav-item { padding: 18px 25px; cursor: pointer; font-weight: 700; border-left: 4px solid transparent; color: #8b949e; }
+        .nav-item:hover, .nav-item.active { background: #161b22; color: var(--accent); border-left-color: var(--accent); }
+        
+        .view { display: none; max-width: 800px; margin: 0 auto; }
+        .view.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Estilos de Componentes */
-        .glass-card { background: rgba(13, 17, 23, 0.8); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 20px; }
-        .btn { padding: 12px 20px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
-        .btn-accent { background: var(--accent); color: #000; }
-        .btn-gold { background: var(--gold); color: #000; }
-        .btn-red { background: var(--red); color: #fff; }
-        
-        input, select { background: #000; border: 1px solid var(--border); color: #fff; padding: 10px; border-radius: 8px; margin: 5px 0; width: 100%; }
+        /* --- ESTILOS DE JUEGOS --- */
+        .slot-reels { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
+        .reel { 
+            width: 100px; height: 140px; background: #000; border: 3px solid var(--gold); 
+            border-radius: 15px; font-size: 4rem; display: flex; align-items: center; justify-content: center;
+        }
+        .spinning { animation: spinBlur 0.1s infinite; }
+        @keyframes spinBlur { 0% { filter: blur(0px); } 50% { filter: blur(4px); } 100% { filter: blur(0px); } }
 
-        /* Grid de Juegos */
-        .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .game-card { text-align: center; cursor: pointer; border: 2px solid transparent; }
-        .game-card:hover { border-color: var(--accent); transform: scale(1.02); }
-
-        /* Especial Juegos */
-        #game-area { text-align: center; }
-        .mines-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-width: 400px; margin: 20px auto; }
-        .tile { width: 70px; height: 70px; background: var(--border); border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        .tile.safe { background: var(--accent); color: #000; }
-        .tile.bomb { background: var(--red); }
-        
-        .slot-reels { display: flex; justify-content: center; gap: 15px; font-size: 4rem; margin: 20px 0; }
-        .reel { background: #000; padding: 20px; border-radius: 10px; border: 2px solid var(--gold); min-width: 100px; }
+        .mines-grid { 
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; 
+            max-width: 350px; margin: 20px auto; 
+        }
+        .tile { 
+            width: 60px; height: 60px; background: var(--border); border-radius: 8px; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; 
+            font-size: 1.5rem; border: none; color: #fff;
+        }
+        .tile:disabled { cursor: default; }
+        .tile.win { background: var(--accent); color: #000; }
+        .tile.lose { background: var(--red); }
     </style>
 </head>
 <body>
 
-<div id="auth-screen" style="position:fixed; inset:0; background:var(--bg); z-index:1000; display:flex; align-items:center; justify-content:center;">
-    <div class="glass-card" style="width:350px; text-align:center;">
-        <h2 style="font-family:'Orbitron'; color:var(--accent);">SMAL EMPIRE</h2>
-        <div id="auth-box">
-            <input type="text" id="auth-u" placeholder="Usuario">
-            <input type="password" id="auth-p" placeholder="Contraseña">
-            <button class="btn btn-accent" style="width:100%; margin-top:10px;" onclick="handleAuth()">ENTRAR / REGISTRAR</button>
-        </div>
+<div id="auth-overlay">
+    <div class="auth-card">
+        <h1 style="font-family:'Orbitron'; color:var(--accent); letter-spacing:3px;">SMAL EMPIRE</h1>
+        <input type="text" id="user-in" placeholder="Nombre de Usuario">
+        <input type="password" id="pass-in" placeholder="Contraseña">
+        <button class="btn btn-main" onclick="handleAuth()">ENTRAR AL IMPERIO</button>
+        <a href="https://wa.me/593987749885" class="btn-wa">SOPORTE WHATSAPP</a>
     </div>
 </div>
 
-<aside class="sidebar" id="sidebar" style="display:none;">
-    <div class="profile">
-        <div id="u-ava">?</div>
-        <h3 id="u-name">-</h3>
-        <div style="color:var(--gold); font-size:1.3rem; font-weight:800;">🪙 <span id="u-bal">0</span></div>
-    </div>
-    <nav>
-        <div class="nav-item active" onclick="nav('home')">🏠 Lobby</div>
-        <div class="nav-item" onclick="nav('games')">🎰 Juegos</div>
-        <div class="nav-item" onclick="nav('boxes')">📦 Cajas</div>
-        <div class="nav-item" onclick="nav('shop')">🛒 Tienda</div>
-        <div class="nav-item" onclick="nav('inv')">🎒 Inventario</div>
-        <div class="nav-item" id="adm-nav" style="display:none; color:var(--accent);" onclick="nav('admin')">🛠 PANEL MAESTRO</div>
-        <div class="nav-item" style="margin-top:auto; color:var(--red);" onclick="location.reload()">🚪 Salir</div>
-    </nav>
-</aside>
-
-<main class="main" id="main-content" style="display:none;">
-    <section id="v-home" class="view active">
-        <h1 style="font-family:'Orbitron';">EL <span style="color:var(--accent);">IMPERIO</span> TE ESPERA</h1>
-        <div class="glass-card">
-            <h3>Estado del Servidor: <span style="color:var(--accent);">ONLINE</span></h3>
-            <p>Usa tus tokens para jugar o abrir cajas exclusivas creadas por el Admin.</p>
+<div id="casino-ui">
+    <aside class="sidebar">
+        <div style="padding: 30px; text-align: center; border-bottom: 1px solid var(--border);">
+            <div id="u-ava" style="width:60px; height:60px; background:var(--accent); color:black; border-radius:15px; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:1.5rem; font-weight:900;">?</div>
+            <div id="u-display-name" style="font-weight: 800; letter-spacing: 1px;">-</div>
+            <div style="color: var(--gold); font-weight: 900; font-size: 1.5rem; margin-top: 10px;">🪙 <span id="u-balance">0</span></div>
         </div>
-    </section>
+        <nav>
+            <div class="nav-item active" onclick="showView('v-lobby')">🏠 LOBBY</div>
+            <div class="nav-item" onclick="showView('v-slots')">🎰 SLOTS</div>
+            <div class="nav-item" onclick="showView('v-mines')">💣 MINAS</div>
+            <div class="nav-item" id="nav-admin" style="display:none; color: var(--accent);" onclick="showView('v-admin')">🛠 PANEL MAESTRO</div>
+            <div class="nav-item" style="color: var(--red); margin-top: auto;" onclick="location.reload()">🚪 CERRAR SESIÓN</div>
+        </nav>
+    </aside>
 
-    <section id="v-games" class="view">
-        <div id="game-selector" class="game-grid">
-            <div class="glass-card game-card" onclick="startSlots()">
-                <h2>🎰 SLOTS</h2>
-                <p>Combina 3 figuras. Costo: 10 tokens.</p>
+    <main class="main-view">
+        <div id="v-lobby" class="view active">
+            <h1 style="font-family:'Orbitron';">BIENVENIDO, <span id="u-welcome" style="color:var(--accent)">-</span></h1>
+            <p>Selecciona un juego en el menú para empezar a apostar tus tokens.</p>
+        </div>
+
+        <div id="v-slots" class="view">
+            <h1>🎰 SLOTS FRUIT</h1>
+            <div class="slot-reels">
+                <div class="reel" id="s1">💎</div>
+                <div class="reel" id="s2">💎</div>
+                <div class="reel" id="s3">💎</div>
             </div>
-            <div class="glass-card game-card" onclick="startMines()">
-                <h2>💣 MINAS</h2>
-                <p>No toques la bomba. Multiplica tu apuesta.</p>
+            <button class="btn btn-main" id="btn-spin" onclick="playSlots()">GIRAR (20 TOKENS)</button>
+        </div>
+
+        <div id="v-mines" class="view">
+            <h1>💣 MINAS ELITE</h1>
+            <p>Costo por partida: 15 tokens. Encuentra diamantes y evita la bomba.</p>
+            <div class="mines-grid" id="mines-board"></div>
+            <button class="btn btn-main" onclick="initMines()">REINICIAR TABLERO</button>
+        </div>
+
+        <div id="v-admin" class="view">
+            <h1>🛠 PANEL MAESTRO</h1>
+            <div style="background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border);">
+                <h3>Cargar Tokens a Usuario</h3>
+                <input type="text" id="adm-target" placeholder="Usuario exacto">
+                <input type="number" id="adm-qty" placeholder="Cantidad (ej: 500)">
+                <button class="btn btn-main" onclick="adminGiveTokens()">ENVIAR TOKENS</button>
             </div>
         </div>
-        <div id="game-area" style="display:none;">
-            <div id="game-render"></div>
-            <button class="btn btn-red" onclick="nav('games')">Volver al Menú</button>
-        </div>
-    </section>
-
-    <section id="v-boxes" class="view">
-        <h1>CAJAS MISTERIOSAS</h1>
-        <div id="boxes-display" class="game-grid"></div>
-    </section>
-
-    <section id="v-shop" class="view">
-        <h1>TIENDA DE TOKENS</h1>
-        <div id="shop-display" class="game-grid"></div>
-        <div class="glass-card" style="margin-top:20px; text-align:center;">
-            <p>Para recargas manuales contacta al dueño:</p>
-            <a href="https://wa.me/593987749885" target="_blank" class="btn btn-accent" style="text-decoration:none; display:inline-block;">WHATSAPP DUEÑO</a>
-        </div>
-    </section>
-
-    <section id="v-inv" class="view">
-        <h1>MI INVENTARIO</h1>
-        <div id="inv-display" class="game-grid"></div>
-    </section>
-
-    <section id="v-admin" class="view">
-        <h1 style="color:var(--accent);">🛠 PANEL MAESTRO</h1>
-        
-        <div class="glass-card">
-            <h3>📦 Crear Nueva Caja</h3>
-            <input type="text" id="adm-box-name" placeholder="Nombre de la caja (ej: Caja Diamante)">
-            <input type="number" id="adm-box-price" placeholder="Precio en tokens">
-            <input type="text" id="adm-box-items" placeholder="Premios separados por coma (ej: M4A1, 500 tokens, VIP)">
-            <button class="btn btn-accent" onclick="admCreateBox()">PUBLICAR CAJA</button>
-        </div>
-
-        <div class="glass-card">
-            <h3>🛒 Crear Paquete de Tienda</h3>
-            <input type="text" id="adm-pack-name" placeholder="Nombre del pack (ej: Starter Pack)">
-            <input type="number" id="adm-pack-tokens" placeholder="Tokens que recibe">
-            <input type="text" id="adm-pack-price" placeholder="Precio real (ej: $5.00)">
-            <button class="btn btn-gold" onclick="admCreatePack()">AÑADIR A LA TIENDA</button>
-        </div>
-
-        <div class="glass-card">
-            <h3>👤 Gestión de Usuarios</h3>
-            <div id="adm-user-list"></div>
-        </div>
-    </section>
-</main>
+    </main>
+</div>
 
 <script>
-// --- CONFIGURACIÓN Y DATOS ---
-let db = JSON.parse(localStorage.getItem('smal_empire_db')) || {
-    users: [{u: 'maestro', p: 'EliteV7', bal: 99999, inv: [], admin: true}],
-    boxes: [{name: 'Caja Inicial', price: 50, items: ['Token de Bronce', 'Skin Básica', '10 Tokens']}],
-    shop: [{name: 'Smal Pack', tokens: 100, price: '$1.00'}]
-};
+    // --- LÓGICA DE DATOS ---
+    let db = JSON.parse(localStorage.getItem('smal_empire_v10')) || {
+        users: [{u: 'maestro', p: '1234', bal: 1000, admin: true}]
+    };
+    let session = null;
+    let mineLocation = 0;
 
-let currentUser = null;
+    function save() { 
+        localStorage.setItem('smal_empire_v10', JSON.stringify(db)); 
+        updateUI();
+    }
 
-function save() { 
-    localStorage.setItem('smal_empire_db', JSON.stringify(db)); 
-    updateUI();
-}
+    // --- SISTEMA DE ACCESO ---
+    function handleAuth() {
+        const u = document.getElementById('user-in').value.trim().toLowerCase();
+        const p = document.getElementById('pass-in').value;
+        if(!u || !p) return alert("Completa los campos");
 
-// --- AUTENTICACIÓN ---
-function handleAuth() {
-    const u = document.getElementById('auth-u').value.trim();
-    const p = document.getElementById('auth-p').value;
-    if(!u || !p) return alert("Completa los datos");
+        let user = db.users.find(x => x.u === u);
+        if(user) {
+            if(user.p === p) login(user);
+            else alert("Contraseña incorrecta");
+        } else {
+            let newUser = { u: u, p: p, bal: 100, admin: false };
+            db.users.push(newUser);
+            save();
+            login(newUser);
+        }
+    }
 
-    let user = db.users.find(x => x.u === u);
-    if(user) {
-        if(user.p === p) login(user);
-        else alert("Contraseña incorrecta");
-    } else {
-        let newUser = {u: u, p: p, bal: 100, inv: [], admin: false};
-        db.users.push(newUser);
+    function login(user) {
+        session = user;
+        document.getElementById('auth-overlay').style.display = 'none';
+        document.getElementById('casino-ui').style.display = 'flex';
+        if(user.admin) document.getElementById('nav-admin').style.display = 'block';
+        updateUI();
+    }
+
+    function showView(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        if(id === 'v-mines') initMines();
+    }
+
+    function updateUI() {
+        if(!session) return;
+        document.getElementById('u-display-name').innerText = session.u.toUpperCase();
+        document.getElementById('u-welcome').innerText = session.u.toUpperCase();
+        document.getElementById('u-balance').innerText = session.bal;
+        document.getElementById('u-ava').innerText = session.u[0].toUpperCase();
+    }
+
+    // --- JUEGO: SLOTS ---
+    function playSlots() {
+        if(session.bal < 20) return alert("No tienes suficientes tokens");
+        
+        session.bal -= 20;
+        const btn = document.getElementById('btn-spin');
+        const reels = [document.getElementById('s1'), document.getElementById('s2'), document.getElementById('s3')];
+        
+        btn.disabled = true;
+        reels.forEach(r => r.classList.add('spinning'));
+
+        setTimeout(() => {
+            const icons = ['🍒', '🍋', '🍇', '💎', '7️⃣'];
+            const res = [
+                icons[Math.floor(Math.random()*icons.length)],
+                icons[Math.floor(Math.random()*icons.length)],
+                icons[Math.floor(Math.random()*icons.length)]
+            ];
+
+            reels.forEach((r, i) => {
+                r.classList.remove('spinning');
+                r.innerText = res[i];
+            });
+
+            if(res[0] === res[1] && res[1] === res[2]) {
+                session.bal += 300;
+                confetti();
+                alert("¡JACKPOT! Ganaste 300 tokens");
+            } else if(res[0] === res[1] || res[1] === res[2] || res[0] === res[2]) {
+                session.bal += 40;
+                alert("¡Par de figuras! Ganaste 40 tokens");
+            }
+
+            btn.disabled = false;
+            save();
+        }, 1200);
+    }
+
+    // --- JUEGO: MINAS ---
+    function initMines() {
+        const board = document.getElementById('mines-board');
+        board.innerHTML = '';
+        mineLocation = Math.floor(Math.random() * 25);
+        for(let i=0; i<25; i++) {
+            const tile = document.createElement('button');
+            tile.className = 'tile';
+            tile.innerText = '❓';
+            tile.onclick = () => revealTile(i, tile);
+            board.appendChild(tile);
+        }
+    }
+
+    function revealTile(i, btn) {
+        if(session.bal < 15) return alert("Costo: 15 tokens por jugada");
+        if(btn.disabled) return;
+
+        if(i === mineLocation) {
+            btn.innerText = '💣';
+            btn.classList.add('lose');
+            session.bal -= 15;
+            alert("¡EXPLOTÓ LA MINA! Perdiste 15 tokens.");
+            initMines();
+        } else {
+            btn.innerText = '💎';
+            btn.classList.add('win');
+            btn.disabled = true;
+            session.bal += 10;
+        }
         save();
-        login(newUser);
     }
-}
 
-function login(user) {
-    currentUser = user;
-    document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('sidebar').style.display = 'flex';
-    document.getElementById('main-content').style.display = 'block';
-    if(user.admin) document.getElementById('adm-nav').style.display = 'flex';
-    nav('home');
-    updateUI();
-}
-
-// --- NAVEGACIÓN ---
-function nav(id) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('v-' + id).classList.add('active');
-    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    
-    if(id === 'boxes') renderBoxes();
-    if(id === 'shop') renderShop();
-    if(id === 'inv') renderInv();
-    if(id === 'admin') renderAdminUsers();
-    
-    document.getElementById('game-selector').style.display = 'grid';
-    document.getElementById('game-area').style.display = 'none';
-}
-
-function updateUI() {
-    if(!currentUser) return;
-    document.getElementById('u-name').innerText = currentUser.u;
-    document.getElementById('u-bal').innerText = currentUser.bal;
-    document.getElementById('u-ava').innerText = currentUser.u[0].toUpperCase();
-}
-
-// --- JUEGOS FUNCIONALES ---
-
-// 1. SLOTS
-function startSlots() {
-    document.getElementById('game-selector').style.display = 'none';
-    const area = document.getElementById('game-area');
-    area.style.display = 'block';
-    document.getElementById('game-render').innerHTML = `
-        <h2>🎰 SUPER SLOTS</h2>
-        <div class="slot-reels">
-            <div class="reel" id="r1">?</div>
-            <div class="reel" id="r2">?</div>
-            <div class="reel" id="r3">?</div>
-        </div>
-        <button class="btn btn-accent" onclick="spinSlots()">GIRAR (10 TOKENS)</button>
-    `;
-}
-
-function spinSlots() {
-    if(currentUser.bal < 10) return alert("Tokens insuficientes");
-    currentUser.bal -= 10;
-    const icons = ['🍒', '🍋', '💎', '7️⃣', '⭐'];
-    const res = [icons[Math.floor(Math.random()*5)], icons[Math.floor(Math.random()*5)], icons[Math.floor(Math.random()*5)]];
-    
-    document.getElementById('r1').innerText = res[0];
-    document.getElementById('r2').innerText = res[1];
-    document.getElementById('r3').innerText = res[2];
-
-    if(res[0] === res[1] && res[1] === res[2]) {
-        alert("¡JACKPOT! Ganaste 100 tokens");
-        currentUser.bal += 100;
-        confetti();
-    } else if(res[0] === res[1] || res[1] === res[2]) {
-        alert("¡Doble! Ganaste 20 tokens");
-        currentUser.bal += 20;
+    // --- FUNCIONES ADMIN ---
+    function adminGiveTokens() {
+        const targetU = document.getElementById('adm-target').value.toLowerCase();
+        const qty = parseInt(document.getElementById('adm-qty').value);
+        let user = db.users.find(x => x.u === targetU);
+        if(user && qty > 0) {
+            user.bal += qty;
+            save();
+            alert(`Tokens enviados a ${targetU}`);
+        } else {
+            alert("Usuario no encontrado o cantidad inválida");
+        }
     }
-    save();
-}
-
-// 2. MINAS
-let minePos = 0;
-function startMines() {
-    document.getElementById('game-selector').style.display = 'none';
-    document.getElementById('game-area').style.display = 'block';
-    minePos = Math.floor(Math.random()*25);
-    let boardHTML = '<div class="mines-board">';
-    for(let i=0; i<25; i++) {
-        boardHTML += `<div class="tile" id="tile-${i}" onclick="checkMine(${i})">?</div>`;
-    }
-    boardHTML += '</div><p>Apuesta: 20 tokens. Encuentra cuadros vacíos.</p>';
-    document.getElementById('game-render').innerHTML = boardHTML;
-}
-
-function checkMine(i) {
-    if(currentUser.bal < 20) return alert("Tokens insuficientes");
-    const t = document.getElementById('tile-' + i);
-    if(i === minePos) {
-        t.innerText = '💣';
-        t.className = 'tile bomb';
-        currentUser.bal -= 20;
-        alert("¡BOOM! Perdiste");
-        startMines();
-    } else {
-        t.innerText = '💎';
-        t.className = 'tile safe';
-        currentUser.bal += 5;
-        confetti({particleCount: 20, spread: 30});
-    }
-    save();
-}
-
-// --- RENDERIZADO DE CONTENIDO ---
-
-function renderBoxes() {
-    const div = document.getElementById('boxes-display');
-    div.innerHTML = '';
-    db.boxes.forEach((box, i) => {
-        div.innerHTML += `
-            <div class="glass-card text-center">
-                <h3>${box.name}</h3>
-                <p>Precio: ${box.price} Tokens</p>
-                <button class="btn btn-accent" onclick="openBox(${i})">ABRIR</button>
-            </div>
-        `;
-    });
-}
-
-function openBox(i) {
-    const box = db.boxes[i];
-    if(currentUser.bal < box.price) return alert("Tokens insuficientes");
-    currentUser.bal -= box.price;
-    const win = box.items[Math.floor(Math.random()*box.items.length)];
-    currentUser.inv.push(win);
-    save();
-    alert("¡Felicidades! Ganaste: " + win);
-    confetti();
-}
-
-function renderShop() {
-    const div = document.getElementById('shop-display');
-    div.innerHTML = '';
-    db.shop.forEach(p => {
-        div.innerHTML += `
-            <div class="glass-card text-center">
-                <h2>🪙 ${p.tokens}</h2>
-                <p>${p.name}</p>
-                <button class="btn btn-gold" onclick="window.open('https://wa.me/593987749885?text=Deseo comprar el paquete ${p.name}')">COMPRAR POR ${p.price}</button>
-            </div>
-        `;
-    });
-}
-
-function renderInv() {
-    const div = document.getElementById('inv-display');
-    div.innerHTML = currentUser.inv.length ? '' : '<p>Mochila vacía...</p>';
-    currentUser.inv.forEach(it => {
-        div.innerHTML += `<div class="glass-card">🎁 ${it}</div>`;
-    });
-}
-
-// --- FUNCIONES ADMIN ---
-
-function admCreateBox() {
-    const n = document.getElementById('adm-box-name').value;
-    const p = parseInt(document.getElementById('adm-box-price').value);
-    const i = document.getElementById('adm-box-items').value.split(',');
-    if(!n || !p || i.length < 1) return alert("Faltan datos");
-    db.boxes.push({name: n, price: p, items: i});
-    save();
-    alert("Caja creada con éxito");
-}
-
-function admCreatePack() {
-    const n = document.getElementById('adm-pack-name').value;
-    const t = parseInt(document.getElementById('adm-pack-tokens').value);
-    const p = document.getElementById('adm-pack-price').value;
-    if(!n || !t || !p) return alert("Faltan datos");
-    db.shop.push({name: n, tokens: t, price: p});
-    save();
-    alert("Paquete de tienda añadido");
-}
-
-function renderAdminUsers() {
-    const div = document.getElementById('adm-user-list');
-    div.innerHTML = '';
-    db.users.forEach(u => {
-        div.innerHTML += `
-            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333;">
-                <span>${u.u} (${u.bal} tokens)</span>
-                <button onclick="admAddTokens('${u.u}')" style="font-size:10px;">+100</button>
-            </div>
-        `;
-    });
-}
-
-function admAddTokens(username) {
-    let u = db.users.find(x => x.u === username);
-    u.bal += 100;
-    save();
-}
-
-// Iniciar
-updateUI();
 </script>
 </body>
 </html>
