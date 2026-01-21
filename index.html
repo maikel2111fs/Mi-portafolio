@@ -2,174 +2,153 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shark Casino Premium</title>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <title>Shark Casino Elite | Registro & Trade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00ffcc; --dark: #0a0a0b; --accent: #ff0055; }
-        body { background: var(--dark); color: white; font-family: 'Poppins', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        .navbar { background: #151517; width: 100%; padding: 15px; display: flex; justify-content: center; gap: 20px; border-bottom: 2px solid var(--neon); }
-        .container { max-width: 800px; width: 90%; margin-top: 30px; text-align: center; }
-        .token-card { background: linear-gradient(145deg, #1a1a1d, #111); padding: 20px; border-radius: 20px; border: 1px solid var(--neon); box-shadow: 0 0 20px rgba(0, 255, 204, 0.2); margin-bottom: 30px; }
-        .token-display { font-size: 3rem; color: var(--neon); text-shadow: 0 0 10px var(--neon); }
-        .game-area { background: #151517; border-radius: 20px; padding: 30px; display: none; border: 1px solid #333; }
-        .active { display: block; animation: fadeIn 0.5s; }
-        button { background: var(--neon); color: black; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; margin: 5px; }
-        button:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--neon); }
-        .nav-btn { background: transparent; color: white; border: 1px solid #444; }
-        .nav-btn.active-nav { border-color: var(--neon); color: var(--neon); }
-        input { background: #222; border: 1px solid #444; color: white; padding: 12px; border-radius: 8px; width: 80%; margin-bottom: 20px; text-align: center; }
+        :root { --neon: #00f2ff; --dark-blue: #0f111a; --card-bg: #1a1d29; }
+        body { background: var(--dark-blue); color: white; font-family: 'Rajdhani', sans-serif; margin: 0; }
         
-        /* Estilo Ruleta Horizontal */
-        .ruleta-container { position: relative; width: 100%; height: 80px; background: #222; border: 2px solid gold; overflow: hidden; display: flex; align-items: center; border-radius: 10px; margin: 20px 0; }
-        .marker { position: absolute; left: 50%; width: 4px; height: 100%; background: red; z-index: 10; }
-        
-        /* Buscaminas */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 180px; margin: auto; }
-        .cell { width: 55px; height: 55px; background: #333; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: 0.2s; }
-        .cell:hover { background: #444; }
+        /* Pantalla de Carga/Login */
+        #auth-overlay {
+            position: fixed; inset: 0; background: radial-gradient(circle, #1a1d29 0%, #050505 100%);
+            z-index: 1000; display: flex; justify-content: center; align-items: center;
+        }
+        .login-box {
+            background: var(--card-bg); padding: 40px; border-radius: 20px;
+            border: 2px solid var(--neon); text-align: center; box-shadow: 0 0 50px rgba(0,242,255,0.2);
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Layout Principal con Sidebar */
+        .wrapper { display: flex; height: 100vh; display: none; }
+        .sidebar { width: 280px; background: #0b0e15; border-right: 1px solid #222; padding: 20px; }
+        .main-view { flex: 1; overflow-y: auto; padding: 40px; background: #0f111a; }
+
+        /* Estilo de Tarjetas de Juego (Tipo Stake) */
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        .game-item {
+            background: var(--card-bg); border-radius: 15px; overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: 1px solid #333;
+        }
+        .game-item:hover { transform: scale(1.05); border-color: var(--neon); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .game-thumb { height: 150px; background: linear-gradient(45deg, #12141d, #1e2230); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+
+        /* Inventario de Premios */
+        .inventory-section { margin-top: 40px; background: rgba(0,242,255,0.05); padding: 20px; border-radius: 15px; }
+        .item-slot {
+            display: inline-block; width: 120px; padding: 10px; background: #252936;
+            margin: 5px; border-radius: 10px; text-align: center; border: 1px solid #444;
+        }
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <button class="nav-btn active-nav" onclick="showGame('home')">INICIO</button>
-    <button class="nav-btn" onclick="showGame('ruleta')">RULETA</button>
-    <button class="nav-btn" onclick="showGame('minas')">BUSCAMINAS</button>
+<div id="auth-overlay">
+    <div class="login-box">
+        <h1 style="font-family: 'Syncopate'; color: var(--neon); font-size: 2rem;">SHARK CASINO</h1>
+        <p>Inicia sesión para proteger tus tokens y premios</p>
+        <input type="email" id="email" placeholder="Correo Gmail" style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; background: #0b0e15; color: white;">
+        <input type="password" id="pass" placeholder="Contraseña" style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; background: #0b0e15; color: white;">
+        <button onclick="iniciarSesion()" style="width: 100%; padding: 15px; background: var(--neon); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #000;">ENTRAR AL SISTEMA</button>
+    </div>
 </div>
 
-<div class="container">
-    <div class="token-card">
-        <h1>SHARK CASINO 🦈</h1>
-        <div class="token-display" id="balance">0</div>
-        <p>Tokens Disponibles</p>
-        <div id="paypal-button-container"></div>
-    </div>
-
-    <input type="text" id="username" placeholder="Tu Usuario (Minecraft / Discord)">
-
-    <div id="game-home" class="game-area active">
-        <h2>Bienvenido al Casino</h2>
-        <p>Selecciona un juego en el menú superior para empezar.</p>
-        <p><b>Probabilidad de ganar: 25%</b></p>
-        <ul style="text-align: left; display: inline-block;">
-            <li>💎 <b>Rangos:</b> VIP hasta Shark+ y Prime</li>
-            <li>⚔️ <b>Kits:</b> 1ero, 2do y 3er nivel</li>
-            <li>🎁 <b>Especiales:</b> Robux y Discord Nitro</li>
-        </ul>
-    </div>
-
-    <div id="game-ruleta" class="game-area">
-        <h3>Ruleta de Premios (5 Tokens)</h3>
-        <div class="ruleta-container">
-            <div class="marker"></div>
-            <div id="ruleta-text" style="width: 100%; font-size: 1.2rem; font-weight: bold; color: gold;">????</div>
+<div class="wrapper" id="main-app">
+    <aside class="sidebar">
+        <h2 style="color: var(--neon); font-family: 'Syncopate'; font-size: 1.2rem;">SHARK ELITE</h2>
+        <nav>
+            <p style="color: #666; font-size: 0.8rem; margin-top: 30px;">MENU</p>
+            <div onclick="changeTab('lobby')" style="cursor:pointer; padding: 10px 0; color: var(--neon);">🏠 Lobby</div>
+            <div onclick="changeTab('inventory')" style="cursor:pointer; padding: 10px 0;">🎒 Mi Inventario</div>
+            <div onclick="changeTab('trades')" style="cursor:pointer; padding: 10px 0;">🤝 Trades</div>
+        </nav>
+        <div style="position: absolute; bottom: 20px;">
+            <p>Balance: <span style="color: var(--neon); font-weight: bold;">🪙 <span id="user-tokens">0</span></span></p>
         </div>
-        <button onclick="jugarRuleta()">GIRAR AHORA</button>
-    </div>
+    </aside>
 
-    <div id="game-minas" class="game-area">
-        <h3>Buscaminas Explosivo (5 Tokens)</h3>
-        <p>¡Elige una casilla! Si hay premio ganas, si hay bomba pierdes.</p>
-        <div class="grid" id="mines-grid">
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
-            <div class="cell" onclick="checkMine()">?</div>
+    <main class="main-view">
+        <div id="lobby">
+            <h1 style="font-size: 2.5rem;">Originales de Shark</h1>
+            <div id="paypal-button-container"></div>
+            <div class="game-grid">
+                <div class="game-item" onclick="abrirJuego('minas')">
+                    <div class="game-thumb">💣</div>
+                    <h3 style="margin-left: 15px;">MINAS</h3>
+                </div>
+                <div class="game-item" onclick="abrirJuego('ruleta')">
+                    <div class="game-thumb">🎡</div>
+                    <h3 style="margin-left: 15px;">RULETA H</h3>
+                </div>
+                <div class="game-item" onclick="abrirJuego('plinko')">
+                    <div class="game-thumb">🔵</div>
+                    <h3 style="margin-left: 15px;">PLINKO</h3>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <h2 id="status"></h2>
+        <div id="inventory" style="display: none;">
+            <h1>Mi Inventario de Premios</h1>
+            <div class="inventory-section" id="items-list">
+                <p>Aún no tienes premios. ¡Empieza a jugar!</p>
+            </div>
+        </div>
+    </main>
 </div>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD"></script>
 
 <script>
-    // CONFIGURACIÓN INICIAL
-    emailjs.init("TU_USER_ID_EMAILJS"); // RECUERDA CAMBIAR ESTO
-    let tokens = 0;
-    const premios = [
-        "Rango VIP", "Rango VIP+", "Rango MASTER", "Rango LEGEND", "Rango LEGEND+", "Rango SHARK", "Rango SHARK+", "Rango PRIME",
-        "MEJOR KIT (OP)", "2do MEJOR KIT", "3er MEJOR KIT",
-        "100 ROBUX", "DISCORD NITRO (1 MES)", "PACK DE RECURSOS LEGENDARIO", "LLAVE KEY MYSTIC"
-    ];
+    let userData = { tokens: 0, inventory: [] };
 
-    // LÓGICA PAYPAL
-    paypal.Buttons({
-        createOrder: (data, actions) => { return actions.order.create({ purchase_units: [{ amount: { value: '1.00' } }] }); },
-        onApprove: (data, actions) => {
-            return actions.order.capture().then(() => {
-                tokens += 10;
-                updateUI();
-                alert("¡Pago de $1 procesado! +10 Tokens añadidos.");
-            });
+    function iniciarSesion() {
+        const mail = document.getElementById('email').value;
+        if(mail.includes("@")) {
+            document.getElementById('auth-overlay').style.fadeOut; // Efecto visual
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.getElementById('main-app').style.display = 'flex';
+        } else {
+            alert("Por favor ingresa un Gmail válido");
         }
+    }
+
+    function changeTab(tab) {
+        document.getElementById('lobby').style.display = tab === 'lobby' ? 'block' : 'none';
+        document.getElementById('inventory').style.display = tab === 'inventory' ? 'block' : 'none';
+    }
+
+    // Integración de PayPal para comprar Tokens
+    paypal.Buttons({
+        createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: '1.00' } }] }),
+        onApprove: (data, actions) => actions.order.capture().then(() => {
+            userData.tokens += 10;
+            document.getElementById('user-tokens').innerText = userData.tokens;
+            alert("¡10 Tokens añadidos a tu cuenta!");
+        })
     }).render('#paypal-button-container');
 
-    function showGame(game) {
-        document.querySelectorAll('.game-area').forEach(g => g.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
-        document.getElementById('game-' + game).classList.add('active');
-        event.currentTarget.classList.add('active-nav');
-    }
-
-    function jugarRuleta() {
-        if (!checkUser() || !payTokens(5)) return;
-        let ruleta = document.getElementById("ruleta-text");
-        ruleta.innerText = "Girando...";
+    // Lógica para ganar e ir al inventario
+    function abrirJuego(game) {
+        if(userData.tokens < 5) return alert("Necesitas al menos 5 tokens para jugar.");
+        userData.tokens -= 5;
+        document.getElementById('user-tokens').innerText = userData.tokens;
         
-        setTimeout(() => {
-            procesarResultado();
-        }, 1500);
-    }
-
-    function checkMine() {
-        if (!checkUser() || !payTokens(5)) return;
-        procesarResultado();
-    }
-
-    function procesarResultado() {
-        let win = Math.random() < 0.25; // 25% GANAR
-        let status = document.getElementById("status");
-        
-        if (win) {
-            let p = premios[Math.floor(Math.random() * premios.length)];
-            status.innerHTML = `<span style="color:var(--neon)">¡GANASTE: ${p}!</span>`;
-            enviarAlGmail(p);
+        // Probabilidad de 25% para ganar
+        if(Math.random() < 0.25) {
+            let premios = ["Rango Shark+", "Discord Nitro", "100 Robux", "Kit Prime"];
+            let ganado = premios[Math.floor(Math.random() * premios.length)];
+            userData.inventory.push(ganado);
+            alert("¡GANASTE UN " + ganado + "! Se guardó en tu inventario.");
+            actualizarInventario();
         } else {
-            status.innerHTML = `<span style="color:var(--accent)">PERDISTE. Intenta otra vez.</span>`;
+            alert("Perdiste. ¡Sigue intentando!");
         }
     }
 
-    function checkUser() {
-        if (document.getElementById("username").value.length < 3) {
-            alert("Escribe tu usuario para saber a quién dar el premio.");
-            return false;
-        }
-        return true;
-    }
-
-    function payTokens(cant) {
-        if (tokens < cant) { alert("No tienes tokens. Compra con PayPal."); return false; }
-        tokens -= cant;
-        updateUI();
-        return true;
-    }
-
-    function updateUI() { document.getElementById("balance").innerText = tokens; }
-
-    function enviarAlGmail(premio) {
-        let user = document.getElementById("username").value;
-        emailjs.send("TU_SERVICE_ID", "TU_TEMPLATE_ID", {
-            from_name: user,
-            message: "¡GANADOR! Usuario: " + user + " ha ganado: " + premio
+    function actualizarInventario() {
+        const list = document.getElementById('items-list');
+        list.innerHTML = "";
+        userData.inventory.forEach(item => {
+            list.innerHTML += `<div class="item-slot"><b>${item}</b><br><button style="font-size:0.6rem; margin-top:5px; cursor:pointer;">RECLAMAR</button></div>`;
         });
     }
 </script>
