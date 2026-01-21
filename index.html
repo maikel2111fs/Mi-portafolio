@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMAL EMPIRE | ULTIMATE V14</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>SMAL EMPIRE | ELITE CASINO 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD"></script>
     <style>
@@ -15,159 +15,165 @@
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
         body { background: var(--bg); color: white; margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        /* --- SIDEBAR --- */
-        .sidebar { width: 280px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
-        .nav-item { padding: 18px 25px; cursor: pointer; color: #8b949e; font-weight: 800; border-left: 4px solid transparent; }
-        .nav-item:hover { background: #161b22; color: white; }
-        .nav-item.active { background: #1c232e; color: var(--accent); border-left-color: var(--accent); }
+        /* SIDEBAR */
+        .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
+        .nav-item { padding: 15px 25px; cursor: pointer; color: #8b949e; font-weight: 800; border-left: 4px solid transparent; display: flex; align-items: center; gap: 10px; }
+        .nav-item:hover, .nav-item.active { background: #161b22; color: var(--accent); border-left-color: var(--accent); }
 
-        /* --- MAIN AREA --- */
-        .main { flex: 1; padding: 40px; overflow-y: auto; background: radial-gradient(circle at top right, #0d1a12, #05070a); }
-        .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.4s ease-out; }
+        /* MAIN AREA */
+        .main { flex: 1; padding: 30px; overflow-y: auto; background: radial-gradient(circle at top right, #0d1a12, #05070a); position: relative; }
+        .view { display: none; animation: fadeIn 0.4s ease; }
+        .view.active { display: block; }
 
-        /* --- TIENDA CUSTOM --- */
-        .shop-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid var(--gold); text-align: center; max-width: 500px; margin: 0 auto; }
-        .price-display { font-size: 2.5rem; font-weight: 900; color: var(--gold); margin: 20px 0; }
+        /* UI ELEMENTS */
+        .glass { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; padding: 20px; backdrop-filter: blur(10px); }
+        .btn { background: var(--accent); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; width: 100%; transition: 0.3s; }
+        .btn:hover { transform: scale(1.02); filter: brightness(1.2); }
+        .input-pro { background: #000; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; outline: none; text-align: center; }
 
-        /* --- RUEDA DE CAJAS --- */
-        .case-container { width: 100%; max-width: 700px; margin: 20px auto; background: #000; border: 2px solid var(--border); position: relative; overflow: hidden; border-radius: 12px; height: 150px; }
+        /* JUEGOS GRID */
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .game-card { background: #151921; border-radius: 15px; overflow: hidden; border: 1px solid var(--border); text-align: center; padding-bottom: 15px; }
+        .game-img { width: 100%; height: 120px; object-fit: cover; opacity: 0.7; }
+
+        /* CASE OPENING CS:GO STYLE */
+        .case-container { width: 100%; height: 160px; background: #000; border: 2px solid var(--border); position: relative; overflow: hidden; border-radius: 12px; margin: 20px 0; }
         .case-reel { display: flex; position: absolute; left: 0; top: 0; height: 100%; transition: transform 5s cubic-bezier(0.1, 0, 0.1, 1); }
-        .case-item { min-width: 130px; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #111; border-bottom: 5px solid transparent; }
-        .case-pointer { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--accent); z-index: 10; transform: translateX(-50%); }
+        .case-item { min-width: 140px; border-right: 1px solid #111; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; }
+        .pointer { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--accent); z-index: 10; box-shadow: 0 0 15px var(--accent); }
 
-        /* --- INVENTARIO --- */
-        .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .item-card { background: var(--card); border: 1px solid var(--border); padding: 15px; border-radius: 10px; text-align: center; font-size: 0.8rem; position: relative; }
-        
-        .rarity-blue { border-bottom: 4px solid var(--blue); }
-        .rarity-purple { border-bottom: 4px solid var(--purple); }
-        .rarity-red { border-bottom: 4px solid var(--red); }
-        .rarity-gold { border-bottom: 4px solid var(--gold); animation: glow 2s infinite; }
-        @keyframes glow { 0%, 100% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 15px var(--gold); } }
+        /* CHAT */
+        .chat-box { width: 300px; background: var(--card); border-left: 1px solid var(--border); display: flex; flex-direction: column; }
+        #chat-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.85rem; }
+        .msg { margin-bottom: 8px; border-bottom: 1px solid #1c232e; padding-bottom: 4px; }
+        .msg b { color: var(--accent); }
 
-        /* --- BOTONES Y ENTRADAS --- */
-        .btn { background: var(--accent); color: black; border: none; padding: 15px; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; width: 100%; margin-top: 10px; }
-        .input-pro { background: #000; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; outline: none; text-align: center; font-size: 1.1rem; }
-        
-        #login-screen { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        /* LOGIN */
+        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<aside class="sidebar">
-    <div style="padding:40px 20px; text-align:center; border-bottom: 1px solid var(--border);">
-        <h2 style="font-family:'Orbitron'; color:var(--accent); letter-spacing: 2px;">SMAL EMPIRE</h2>
-        <div style="margin-top:20px; background:#000; padding:12px; border-radius:12px; border: 1px solid var(--border);">
-            <div style="font-size: 0.7rem; color: #8b949e; margin-bottom: 5px;">SALDO ACTUAL</div>
-            <span style="color:var(--gold); font-weight:900; font-size: 1.4rem;">🪙 <span id="u-bal">0</span></span>
+<div id="auth-screen">
+    <div class="glass" style="width: 380px; text-align: center; border: 1px solid var(--accent);">
+        <h1 style="font-family:'Orbitron'; color:var(--accent); margin:0;">SMAL EMPIRE</h1>
+        <p style="font-size: 0.7rem; color: #8b949e; letter-spacing: 2px;">ELITE GAMBLING PLATFORM</p>
+        <div id="auth-form" style="margin-top:20px;">
+            <input type="text" id="l-u" class="input-pro" placeholder="Usuario">
+            <input type="password" id="l-p" class="input-pro" placeholder="Contraseña">
+            <button class="btn" onclick="logic.auth()">INGRESAR AL SISTEMA</button>
+            <p style="font-size: 0.7rem; margin-top: 15px;">Al entrar aceptas los términos de servicio 2026.</p>
         </div>
     </div>
-    <nav>
-        <div class="nav-item active" onclick="ui.nav('lobby')">🏠 INICIO</div>
-        <div class="nav-item" onclick="ui.nav('cases')">📦 ABRIR CAJAS</div>
-        <div class="nav-item" onclick="ui.nav('shop')">💰 COMPRAR COINS</div>
+</div>
+
+<aside class="sidebar">
+    <div style="padding:30px 20px; text-align:center; border-bottom: 1px solid var(--border);">
+        <h3 style="font-family:'Orbitron'; color:var(--accent); margin:0;">IMPERIO</h3>
+        <div style="margin-top:15px; background:#000; padding:10px; border-radius:12px; border: 1px solid var(--gold);">
+            <div style="font-size: 0.6rem; color: #8b949e;">BALANCE</div>
+            <span style="color:var(--gold); font-weight:900; font-size: 1.3rem;">🪙 <span id="u-bal">0</span></span>
+        </div>
+    </div>
+    <nav style="flex:1">
+        <div class="nav-item active" onclick="ui.nav('lobby')">🏠 LOBBY</div>
+        <div class="nav-item" onclick="ui.nav('games')">🎰 10 JUEGOS PRO</div>
+        <div class="nav-item" onclick="ui.nav('cases')">📦 CAJAS SKINS</div>
         <div class="nav-item" onclick="ui.nav('inv')">🎒 INVENTARIO</div>
-        <div class="nav-item" id="adm-tab" style="display:none; color:var(--gold)" onclick="ui.nav('admin')">🛠 PANEL MAESTRO</div>
-        <div class="nav-item" style="color:var(--red); margin-top:auto;" onclick="location.reload()">🚪 SALIR</div>
+        <div class="nav-item" onclick="ui.nav('shop')">💰 COMPRAR TOKENS</div>
+        <div id="adm-tab" class="nav-item" style="display:none; color:var(--gold)" onclick="ui.nav('admin')">🛠 PANEL MAESTRO</div>
     </nav>
+    <div class="nav-item" style="color:var(--red); border-top:1px solid var(--border)" onclick="location.reload()">🚪 SALIR</div>
 </aside>
 
 <main class="main">
     <div id="v-lobby" class="view active">
-        <h1>BIENVENIDO AL <span style="color:var(--accent)">IMPERIO</span></h1>
-        <p>Sistema de apuestas con skins y tokens reales optimizado para 2026.</p>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-            <div class="shop-box" style="margin:0; max-width:100%;">
-                <h3>Último Item Ganado</h3>
-                <div id="recent-win" style="font-size: 1.2rem; color: var(--gold);">Ninguno todavía</div>
+        <h1 style="font-family:'Orbitron';">BIENVENIDO, <span id="u-display" style="color:var(--accent)">-</span></h1>
+        <div class="glass">
+            <h3>Estado del Servidor: <span style="color:var(--accent)">ONLINE</span></h3>
+            <p>1 USD = 10 Tokens. Soporte WhatsApp: <a href="https://wa.me/593987749885" style="color:var(--accent)">+593987749885</a></p>
+        </div>
+        <div style="margin-top:20px;" class="game-grid">
+            <div class="glass" style="text-align:center;">
+                <h4 style="color:var(--gold)">PREMIO MAYOR HOY</h4>
+                <h2 style="margin:0;">15,000 🪙</h2>
             </div>
-            <div class="shop-box" style="margin:0; max-width:100%;">
-                <h3>Usuarios Online</h3>
-                <div style="color:var(--accent); font-size: 1.5rem; font-weight: 900;">1,402</div>
+            <div class="glass" style="text-align:center;">
+                <h4 style="color:var(--accent)">JUGADORES ACTIVOS</h4>
+                <h2 style="margin:0;">2,541</h2>
             </div>
         </div>
     </div>
 
-    <div id="v-shop" class="view">
-        <h1 style="text-align: center;">TIENDA DE TOKENS</h1>
-        <div class="shop-box">
-            <p>1 USD = 10 TOKENS (Min. $10)</p>
-            <label>¿Cuántos tokens quieres?</label>
-            <input type="number" id="coin-input" class="input-pro" value="800" oninput="ui.calcPrice()">
-            <div class="price-display">$ <span id="price-val">80.00</span> USD</div>
-            <div id="paypal-button-container"></div>
-            <p style="font-size: 0.8rem; margin-top: 15px; color: #8b949e;">Pagos seguros vía PayPal Encrypted</p>
-        </div>
+    <div id="v-games" class="view">
+        <h1>JUEGOS DEL IMPERIO</h1>
+        <div class="game-grid" id="game-list"></div>
     </div>
 
     <div id="v-cases" class="view">
-        <h1>SISTEMA DE APERTURA</h1>
-        <div class="shop-box" style="max-width: 100%; margin-bottom: 20px;">
-            <h2 id="case-title">Caja Alpha de Inicio</h2>
+        <h1>CASE OPENING ELITE</h1>
+        <div class="glass" style="text-align:center;">
+            <h2 id="case-name">Caja de Operación: SMAL 1</h2>
             <div class="case-container">
-                <div class="case-pointer"></div>
+                <div class="pointer"></div>
                 <div class="case-reel" id="case-reel"></div>
             </div>
-            <button class="btn" id="btn-open" onclick="logic.openCase()">ABRIR POR 100 TOKENS</button>
+            <button class="btn" style="max-width:300px;" onclick="logic.openCase()">ABRIR CAJA (150 TOKENS)</button>
         </div>
     </div>
 
     <div id="v-inv" class="view">
-        <h1>MI INVENTARIO</h1>
-        <div class="inv-grid" id="inv-grid"></div>
+        <h1>TU INVENTARIO VIP</h1>
+        <div class="game-grid" id="inv-grid"></div>
+    </div>
+
+    <div id="v-shop" class="view">
+        <h1>CARGAR TOKENS (SISTEMA SEGURO)</h1>
+        <div class="glass" style="max-width:500px; margin:0 auto; text-align:center;">
+            <p>Mínimo de compra sugerido: $80 USD (800 Tokens)</p>
+            <input type="number" id="coin-input" class="input-pro" value="800" oninput="ui.calc()">
+            <div style="font-size:2.5rem; color:var(--gold); margin:20px 0;">$ <span id="price-val">80.00</span></div>
+            <div id="paypal-button-container"></div>
+        </div>
     </div>
 
     <div id="v-admin" class="view">
-        <h1>🛠 CONFIGURACIÓN MAESTRA</h1>
-        <div class="shop-box" style="max-width: 100%; text-align: left;">
-            <h3>Añadir Nuevo Item a la Base</h3>
-            <input type="text" id="adm-n" class="input-pro" placeholder="Nombre del Item">
-            <select id="adm-r" class="input-pro">
-                <option value="blue">Azul (Común)</option>
-                <option value="purple">Morado (Raro)</option>
-                <option value="red">Rojo (Mítico)</option>
-                <option value="gold">Dorado (LEGENDARIO)</option>
-            </select>
-            <button class="btn" onclick="logic.addItem()">CREAR ITEM</button>
+        <h1>🛠 PANEL DE CONTROL DUEÑO</h1>
+        <div class="glass">
+            <h3>Modificar Balance de Usuario</h3>
+            <input type="text" id="adm-target" class="input-pro" placeholder="Nombre de Usuario">
+            <input type="number" id="adm-amount" class="input-pro" placeholder="Nueva cantidad de Tokens">
+            <button class="btn" onclick="admin.setBal()">ACTUALIZAR SALDO</button>
+        </div>
+        <div class="glass" style="margin-top:20px;">
+            <h3>Configuración de Probabilidades</h3>
+            <label>Win Rate del Casino (%):</label>
+            <input type="range" min="1" max="95" value="45" style="width:100%" oninput="admin.setRate(this.value)">
+            <span id="rate-val">45%</span>
         </div>
     </div>
 </main>
 
-<div id="login-screen">
-    <div class="shop-box">
-        <h1 style="font-family:'Orbitron'; color:var(--accent)">ACCESO</h1>
-        <input type="text" id="l-u" class="input-pro" placeholder="Usuario">
-        <input type="password" id="l-p" class="input-pro" placeholder="Contraseña">
-        <button class="btn" onclick="logic.auth()">INGRESAR AL SISTEMA</button>
+<aside class="chat-box">
+    <div style="padding:15px; border-bottom:1px solid var(--border); font-weight:800;">💬 CHAT GLOBAL</div>
+    <div id="chat-messages"></div>
+    <div style="padding:10px;">
+        <input type="text" id="chat-in" class="input-pro" style="margin:0; font-size:0.8rem;" placeholder="Escribe un mensaje..." onkeypress="if(event.key==='Enter') logic.sendChat()">
     </div>
-</div>
+</aside>
 
 <script>
-const ui = {
-    nav: (id) => {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById('v-'+id).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        if(id === 'inv') logic.renderInv();
-    },
-    calcPrice: () => {
-        const coins = document.getElementById('coin-input').value;
-        const total = (coins / 10).toFixed(2);
-        document.getElementById('price-val').innerText = total;
-    }
-};
-
+// --- LÓGICA DE DATOS Y PERSISTENCIA ---
 const logic = {
-    db: JSON.parse(localStorage.getItem('smal_v14')) || {
-        users: [{u:'maestro', p:'Elite2026', bal:1000, admin:true, inv:[]}],
+    db: JSON.parse(localStorage.getItem('smal_pro_v16')) || {
+        users: [{u:'maestro', p:'Elite2026', bal:10000, admin:true, inv:[]}],
         items: [
-            {n: 'Karambit | Gamma Doppler', r: 'gold'},
-            {n: 'AWP | Asiimov', r: 'red'},
-            {n: 'M4A1-S | Mecha', r: 'purple'},
-            {n: 'Glock | Candy', r: 'blue'}
-        ]
+            {n:'Karambit Doppler', r:'gold', img:'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJf1fLEcjVL49KJlZG0k_b5MqjSg3hu-NVasODComplex...'},
+            {n:'AWP Asiimov', r:'red'}, {n:'AK-47 Vulcan', r:'purple'}, {n:'Glock Water', r:'blue'}
+        ],
+        chat: [{u:'System', m:'Bienvenido al Imperio Smal.'}],
+        settings: {rate: 45}
     },
     user: null,
 
@@ -175,110 +181,157 @@ const logic = {
         const u = document.getElementById('l-u').value.toLowerCase();
         const p = document.getElementById('l-p').value;
         if(!u || !p) return;
-        let found = this.db.users.find(x => x.u === u);
-        if(!found) {
-            found = {u, p, bal:500, admin:false, inv:[]};
-            this.db.users.push(found);
+        let user = this.db.users.find(x => x.u === u);
+        if(!user) {
+            user = {u, p, bal:200, admin:false, inv:[]};
+            this.db.users.push(user);
         }
-        if(found.p === p) {
-            this.user = found;
-            document.getElementById('login-screen').style.display = 'none';
-            if(found.admin) document.getElementById('adm-tab').style.display = 'block';
+        if(user.p === p) {
+            this.user = user;
+            document.getElementById('auth-screen').style.display='none';
+            if(user.admin) document.getElementById('adm-tab').style.display='flex';
+            document.getElementById('u-display').innerText = u.toUpperCase();
             this.update();
-            this.initPaypal();
-        }
+            this.loadChat();
+            ui.renderGames();
+            ui.initPaypal();
+        } else { alert("Clave incorrecta"); }
     },
 
     update() {
         document.getElementById('u-bal').innerText = Math.floor(this.user.bal);
-        localStorage.setItem('smal_v14', JSON.stringify(this.db));
+        localStorage.setItem('smal_pro_v16', JSON.stringify(this.db));
     },
 
-    renderInv() {
-        const grid = document.getElementById('inv-grid');
-        grid.innerHTML = this.user.inv.map(it => `
-            <div class="item-card rarity-${it.r}">
-                <div style="font-size:2rem; margin-bottom:10px;">📦</div>
-                <b>${it.n}</b><br>
-                <button onclick="logic.claim('${it.n}')" style="background:var(--accent); border:none; margin-top:10px; font-size:0.6rem; font-weight:900; padding:5px; border-radius:4px; cursor:pointer;">RECLAMAR</button>
-            </div>
-        `).join('');
-    },
-
-    claim(name) {
-        const mail = "gancinomaikel@gmail.com";
-        const body = `El usuario ${this.user.u} solicita el item: ${name}`;
-        window.open(`mailto:${mail}?subject=RECLAMO ITEM&body=${body}`);
-        this.user.inv = this.user.inv.filter(x => x.n !== name);
+    sendChat() {
+        const m = document.getElementById('chat-in').value;
+        if(!m) return;
+        this.db.chat.push({u: this.user.u, m: m});
+        if(this.db.chat.length > 20) this.db.chat.shift();
+        document.getElementById('chat-in').value = '';
+        this.loadChat();
         this.update();
-        this.renderInv();
+    },
+
+    loadChat() {
+        const box = document.getElementById('chat-messages');
+        box.innerHTML = this.db.chat.map(c => `<div class="msg"><b>${c.u}:</b> ${c.m}</div>`).join('');
+        box.scrollTop = box.scrollHeight;
     },
 
     openCase() {
-        if(this.user.bal < 100) return alert("Faltan Tokens");
-        this.user.bal -= 100;
+        if(this.user.bal < 150) return alert("Faltan Tokens");
+        this.user.bal -= 150;
         this.update();
 
         const reel = document.getElementById('case-reel');
-        reel.style.transition = 'none';
-        reel.style.transform = 'translateX(0)';
+        reel.style.transition = 'none'; reel.style.transform = 'translateX(0)';
         
         let pool = [];
         let html = '';
         for(let i=0; i<60; i++) {
             const r = Math.random()*100;
-            let item = r > 98 ? this.db.items.find(x => x.r === 'gold') : 
-                       r > 85 ? this.db.items.find(x => x.r === 'red') :
-                       r > 60 ? this.db.items.find(x => x.r === 'purple') : 
-                       this.db.items.find(x => x.r === 'blue');
-            if(!item) item = this.db.items[this.db.items.length-1];
-            pool.push(item);
-            html += `<div class="case-item rarity-${item.r}"><b>${item.n}</b></div>`;
+            let it = r > 98 ? this.db.items[0] : r > 85 ? this.db.items[1] : r > 60 ? this.db.items[2] : this.db.items[3];
+            pool.push(it);
+            html += `<div class="case-item" style="border-bottom: 4px solid var(--${it.r === 'gold' ? 'gold' : it.r === 'red' ? 'red' : 'blue'})">
+                        <div style="font-size:2rem">📦</div>
+                        <span style="font-size:0.7rem">${it.n}</span>
+                     </div>`;
         }
         reel.innerHTML = html;
 
         setTimeout(() => {
             reel.style.transition = 'transform 5s cubic-bezier(0.1, 0, 0.1, 1)';
-            reel.style.transform = 'translateX(-' + (40 * 130 + Math.random()*100) + 'px)';
+            reel.style.transform = 'translateX(-' + (43 * 140 + Math.random()*50) + 'px)';
         }, 50);
 
         setTimeout(() => {
-            const winner = pool[43];
-            alert("¡GANASTE: " + winner.n + "!");
-            this.user.inv.push(winner);
-            document.getElementById('recent-win').innerText = winner.n;
-            if(winner.r === 'gold') confetti();
+            const win = pool[46];
+            alert("¡TE TOCÓ: " + win.n + "!");
+            this.user.inv.push(win);
+            if(win.r === 'gold') confetti();
             this.update();
         }, 5500);
     },
 
-    addItem() {
-        const n = document.getElementById('adm-n').value;
-        const r = document.getElementById('adm-r').value;
-        if(n) {
-            this.db.items.push({n, r});
-            this.update();
-            alert("Item guardado en la base del imperio.");
-        }
-    },
+    claim(name) {
+        const body = `Usuario ${this.user.u} reclama: ${name}`;
+        window.open(`mailto:gancinomaikel@gmail.com?subject=RECLAMO IMPERIO&body=${body}`);
+        this.user.inv = this.user.inv.filter(x => x.n !== name);
+        this.update();
+        ui.renderInv();
+    }
+};
 
+// --- INTERFAZ ---
+const ui = {
+    nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('v-'+id).classList.add('active');
+        if(id === 'inv') this.renderInv();
+    },
+    calc() {
+        const val = document.getElementById('coin-input').value;
+        document.getElementById('price-val').innerText = (val / 10).toFixed(2);
+    },
+    renderGames() {
+        const games = ["SLOTS", "RULETA", "MINAS", "CRASH", "DADOS", "CARTAS", "PLINKO", "TORRE", "RUEDA", "POKER"];
+        document.getElementById('game-list').innerHTML = games.map(g => `
+            <div class="game-card">
+                <img src="https://images.unsplash.com/photo-1596838132731-dd967be659ef?auto=format&fit=crop&w=300" class="game-img">
+                <h4>${g} ELITE</h4>
+                <p>Costo: 50 🪙</p>
+                <button class="btn" style="width:80%" onclick="game.play('${g}')">JUGAR</button>
+            </div>
+        `).join('');
+    },
+    renderInv() {
+        document.getElementById('inv-grid').innerHTML = logic.user.inv.map(it => `
+            <div class="glass" style="text-align:center;">
+                <div style="font-size:2rem">🎁</div>
+                <b>${it.n}</b>
+                <button class="btn" style="margin-top:10px; font-size:0.7rem;" onclick="logic.claim('${it.n}')">RECLAMAR</button>
+            </div>
+        `).join('');
+    },
     initPaypal() {
         paypal.Buttons({
-            createOrder: (data, actions) => {
-                const total = document.getElementById('price-val').innerText;
-                return actions.order.create({
-                    purchase_units: [{ amount: { value: total } }]
-                });
-            },
-            onApprove: (data, actions) => {
-                return actions.order.capture().then(details => {
-                    const coins = parseInt(document.getElementById('coin-input').value);
-                    this.user.bal += coins;
-                    this.update();
-                    alert("TRANSACCIÓN EXITOSA: +" + coins + " TOKENS");
-                });
-            }
+            createOrder: (d, a) => a.order.create({ purchase_units: [{ amount: { value: document.getElementById('price-val').innerText } }] }),
+            onApprove: (d, a) => a.order.capture().then(() => {
+                logic.user.bal += parseInt(document.getElementById('coin-input').value);
+                logic.update();
+                alert("PAGO COMPLETADO");
+            })
         }).render('#paypal-button-container');
+    }
+};
+
+// --- LÓGICA DE JUEGOS ---
+const game = {
+    play(n) {
+        if(logic.user.bal < 50) return alert("Sin tokens");
+        logic.user.bal -= 50;
+        const win = Math.random() < (logic.db.settings.rate / 100);
+        if(win) {
+            const p = 150; logic.user.bal += p;
+            confetti(); alert(`GANASTE EN ${n}: +${p} Tokens`);
+        } else { alert(`Perdiste en ${n}`); }
+        logic.update();
+    }
+};
+
+// --- ADMIN ---
+const admin = {
+    setBal() {
+        const u = document.getElementById('adm-target').value.toLowerCase();
+        const b = parseInt(document.getElementById('adm-amount').value);
+        const t = logic.db.users.find(x => x.u === u);
+        if(t) { t.bal = b; logic.update(); alert("Saldo modificado"); }
+    },
+    setRate(v) {
+        logic.db.settings.rate = v;
+        document.getElementById('rate-val').innerText = v + "%";
+        logic.update();
     }
 };
 </script>
