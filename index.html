@@ -3,346 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMAL EMPIRE | ADMINISTRACIÓN ELITE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>SMAL EMPIRE | ELITE V6</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-deep: #07090b; --bg-card: #0f1216; --accent: #00ff59; --gold: #f5d033;
-            --text: #ffffff; --text-dim: #808a9d; --border: #1e2329; --red: #ff3e3e;
+            --bg: #040609; --card: #0d1117; --accent: #00ff59; --gold: #f5d033;
+            --text: #ffffff; --text-dim: #8b949e; --border: #21262d; --red: #ff4747;
         }
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: all 0.2s ease; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        body { background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+        /* --- SIDEBAR --- */
+        .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
+        .nav-item { padding: 15px 25px; cursor: pointer; color: var(--text-dim); display: flex; align-items: center; gap: 12px; font-weight: 600; border-left: 4px solid transparent; }
+        .nav-item:hover, .nav-item.active { background: #161b22; color: var(--accent); border-left-color: var(--accent); }
         
-        /* --- FONDO ANIMADO --- */
-        body { 
-            background: var(--bg-deep); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden;
-            background-image: radial-gradient(circle at 50% -20%, #1a2c38 0%, #07090b 80%);
-        }
-        #bg-canvas { position: fixed; inset: 0; z-index: -1; opacity: 0.4; }
-
-        /* --- SIDEBAR ESTILO STAKE --- */
-        .sidebar { width: 240px; background: var(--bg-card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
-        .user-profile { padding: 25px; text-align: center; border-bottom: 1px solid var(--border); }
-        .avatar-circle { width: 65px; height: 65px; background: var(--accent); border-radius: 18px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900; font-size: 1.8rem; box-shadow: 0 0 20px rgba(0,255,89,0.2); }
-        .nav-link { padding: 14px 20px; cursor: pointer; color: var(--text-dim); display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.9rem; border-left: 3px solid transparent; }
-        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.03); color: var(--text); border-left-color: var(--accent); }
-
-        /* --- CONTENIDO PRINCIPAL --- */
-        .main-viewport { flex: 1; overflow-y: auto; padding: 20px; position: relative; }
-        .view { display: none; max-width: 1100px; margin: 0 auto; animation: fadeInUp 0.4s ease forwards; }
+        /* --- MAIN --- */
+        .main { flex: 1; overflow-y: auto; padding: 30px; position: relative; background: radial-gradient(circle at 50% 0%, #1a2c38, #040609); }
+        .view { display: none; animation: fadeIn 0.4s ease; max-width: 1200px; margin: 0 auto; }
         .view.active { display: block; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- UI COMPONENTS --- */
-        .balance-display { background: #1a1f26; padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--gold); }
-        .grid-games { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
-        .game-card { background: var(--bg-card); border-radius: 12px; padding: 25px; border: 1px solid var(--border); text-align: center; cursor: pointer; position: relative; overflow: hidden; }
-        .game-card:hover { border-color: var(--accent); transform: translateY(-3px); background: #161a1f; }
-        .game-card h4 { margin: 10px 0 0; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 1px; }
+        /* --- TRAGAMONEDAS PRO --- */
+        .slot-machine-container { position: relative; display: flex; align-items: center; gap: 30px; background: #161a1f; padding: 40px; border-radius: 30px; border: 4px solid #2b2f36; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+        .reels-container { display: flex; gap: 15px; background: #000; padding: 20px; border-radius: 15px; border: 2px solid var(--border); }
+        .reel { width: 100px; height: 120px; background: #111; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 4rem; overflow: hidden; border: 1px solid #333; }
+        .reel.spinning { animation: blurSpin 0.1s infinite linear; }
+        @keyframes blurSpin { 0% { filter: blur(0); transform: translateY(0); } 50% { filter: blur(10px); } 100% { filter: blur(0); transform: translateY(5px); } }
 
-        /* --- AUTH SCREEN --- */
-        #auth-overlay { position: fixed; inset: 0; background: var(--bg-deep); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-        .auth-box { background: var(--bg-card); padding: 40px; border-radius: 16px; width: 380px; border: 1px solid var(--accent); text-align: center; }
-        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 8px; background: #07090b; border: 1px solid var(--border); color: #fff; outline: none; }
-        .btn-main { background: var(--accent); color: #000; border: none; padding: 14px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; }
+        /* PALANCA */
+        .lever-base { width: 20px; height: 150px; background: #2b2f36; border-radius: 10px; position: relative; cursor: pointer; }
+        .lever-arm { width: 10px; height: 100px; background: #4a4e54; position: absolute; top: 0; left: 5px; border-radius: 5px; transform-origin: bottom; transition: 0.3s; }
+        .lever-ball { width: 40px; height: 40px; background: var(--red); border-radius: 50%; position: absolute; top: -20px; left: -10px; box-shadow: 0 0 15px var(--red); }
+        .lever-base.pulled .lever-arm { transform: rotateX(150deg); }
 
-        /* --- GAME ENGINE (DICE/MINES) --- */
-        .game-container { background: var(--bg-card); border-radius: 20px; display: flex; border: 1px solid var(--border); height: 500px; }
-        .game-sidebar { width: 250px; padding: 20px; border-right: 1px solid var(--border); background: #161a1f; }
-        .game-play-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        .mines-grid { display: grid; grid-template-columns: repeat(5, 60px); gap: 8px; }
-        .mine-tile { width: 60px; height: 60px; background: #2f3640; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        .mine-tile:hover { background: #3d4451; }
-        .mine-tile.revealed { background: var(--bg-deep); pointer-events: none; }
+        /* --- PLINKO --- */
+        .plinko-multipliers { display: flex; justify-content: space-around; width: 100%; margin-top: 20px; }
+        .mult-box { width: 40px; height: 30px; border-radius: 5px; font-weight: 900; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+
+        /* --- UI HELPERS --- */
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .btn-accent { background: var(--accent); color: #000; }
+        .btn-gold { background: var(--gold); color: #000; }
+        .glass-card { background: rgba(13, 17, 23, 0.8); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-
-<div id="auth-overlay">
-    <div class="auth-box">
-        <h1 style="font-family:'Orbitron'; color:var(--accent); letter-spacing: 4px;">SMAL EMPIRE</h1>
-        <p style="color:var(--text-dim); margin-bottom: 25px;">Regístrate y recibe <b>3 TIROS GRATIS</b></p>
-        <div id="auth-forms">
-            <input type="text" id="user-name" placeholder="Usuario">
-            <input type="password" id="user-pass" placeholder="Contraseña">
-            <button class="btn-main" onclick="handleAuth('login')">ENTRAR AL IMPERIO</button>
-            <p style="font-size: 0.8rem; margin-top: 15px; color: var(--text-dim);" onclick="toggleAuth()">¿No tienes cuenta? Crear una</p>
-        </div>
+<div id="auth-overlay" style="position:fixed; inset:0; background:var(--bg); z-index:1000; display:flex; align-items:center; justify-content:center;">
+    <div class="glass-card" style="width:380px; text-align:center; border-color:var(--accent);">
+        <h1 style="font-family:'Orbitron'; color:var(--accent); letter-spacing:5px;">SMAL EMPIRE</h1>
+        <input type="text" id="auth-u" placeholder="Nombre de Usuario">
+        <button class="btn btn-accent" style="width:100%" onclick="login()">INGRESAR AL CASINO</button>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div class="user-profile">
-        <div class="avatar-circle" id="nav-ava">?</div>
-        <h3 id="nav-name" style="margin:0; font-size:1rem;">Invitado</h3>
-        <p id="nav-rank" style="color:var(--accent); font-size:0.7rem; margin:5px 0 0; font-weight:800;">NIVEL ELITE</p>
+    <div style="padding:30px; text-align:center;">
+        <div id="u-ava" style="width:65px; height:65px; background:var(--accent); color:black; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 15px; font-weight:900; font-size:1.8rem;">?</div>
+        <h3 id="u-name" style="margin:0;">-</h3>
+        <div style="color:var(--gold); font-weight:900; font-size:1.4rem; margin-top:10px;">🪙 <span id="u-bal">0.00</span></div>
     </div>
-    <div style="padding: 10px 20px;">
-        <div class="balance-display">🪙 <span id="nav-bal">0.00</span></div>
-        <p id="nav-free" style="font-size:0.6rem; color:var(--accent); text-align:center; margin-top:5px;">3 TIROS GRATIS RESTANTES</p>
-    </div>
-    <nav style="margin-top: 10px;">
-        <div class="nav-link active" onclick="nav('home')">🏠 Inicio</div>
-        <div class="nav-link" onclick="nav('games')">🎮 10 Juegos Pro</div>
-        <div class="nav-link" onclick="nav('trades')">🛒 Tienda / Trades</div>
-        <div class="nav-link" onclick="nav('inv')">🎒 Mi Inventario</div>
-        <div class="nav-link" id="adm-btn" style="display:none; color:var(--gold)" onclick="nav('admin')">🛠 PANEL MAESTRO</div>
+    <nav>
+        <div class="nav-item active" onclick="nav('home')">🏠 Inicio</div>
+        <div class="nav-item" onclick="nav('games')">🎰 Juegos Elite</div>
+        <div class="nav-item" onclick="nav('boxes')">📦 Mystery Boxes</div>
+        <div class="nav-item" onclick="nav('shop')">🛒 Tienda Oficial</div>
+        <div class="nav-item" onclick="nav('trades')">🤝 Tradeos Directos</div>
+        <div class="nav-item" onclick="nav('market')">⚖️ Mercado P2P</div>
+        <div class="nav-item" onclick="nav('inv')">🎒 Mi Mochila</div>
+        <div class="nav-item" id="adm-btn" style="display:none; color:var(--gold)" onclick="nav('admin')">🛠 PANEL MAESTRO</div>
     </nav>
 </aside>
 
-<main class="main-viewport">
+<main class="main">
     <div id="v-home" class="view active">
-        <h1 style="font-family:'Orbitron';">SALA DE <span style="color:var(--accent)">CONTROL</span></h1>
-        <div class="grid-games">
-            <div class="game-card" onclick="nav('games')">🚀<h3>MODO JUEGOS</h3></div>
-            <div class="game-card" onclick="nav('trades')">🤝<h3>MERCADO</h3></div>
+        <h1 style="font-family:'Orbitron';">LOBBY DEL <span style="color:var(--accent)">IMPERIO</span></h1>
+        <div class="glass-card" style="border-left: 5px solid var(--accent);">
+            <h3>Noticias Globales</h3>
+            <p>¡El sistema de comercio ya está activo! Vende tus premios a otros jugadores.</p>
         </div>
     </div>
 
     <div id="v-games" class="view">
-        <h2 style="font-family:'Orbitron'; border-bottom: 1px solid var(--border); padding-bottom: 10px;">ORIGINALES DE SMAL</h2>
-        <div class="grid-games" id="game-list">
-            <div class="game-card" onclick="openGame('MINAS')">💣 <h4>MINAS</h4></div>
-            <div class="game-card" onclick="openGame('CRASH')">🚀 <h4>CRASH</h4></div>
-            <div class="game-card" onclick="openGame('DICE')">🎲 <h4>DICE</h4></div>
-            <div class="game-card" onclick="openGame('LIMBO')">🌈 <h4>LIMBO</h4></div>
-            <div class="game-card" onclick="openGame('PLINKO')">🔵 <h4>PLINKO</h4></div>
-            <div class="game-card" onclick="openGame('WHEEL')">🎡 <h4>WHEEL</h4></div>
-            <div class="game-card" onclick="openGame('SLOTS')">🎰 <h4>SLOTS</h4></div>
-            <div class="game-card" onclick="openGame('TOWER')">🗼 <h4>TOWER</h4></div>
-            <div class="game-card" onclick="openGame('DIAMONDS')">💎 <h4>DIAMONDS</h4></div>
-            <div class="game-card" onclick="openGame('COINFLIP')">🪙 <h4>COINFLIP</h4></div>
+        <div id="game-selection" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+            <div class="glass-card" onclick="openG('SLOTS')" style="cursor:pointer; text-align:center;"><h2>🎰 SLOTS FRUIT</h2><p>Jackpot 777</p></div>
+            <div class="glass-card" onclick="openG('MINAS')" style="cursor:pointer; text-align:center;"><h2>💣 MINAS</h2><p>Multiplicador x10</p></div>
+            <div class="glass-card" onclick="openG('PLINKO')" style="cursor:pointer; text-align:center;"><h2>🔵 PLINKO</h2><p>Caída de suerte</p></div>
         </div>
 
-        <div id="game-interface" style="display:none; margin-top: 20px;">
-            <div class="game-container">
-                <div class="game-sidebar">
-                    <label style="font-size:0.7rem; color:var(--text-dim);">Monto de Apuesta</label>
-                    <input type="number" id="game-bet" value="10">
-                    <div id="mines-config" style="display:none">
-                        <label style="font-size:0.7rem; color:var(--text-dim);">Minas (1-24)</label>
-                        <input type="number" id="mines-count" value="3">
-                    </div>
-                    <button class="btn-main" id="btn-play" onclick="startGameLogic()">APOSTAR</button>
-                    <button class="btn-main" id="btn-cash" style="display:none; background:var(--gold); margin-top:10px;" onclick="cashout()">RETIRAR</button>
-                </div>
-                <div class="game-play-area" id="game-canvas"></div>
-            </div>
-            <button class="nav-link" onclick="closeGame()" style="margin-top:10px;">← Volver a la lista</button>
+        <div id="game-stage" style="display:none; text-align:center; padding-top:20px;">
+            <div id="game-content"></div>
+            <button class="btn btn-gold" style="margin-top:40px;" onclick="closeG()">VOLVER AL MENÚ</button>
         </div>
     </div>
 
-    <div id="v-trades" class="view">
-        <h1 style="font-family:'Orbitron';">MERCADO E INTERCAMBIOS</h1>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-            <div class="game-card">
-                <h3>Enviar Trade</h3>
-                <input type="text" id="trade-user" placeholder="Nombre del jugador">
-                <button class="btn-main">MANDAR SOLICITUD</button>
-            </div>
-            <div class="game-card" style="border-color:var(--accent)">
-                <h3>Tienda de Premios</h3>
-                <div id="shop-items-container"></div>
-            </div>
-        </div>
+    <div id="v-market" class="view">
+        <h1>MERCADO DE JUGADORES</h1>
+        <div id="m-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:15px;"></div>
     </div>
 
     <div id="v-admin" class="view">
-        <h1 style="font-family:'Orbitron'; color:var(--gold)">PANEL MAESTRO DE CONTROL</h1>
-        <div class="grid-games">
-            <div class="game-card">
-                <h3>Configurar Tienda</h3>
-                <input type="text" id="adm-p-name" placeholder="Nombre Premio">
-                <input type="number" id="adm-p-cost" placeholder="Costo TKN">
-                <button class="btn-main" onclick="adminAddProduct()">AÑADIR A LA WEB</button>
-            </div>
-            <div class="game-card">
-                <h3>Gestionar Usuarios</h3>
-                <p>Lista de jugadores activos aparecerá aquí.</p>
-            </div>
+        <h1 style="color:var(--gold)">CREADOR DE PREMIOS & CAJAS</h1>
+        <div class="glass-card">
+            <h3>Nueva Mystery Box</h3>
+            <input type="text" id="adm-box-n" placeholder="Nombre de la Caja">
+            <input type="number" id="adm-box-p" placeholder="Precio en Tokens">
+            <p style="font-size:0.8rem; color:var(--text-dim);">Escribe 10 premios separados por coma:</p>
+            <textarea id="adm-box-items" placeholder="iPhone, BMW, 100 Tokens, Skin Oro..." style="width:100%; background:#000; color:#fff; border:1px solid var(--border); border-radius:8px; padding:10px;"></textarea>
+            <button class="btn btn-accent" style="margin-top:15px;" onclick="adminCreateBox()">PUBLICAR CAJA</button>
         </div>
     </div>
 
     <div id="v-inv" class="view">
         <h1>MI MOCHILA</h1>
-        <div class="grid-games" id="inv-container"></div>
+        <div id="inv-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:15px;"></div>
     </div>
 </main>
 
 <script>
-    // --- SISTEMA DE DATOS DINÁMICO (LOCALSTORAGE) ---
-    let state = JSON.parse(localStorage.getItem('smal_elite_v4')) || {
-        user: null, bal: 0, free: 3, inv: [],
-        shop: [
-            {n: "Skin Diamante", p: 500},
-            {n: "Unban Pass", p: 1000}
-        ]
+    let db = JSON.parse(localStorage.getItem('smal_v6')) || {
+        u: "", bal: 50, free: 3, inv: [], boxes: [], market: []
     };
 
-    function save() { localStorage.setItem('smal_elite_v4', JSON.stringify(state)); }
+    function save() { localStorage.setItem('smal_v6', JSON.stringify(db)); }
 
-    // --- ACCESO Y SEGURIDAD ---
-    function handleAuth(mode) {
-        let u = document.getElementById('user-name').value;
-        if(!u) return alert("Ingresa un usuario");
-        state.user = u;
+    function login() {
+        let u = document.getElementById('auth-u').value;
+        if(!u) return;
+        db.u = u;
         if(u === "SmalAdmin") document.getElementById('adm-btn').style.display = 'flex';
         document.getElementById('auth-overlay').style.display = 'none';
-        document.getElementById('nav-name').innerText = u;
-        document.getElementById('nav-ava').innerText = u[0].toUpperCase();
-        refreshUI();
+        document.getElementById('u-name').innerText = u;
+        document.getElementById('u-ava').innerText = u[0].toUpperCase();
+        refresh();
     }
 
-    function refreshUI() {
-        document.getElementById('nav-bal').innerText = state.bal.toFixed(2);
-        document.getElementById('nav-free').innerText = state.free + " TIROS GRATIS RESTANTES";
-        renderShop();
+    function refresh() {
+        document.getElementById('u-bal').innerText = db.bal.toFixed(2);
         renderInv();
+        renderMarket();
         save();
     }
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById('v-'+id).classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     }
 
-    // --- MOTOR DE JUEGOS PROFESIONAL ---
-    let activeGame = "";
-    let gameActive = false;
-    let currentMult = 1.0;
+    // --- JUEGOS: SLOTS ---
+    function openG(g) {
+        document.getElementById('game-selection').style.display = 'none';
+        const stage = document.getElementById('game-stage');
+        const cont = document.getElementById('game-content');
+        stage.style.display = 'block';
+        cont.innerHTML = "";
 
-    function openGame(name) {
-        activeGame = name;
-        document.getElementById('game-list').style.display = 'none';
-        document.getElementById('game-interface').style.display = 'block';
-        document.getElementById('game-canvas').innerHTML = "";
-        document.getElementById('mines-config').style.display = (name === 'MINAS') ? 'block' : 'none';
-        
-        if(name === 'MINAS') renderMinesGrid();
-    }
-
-    function renderMinesGrid() {
-        const area = document.getElementById('game-canvas');
-        area.innerHTML = `<div class="mines-grid" id="m-grid">
-            ${Array(25).fill('<div class="mine-tile" onclick="clickMine(this)">?</div>').join('')}
-        </div>`;
-    }
-
-    function startGameLogic() {
-        let bet = parseFloat(document.getElementById('game-bet').value);
-        if(state.free <= 0 && state.bal < bet) return alert("Sin tokens suficientes");
-
-        if(state.free > 0) state.free--;
-        else state.bal -= bet;
-        
-        gameActive = true;
-        currentMult = 1.0;
-        document.getElementById('btn-play').disabled = true;
-        document.getElementById('btn-cash').style.display = 'block';
-        refreshUI();
-    }
-
-    function clickMine(el) {
-        if(!gameActive) return;
-        let isBomb = Math.random() < 0.15; // 15% probabilidad bomba
-        if(isBomb) {
-            el.innerHTML = "💣"; el.style.background = "var(--red)";
-            alert("¡BOOM! Perdiste la apuesta.");
-            resetGame();
-        } else {
-            el.innerHTML = "💎"; el.style.background = "var(--accent)";
-            currentMult += 0.4;
-            document.getElementById('btn-cash').innerText = `RETIRAR (${(document.getElementById('game-bet').value * currentMult).toFixed(2)})`;
+        if(g === 'SLOTS') {
+            cont.innerHTML = `
+                <div class="slot-machine-container">
+                    <div class="reels-container">
+                        <div class="reel" id="r1">🍎</div>
+                        <div class="reel" id="r2">🍒</div>
+                        <div class="reel" id="r3">🍏</div>
+                    </div>
+                    <div class="lever-base" id="lever" onclick="pullLever()">
+                        <div class="lever-arm"></div>
+                        <div class="lever-ball"></div>
+                    </div>
+                </div>
+                <h2 id="slot-res" style="margin-top:20px; font-family:'Orbitron';">JALA LA PALANCA</h2>
+                <p>Costo: 10 Tokens (o 1 tiro gratis)</p>
+            `;
+        } else if(g === 'PLINKO') {
+            cont.innerHTML = `
+                <div style="background:#000; width:300px; height:400px; border:2px solid #333; margin:0 auto; position:relative; overflow:hidden;">
+                    <div id="ball" style="width:15px; height:15px; background:var(--accent); border-radius:50%; position:absolute; top:20px; left:50%; transform:translateX(-50%); display:none;"></div>
+                    <div style="margin-top:50px; display:grid; grid-template-columns:repeat(7, 1fr); gap:10px; padding:20px; opacity:0.5;">
+                        ${Array(20).fill('•').join(' ')}
+                    </div>
+                    <div class="plinko-multipliers" style="position:absolute; bottom:0;">
+                        <div class="mult-box" style="background:#ff3b3b">x0.2</div>
+                        <div class="mult-box" style="background:#ff9f43">x1.5</div>
+                        <div class="mult-box" style="background:var(--accent); color:black">x5.0</div>
+                        <div class="mult-box" style="background:#ff9f43">x1.5</div>
+                        <div class="mult-box" style="background:#ff3b3b">x0.2</div>
+                    </div>
+                </div>
+                <button class="btn btn-accent" style="margin-top:20px" onclick="playPlinko()">SOLTAR BOLA</button>
+            `;
         }
     }
 
-    function cashout() {
-        let win = document.getElementById('game-bet').value * currentMult;
-        state.bal += win;
-        confetti();
-        alert(`¡Ganaste ${win.toFixed(2)} tokens!`);
-        resetGame();
-        refreshUI();
+    function pullLever() {
+        if(db.free <= 0 && db.bal < 10) return alert("Sin saldo");
+        
+        const lever = document.getElementById('lever');
+        lever.classList.add('pulled');
+        setTimeout(() => lever.classList.remove('pulled'), 500);
+
+        if(db.free > 0) db.free--; else db.bal -= 10;
+        refresh();
+
+        const symbols = ["🍎", "🍒", "🍏", "7️⃣", "💎"];
+        const r1 = document.getElementById('r1');
+        const r2 = document.getElementById('r2');
+        const r3 = document.getElementById('r3');
+
+        r1.classList.add('spinning'); r2.classList.add('spinning'); r3.classList.add('spinning');
+
+        setTimeout(() => {
+            r1.classList.remove('spinning'); r1.innerText = symbols[Math.floor(Math.random()*5)];
+            setTimeout(() => {
+                r2.classList.remove('spinning'); r2.innerText = symbols[Math.floor(Math.random()*5)];
+                setTimeout(() => {
+                    r3.classList.remove('spinning'); r3.innerText = symbols[Math.floor(Math.random()*5)];
+                    checkSlots(r1.innerText, r2.innerText, r3.innerText);
+                }, 300);
+            }, 300);
+        }, 1000);
     }
 
-    function resetGame() {
-        gameActive = false;
-        document.getElementById('btn-play').disabled = false;
-        document.getElementById('btn-cash').style.display = 'none';
-        if(activeGame === 'MINAS') renderMinesGrid();
+    function checkSlots(a, b, c) {
+        const res = document.getElementById('slot-res');
+        if(a === "7️⃣" && b === "7️⃣" && c === "7️⃣") {
+            db.bal += 200; confetti(); res.innerText = "JACKPOT 777! +200";
+        } else if(a === b && b === c) {
+            db.bal += 50; confetti(); res.innerText = "¡PREMIO MAYOR! +50";
+        } else if(a === b || b === c) {
+            db.bal += 15; res.innerText = "PAR GANADOR! +15";
+        } else {
+            res.innerText = "SIGUE INTENTANDO";
+        }
+        refresh();
     }
 
-    function closeGame() {
-        document.getElementById('game-list').style.display = 'grid';
-        document.getElementById('game-interface').style.display = 'none';
+    function closeG() {
+        document.getElementById('game-selection').style.display = 'grid';
+        document.getElementById('game-stage').style.display = 'none';
     }
 
-    // --- PANEL MAESTRO (ADMIN) ---
-    function adminAddProduct() {
-        let n = document.getElementById('adm-p-name').value;
-        let c = document.getElementById('adm-p-cost').value;
-        if(!n || !c) return;
-        state.shop.push({n, p: parseInt(c)});
-        refreshUI();
-        alert("Premio añadido a la tienda global.");
+    // --- COMERCIO ---
+    function renderMarket() {
+        const list = document.getElementById('m-list');
+        list.innerHTML = db.market.length === 0 ? "<p>No hay artículos en venta.</p>" : "";
+        db.market.forEach((i, idx) => {
+            list.innerHTML += `<div class="glass-card"><h4>${i.n}</h4><p>Vendido por: ${i.v}</p><button class="btn btn-gold" style="width:100%" onclick="buyMarket(${idx})">COMPRAR POR ${i.p}</button></div>`;
+        });
     }
 
-    function renderShop() {
-        const c = document.getElementById('shop-items-container');
-        c.innerHTML = "";
-        state.shop.forEach(i => {
-            c.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; background:#161a1f; padding:10px; border-radius:8px;">
-                <span>${i.n}</span>
-                <button class="btn-main" style="width:auto; padding:5px 15px;" onclick="buyItem('${i.n}', ${i.p})">${i.p} TKN</button>
+    function buyMarket(idx) {
+        let itm = db.market[idx];
+        if(db.bal >= itm.p) {
+            db.bal -= itm.p;
+            db.inv.push(itm.n);
+            db.market.splice(idx, 1);
+            refresh();
+        }
+    }
+
+    // --- INVENTARIO ---
+    function renderInv() {
+        const list = document.getElementById('inv-list');
+        list.innerHTML = "";
+        db.inv.forEach((i, idx) => {
+            list.innerHTML += `<div class="glass-card"><h4>${i}</h4>
+                <button class="btn btn-accent" style="width:100%; font-size:0.7rem; margin-bottom:5px;" onclick="claim('${i}', ${idx})">RECLAMAR WA</button>
+                <button class="btn btn-gold" style="width:100%; font-size:0.7rem;" onclick="sellM('${i}', ${idx})">VENDER EN MERCADO</button>
             </div>`;
         });
     }
 
-    function buyItem(name, price) {
-        if(state.bal < price) return alert("Tokens insuficientes");
-        state.bal -= price;
-        state.inv.push(name);
-        refreshUI();
-        alert("¡Compra exitosa! Revisa tu inventario.");
-    }
-
-    function renderInv() {
-        const c = document.getElementById('inv-container');
-        c.innerHTML = "";
-        state.inv.forEach((item, idx) => {
-            c.innerHTML += `<div class="game-card"><h3>${item}</h3><button class="btn-main" onclick="claim('${item}', ${idx})">RECLAMAR</button></div>`;
-        });
+    function sellM(name, idx) {
+        let price = prompt("¿Precio de venta en Tokens?");
+        if(price) {
+            db.market.push({n: name, p: parseFloat(price), v: db.u});
+            db.inv.splice(idx, 1);
+            refresh();
+        }
     }
 
     function claim(item, idx) {
-        window.open(`https://wa.me/593987749885?text=Soy ${state.user}, reclamo mi premio: ${item}`);
-        state.inv.splice(idx, 1);
-        refreshUI();
+        window.open(`https://wa.me/593987749885?text=Soy ${db.u}, reclamo mi premio: ${item}`);
+        db.inv.splice(idx, 1);
+        refresh();
     }
 
-    // --- CANVAS ANIMACIÓN ---
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    let particles = Array(60).fill().map(() => ({
-        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-        v: Math.random() * 0.5 + 0.2
-    }));
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(0, 255, 89, 0.3)";
-        particles.forEach(p => {
-            p.y -= p.v; if(p.y < 0) p.y = canvas.height;
-            ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI*2); ctx.fill();
-        });
-        requestAnimationFrame(animate);
+    // --- ADMIN ---
+    function adminCreateBox() {
+        let n = document.getElementById('adm-box-n').value;
+        let p = document.getElementById('adm-box-p').value;
+        let itms = document.getElementById('adm-box-items').value.split(",");
+        if(itms.length < 2) return alert("Pon al menos 2 premios");
+        db.boxes.push({n, p, items: itms});
+        save();
+        alert("¡Caja publicada!");
     }
-    animate();
 </script>
 </body>
 </html>
