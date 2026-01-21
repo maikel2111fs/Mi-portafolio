@@ -3,408 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMAL EMPIRE | ELITE CASINO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>SMAL EMPIRE | ADMINISTRACIÓN ELITE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg: #0b0e11; --card: #1a1d23; --accent: #00ff59; --gold: #ffc107;
-            --text: #ffffff; --text-dim: #848e9c; --border: #2b2f36; --red: #ff3b3b;
+            --bg-deep: #07090b; --bg-card: #0f1216; --accent: #00ff59; --gold: #f5d033;
+            --text: #ffffff; --text-dim: #808a9d; --border: #1e2329; --red: #ff3e3e;
         }
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.2s; }
-        body { background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: all 0.2s ease; }
+        
+        /* --- FONDO ANIMADO --- */
+        body { 
+            background: var(--bg-deep); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden;
+            background-image: radial-gradient(circle at 50% -20%, #1a2c38 0%, #07090b 80%);
+        }
+        #bg-canvas { position: fixed; inset: 0; z-index: -1; opacity: 0.4; }
 
-        /* --- SIDEBAR PRO --- */
-        .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
-        .nav-item { padding: 14px 20px; cursor: pointer; color: var(--text-dim); display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.9rem; }
-        .nav-item:hover, .nav-item.active { background: #2b2f36; color: var(--accent); }
-        .balance-box { background: #0b0e11; margin: 20px; padding: 15px; border-radius: 12px; border: 1px solid var(--border); text-align: center; }
+        /* --- SIDEBAR ESTILO STAKE --- */
+        .sidebar { width: 240px; background: var(--bg-card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
+        .user-profile { padding: 25px; text-align: center; border-bottom: 1px solid var(--border); }
+        .avatar-circle { width: 65px; height: 65px; background: var(--accent); border-radius: 18px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900; font-size: 1.8rem; box-shadow: 0 0 20px rgba(0,255,89,0.2); }
+        .nav-link { padding: 14px 20px; cursor: pointer; color: var(--text-dim); display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.9rem; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.03); color: var(--text); border-left-color: var(--accent); }
 
-        /* --- MAIN AREA --- */
-        .main { flex: 1; overflow-y: auto; padding: 25px; position: relative; }
-        .view { display: none; } .view.active { display: block; }
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-viewport { flex: 1; overflow-y: auto; padding: 20px; position: relative; }
+        .view { display: none; max-width: 1100px; margin: 0 auto; animation: fadeInUp 0.4s ease forwards; }
+        .view.active { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- CARDS & GRID --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .game-card { background: var(--card); border-radius: 15px; padding: 20px; border: 1px solid var(--border); cursor: pointer; text-align: center; position: relative; overflow: hidden; }
-        .game-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .game-card h3 { margin: 10px 0 5px; font-family: 'Orbitron'; font-size: 0.9rem; }
+        /* --- UI COMPONENTS --- */
+        .balance-display { background: #1a1f26; padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--gold); }
+        .grid-games { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+        .game-card { background: var(--bg-card); border-radius: 12px; padding: 25px; border: 1px solid var(--border); text-align: center; cursor: pointer; position: relative; overflow: hidden; }
+        .game-card:hover { border-color: var(--accent); transform: translateY(-3px); background: #161a1f; }
+        .game-card h4 { margin: 10px 0 0; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 1px; }
 
-        /* --- LIVE FEED (Falso) --- */
-        .live-feed { height: 40px; background: rgba(0,0,0,0.3); border-radius: 10px; margin-bottom: 20px; display: flex; align-items: center; padding: 0 15px; overflow: hidden; font-size: 0.8rem; border: 1px solid var(--border); }
-        .feed-track { display: flex; gap: 30px; animation: scrollText 20s linear infinite; white-space: nowrap; }
-        @keyframes scrollText { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+        /* --- AUTH SCREEN --- */
+        #auth-overlay { position: fixed; inset: 0; background: var(--bg-deep); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .auth-box { background: var(--bg-card); padding: 40px; border-radius: 16px; width: 380px; border: 1px solid var(--accent); text-align: center; }
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 8px; background: #07090b; border: 1px solid var(--border); color: #fff; outline: none; }
+        .btn-main { background: var(--accent); color: #000; border: none; padding: 14px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; }
 
-        /* --- GAME ENGINE UI --- */
-        .engine-container { max-width: 800px; margin: 0 auto; background: var(--card); border-radius: 20px; border: 1px solid var(--accent); overflow: hidden; display: flex; flex-direction: column; }
-        .game-header { padding: 15px; background: #2b2f36; display: flex; justify-content: space-between; align-items: center; }
-        .game-body { padding: 40px; display: flex; flex-direction: column; align-items: center; min-height: 400px; justify-content: center; }
-        .bet-input { background: #0b0e11; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 150px; text-align: center; font-weight: 800; }
-        .btn-play { background: var(--accent); color: black; border: none; padding: 15px 40px; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 15px; width: 200px; }
-        .btn-play:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* --- AUTH --- */
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-        .auth-card { background: var(--card); padding: 40px; border-radius: 20px; width: 350px; text-align: center; border: 1px solid var(--accent); }
-
-        /* --- TABLES --- */
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { text-align: left; color: var(--text-dim); padding: 10px; border-bottom: 1px solid var(--border); }
-        td { padding: 15px 10px; border-bottom: 1px solid var(--border); }
-        .rank-gold { color: var(--gold); font-weight: 800; }
-
-        /* --- TRADES & AMIGOS --- */
-        .trade-box { background: #2b2f36; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        /* --- GAME ENGINE (DICE/MINES) --- */
+        .game-container { background: var(--bg-card); border-radius: 20px; display: flex; border: 1px solid var(--border); height: 500px; }
+        .game-sidebar { width: 250px; padding: 20px; border-right: 1px solid var(--border); background: #161a1f; }
+        .game-play-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .mines-grid { display: grid; grid-template-columns: repeat(5, 60px); gap: 8px; }
+        .mine-tile { width: 60px; height: 60px; background: #2f3640; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .mine-tile:hover { background: #3d4451; }
+        .mine-tile.revealed { background: var(--bg-deep); pointer-events: none; }
     </style>
 </head>
 <body>
 
-<div id="auth-screen">
-    <div class="auth-card">
-        <h1 style="font-family:'Orbitron'; color:var(--accent); margin-bottom:0;">SMAL EMPIRE</h1>
-        <p style="color:var(--text-dim); margin-bottom:30px;">V3 BLACK EDITION</p>
-        <input type="text" id="user-in" placeholder="Usuario" style="width:100%; padding:12px; margin-bottom:10px; background:#0b0e11; border:1px solid var(--border); color:white; border-radius:8px;">
-        <button class="btn-play" style="width:100%" onclick="login()">ENTRAR AL IMPERIO</button>
+<canvas id="bg-canvas"></canvas>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <h1 style="font-family:'Orbitron'; color:var(--accent); letter-spacing: 4px;">SMAL EMPIRE</h1>
+        <p style="color:var(--text-dim); margin-bottom: 25px;">Regístrate y recibe <b>3 TIROS GRATIS</b></p>
+        <div id="auth-forms">
+            <input type="text" id="user-name" placeholder="Usuario">
+            <input type="password" id="user-pass" placeholder="Contraseña">
+            <button class="btn-main" onclick="handleAuth('login')">ENTRAR AL IMPERIO</button>
+            <p style="font-size: 0.8rem; margin-top: 15px; color: var(--text-dim);" onclick="toggleAuth()">¿No tienes cuenta? Crear una</p>
+        </div>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div style="padding: 25px; text-align: center;">
-        <div id="u-ava" style="width:60px; height:60px; background:var(--accent); border-radius:50%; margin: 0 auto 10px; display:flex; align-items:center; justify-content:center; color:black; font-weight:900; font-size:1.5rem;">?</div>
-        <h3 id="u-name" style="margin:0;">Invitado</h3>
+    <div class="user-profile">
+        <div class="avatar-circle" id="nav-ava">?</div>
+        <h3 id="nav-name" style="margin:0; font-size:1rem;">Invitado</h3>
+        <p id="nav-rank" style="color:var(--accent); font-size:0.7rem; margin:5px 0 0; font-weight:800;">NIVEL ELITE</p>
     </div>
-    <div class="balance-box">
-        <div style="font-size:0.7rem; color:var(--text-dim);">TU SALDO</div>
-        <div style="font-size:1.4rem; font-weight:900; color:var(--gold);">🪙 <span id="u-bal">0.00</span></div>
-        <div id="u-free" style="font-size:0.65rem; color:var(--accent); margin-top:5px;">3 TIRADAS GRATIS RESTANTES</div>
+    <div style="padding: 10px 20px;">
+        <div class="balance-display">🪙 <span id="nav-bal">0.00</span></div>
+        <p id="nav-free" style="font-size:0.6rem; color:var(--accent); text-align:center; margin-top:5px;">3 TIROS GRATIS RESTANTES</p>
     </div>
-    <nav>
-        <div class="nav-item active" onclick="showV('home')">🏠 Lobby</div>
-        <div class="nav-item" onclick="showV('games')">🎮 Juegos Elite</div>
-        <div class="nav-item" onclick="showV('leader')">🏆 Tabla de Líderes</div>
-        <div class="nav-item" onclick="showV('social')">🤝 Amigos & Trade</div>
-        <div class="nav-item" onclick="showV('inv')">🎒 Mi Mochila</div>
-        <div class="nav-item" id="adm-link" style="display:none; color:var(--gold)" onclick="showV('admin')">🛠 PANEL MAESTRO</div>
+    <nav style="margin-top: 10px;">
+        <div class="nav-link active" onclick="nav('home')">🏠 Inicio</div>
+        <div class="nav-link" onclick="nav('games')">🎮 10 Juegos Pro</div>
+        <div class="nav-link" onclick="nav('trades')">🛒 Tienda / Trades</div>
+        <div class="nav-link" onclick="nav('inv')">🎒 Mi Inventario</div>
+        <div class="nav-link" id="adm-btn" style="display:none; color:var(--gold)" onclick="nav('admin')">🛠 PANEL MAESTRO</div>
     </nav>
 </aside>
 
-<main class="main">
-    <div class="live-feed">
-        <div class="feed-track" id="live-wins">
-            </div>
-    </div>
-
+<main class="main-viewport">
     <div id="v-home" class="view active">
-        <h1 style="font-family:'Orbitron'; font-size:2rem;">BIENVENIDO, <span id="hi-name" style="color:var(--accent)">JEFE</span></h1>
-        <div class="grid">
-            <div class="game-card" onclick="showV('games')"><h3>SALA DE JUEGOS</h3><p>10 juegos multiplicadores</p></div>
-            <div class="game-card" onclick="showV('social')"><h3>SISTEMA SOCIAL</h3><p>Agrega amigos y haz trades</p></div>
+        <h1 style="font-family:'Orbitron';">SALA DE <span style="color:var(--accent)">CONTROL</span></h1>
+        <div class="grid-games">
+            <div class="game-card" onclick="nav('games')">🚀<h3>MODO JUEGOS</h3></div>
+            <div class="game-card" onclick="nav('trades')">🤝<h3>MERCADO</h3></div>
         </div>
     </div>
 
     <div id="v-games" class="view">
-        <div id="game-selection" class="grid">
-            <div class="game-card" onclick="loadGame('MINAS')">💣<h3>MINAS</h3></div>
-            <div class="game-card" onclick="loadGame('CRASH')">🚀<h3>CRASH</h3></div>
-            <div class="game-card" onclick="loadGame('COIN')">🪙<h3>MONEDA</h3></div>
-            <div class="game-card" onclick="loadGame('SLOTS')">🎰<h3>SLOTS</h3></div>
-            <div class="game-card" onclick="loadGame('DADOS')">🎲<h3>DADOS</h3></div>
-            <div class="game-card" onclick="loadGame('PLINKO')">🔵<h3>PLINKO</h3></div>
-            <div class="game-card" onclick="loadGame('RUEDA')">🎡<h3>RUEDA</h3></div>
-            <div class="game-card" onclick="loadGame('TOWER')">🗼<h3>TORRE</h3></div>
-            <div class="game-card" onclick="loadGame('BJ')">🃏<h3>BJ 21</h3></div>
-            <div class="game-card" onclick="loadGame('BOXES')">📦<h3>CAJAS</h3></div>
+        <h2 style="font-family:'Orbitron'; border-bottom: 1px solid var(--border); padding-bottom: 10px;">ORIGINALES DE SMAL</h2>
+        <div class="grid-games" id="game-list">
+            <div class="game-card" onclick="openGame('MINAS')">💣 <h4>MINAS</h4></div>
+            <div class="game-card" onclick="openGame('CRASH')">🚀 <h4>CRASH</h4></div>
+            <div class="game-card" onclick="openGame('DICE')">🎲 <h4>DICE</h4></div>
+            <div class="game-card" onclick="openGame('LIMBO')">🌈 <h4>LIMBO</h4></div>
+            <div class="game-card" onclick="openGame('PLINKO')">🔵 <h4>PLINKO</h4></div>
+            <div class="game-card" onclick="openGame('WHEEL')">🎡 <h4>WHEEL</h4></div>
+            <div class="game-card" onclick="openGame('SLOTS')">🎰 <h4>SLOTS</h4></div>
+            <div class="game-card" onclick="openGame('TOWER')">🗼 <h4>TOWER</h4></div>
+            <div class="game-card" onclick="openGame('DIAMONDS')">💎 <h4>DIAMONDS</h4></div>
+            <div class="game-card" onclick="openGame('COINFLIP')">🪙 <h4>COINFLIP</h4></div>
         </div>
 
-        <div id="game-engine" class="engine-container" style="display:none">
-            <div class="game-header">
-                <span id="g-title" style="font-family:'Orbitron'; font-weight:900;">JUEGO</span>
-                <button onclick="exitGame()" style="background:none; border:none; color:white; cursor:pointer;">❌</button>
-            </div>
-            <div class="game-body">
-                <div id="g-display" style="margin-bottom:30px;"></div>
-                <div style="display:flex; gap:10px; align-items:center;">
-                    <input type="number" id="bet-amt" class="bet-input" value="10">
-                    <button class="btn-play" id="btn-start" onclick="playGame()">APOSTAR</button>
-                    <button class="btn-play" id="btn-cash" style="display:none; background:var(--gold)" onclick="cashout()">RETIRAR</button>
+        <div id="game-interface" style="display:none; margin-top: 20px;">
+            <div class="game-container">
+                <div class="game-sidebar">
+                    <label style="font-size:0.7rem; color:var(--text-dim);">Monto de Apuesta</label>
+                    <input type="number" id="game-bet" value="10">
+                    <div id="mines-config" style="display:none">
+                        <label style="font-size:0.7rem; color:var(--text-dim);">Minas (1-24)</label>
+                        <input type="number" id="mines-count" value="3">
+                    </div>
+                    <button class="btn-main" id="btn-play" onclick="startGameLogic()">APOSTAR</button>
+                    <button class="btn-main" id="btn-cash" style="display:none; background:var(--gold); margin-top:10px;" onclick="cashout()">RETIRAR</button>
                 </div>
-                <p id="g-msg" style="margin-top:20px; font-weight:800;"></p>
+                <div class="game-play-area" id="game-canvas"></div>
             </div>
+            <button class="nav-link" onclick="closeGame()" style="margin-top:10px;">← Volver a la lista</button>
         </div>
     </div>
 
-    <div id="v-leader" class="view">
-        <h1>🏆 TOP MUNDIAL IMPERIO</h1>
-        <table id="leader-table">
-            <thead><tr><th>RANGO</th><th>USUARIO</th><th>GANANCIAS</th></tr></thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div id="v-social" class="view">
-        <h1>🤝 SISTEMA SOCIAL</h1>
-        <div class="grid">
+    <div id="v-trades" class="view">
+        <h1 style="font-family:'Orbitron';">MERCADO E INTERCAMBIOS</h1>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
             <div class="game-card">
-                <h3>AGREGAR AMIGO</h3>
-                <input type="text" id="friend-name" placeholder="Nombre de usuario" style="width:100%; padding:10px; margin-top:10px; background:#0b0e11; border:1px solid var(--border); color:white; border-radius:5px;">
-                <button class="btn-play" style="width:100%;" onclick="addFriend()">ENVIAR SOLICITUD</button>
+                <h3>Enviar Trade</h3>
+                <input type="text" id="trade-user" placeholder="Nombre del jugador">
+                <button class="btn-main">MANDAR SOLICITUD</button>
             </div>
-            <div class="game-card">
-                <h3>ENVÍO DE TOKENS (TRADE)</h3>
-                <input type="text" id="trade-user" placeholder="A quién envía">
-                <input type="number" id="trade-amt" placeholder="Cantidad">
-                <button class="btn-play" style="width:100%; background:var(--gold)" onclick="sendTrade()">ENVIAR REGALO</button>
+            <div class="game-card" style="border-color:var(--accent)">
+                <h3>Tienda de Premios</h3>
+                <div id="shop-items-container"></div>
             </div>
         </div>
-        <h3 style="margin-top:40px;">LISTA DE AMIGOS</h3>
-        <div id="friend-list"></div>
-    </div>
-
-    <div id="v-inv" class="view">
-        <h1>🎒 MI MOCHILA</h1>
-        <div class="grid" id="inv-grid"></div>
     </div>
 
     <div id="v-admin" class="view">
-        <h1>🛠 CONTROL MAESTRO</h1>
-        <div class="grid">
+        <h1 style="font-family:'Orbitron'; color:var(--gold)">PANEL MAESTRO DE CONTROL</h1>
+        <div class="grid-games">
             <div class="game-card">
-                <h3>DAR TOKENS</h3>
-                <input type="number" id="adm-amt" placeholder="Cantidad">
-                <button class="btn-play" onclick="admAdd()">SUMAR A MI SALDO</button>
+                <h3>Configurar Tienda</h3>
+                <input type="text" id="adm-p-name" placeholder="Nombre Premio">
+                <input type="number" id="adm-p-cost" placeholder="Costo TKN">
+                <button class="btn-main" onclick="adminAddProduct()">AÑADIR A LA WEB</button>
+            </div>
+            <div class="game-card">
+                <h3>Gestionar Usuarios</h3>
+                <p>Lista de jugadores activos aparecerá aquí.</p>
             </div>
         </div>
+    </div>
+
+    <div id="v-inv" class="view">
+        <h1>MI MOCHILA</h1>
+        <div class="grid-games" id="inv-container"></div>
     </div>
 </main>
 
 <script>
-    // --- ESTADO Y PERSISTENCIA ---
-    let state = JSON.parse(localStorage.getItem('smal_v3_save')) || {
-        u: "", bal: 0, free: 3, inv: [], friends: [], 
-        leaderboard: [
-            {n: "SmalAdmin", b: 15000}, {n: "Rey_Crypto", b: 8500}, {n: "DarkSoul", b: 4200}
+    // --- SISTEMA DE DATOS DINÁMICO (LOCALSTORAGE) ---
+    let state = JSON.parse(localStorage.getItem('smal_elite_v4')) || {
+        user: null, bal: 0, free: 3, inv: [],
+        shop: [
+            {n: "Skin Diamante", p: 500},
+            {n: "Unban Pass", p: 1000}
         ]
     };
 
-    function save() { localStorage.setItem('smal_v3_save', JSON.stringify(state)); }
+    function save() { localStorage.setItem('smal_elite_v4', JSON.stringify(state)); }
 
-    function login() {
-        let user = document.getElementById('user-in').value;
-        if(!user) return;
-        state.u = user;
-        if(user === "SmalAdmin") document.getElementById('adm-link').style.display = 'flex';
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('u-name').innerText = user;
-        document.getElementById('hi-name').innerText = user;
-        document.getElementById('u-ava').innerText = user[0].toUpperCase();
+    // --- ACCESO Y SEGURIDAD ---
+    function handleAuth(mode) {
+        let u = document.getElementById('user-name').value;
+        if(!u) return alert("Ingresa un usuario");
+        state.user = u;
+        if(u === "SmalAdmin") document.getElementById('adm-btn').style.display = 'flex';
+        document.getElementById('auth-overlay').style.display = 'none';
+        document.getElementById('nav-name').innerText = u;
+        document.getElementById('nav-ava').innerText = u[0].toUpperCase();
         refreshUI();
-        initLiveFeed();
     }
 
     function refreshUI() {
-        document.getElementById('u-bal').innerText = state.bal.toFixed(2);
-        document.getElementById('u-free').innerText = state.free > 0 ? `${state.free} TIRADAS GRATIS RESTANTES` : "MODO REAL ACTIVO";
-        renderLeaders();
+        document.getElementById('nav-bal').innerText = state.bal.toFixed(2);
+        document.getElementById('nav-free').innerText = state.free + " TIROS GRATIS RESTANTES";
+        renderShop();
         renderInv();
-        renderFriends();
         save();
     }
 
-    function showV(id) {
+    function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById('v-' + id).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        document.getElementById('v-'+id).classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     }
 
-    // --- LIVE FEED FALSO ---
-    function initLiveFeed() {
-        const feed = document.getElementById('live-wins');
-        const names = ["User99", "Dragon", "Player_X", "SmalFan", "Tito", "EcuadorKing"];
-        const games = ["Minas", "Crash", "Slots", "BJ"];
+    // --- MOTOR DE JUEGOS PROFESIONAL ---
+    let activeGame = "";
+    let gameActive = false;
+    let currentMult = 1.0;
+
+    function openGame(name) {
+        activeGame = name;
+        document.getElementById('game-list').style.display = 'none';
+        document.getElementById('game-interface').style.display = 'block';
+        document.getElementById('game-canvas').innerHTML = "";
+        document.getElementById('mines-config').style.display = (name === 'MINAS') ? 'block' : 'none';
         
-        setInterval(() => {
-            let n = names[Math.floor(Math.random()*names.length)];
-            let g = games[Math.floor(Math.random()*games.length)];
-            let w = (Math.random()*100).toFixed(2);
-            let item = document.createElement('span');
-            item.innerHTML = `🟢 <b>${n}</b> ganó 🪙${w} en <b>${g}</b>`;
-            feed.appendChild(item);
-            if(feed.children.length > 10) feed.removeChild(feed.firstChild);
-        }, 3000);
+        if(name === 'MINAS') renderMinesGrid();
     }
 
-    // --- MOTOR DE JUEGOS ---
-    let currentG = null;
-    let multiplier = 1.0;
-    let activeBet = 0;
-
-    function loadGame(game) {
-        currentG = game;
-        document.getElementById('game-selection').style.display = 'none';
-        document.getElementById('game-engine').style.display = 'flex';
-        document.getElementById('g-title').innerText = game;
-        document.getElementById('g-msg').innerText = "Introduce apuesta y dale a jugar";
-        resetGameView();
+    function renderMinesGrid() {
+        const area = document.getElementById('game-canvas');
+        area.innerHTML = `<div class="mines-grid" id="m-grid">
+            ${Array(25).fill('<div class="mine-tile" onclick="clickMine(this)">?</div>').join('')}
+        </div>`;
     }
 
-    function resetGameView() {
-        const display = document.getElementById('g-display');
-        display.innerHTML = "";
-        if(currentG === 'MINAS') {
-            display.innerHTML = `<div style="display:grid; grid-template-columns:repeat(3, 60px); gap:10px;" id="m-grid">
-                ${Array(9).fill('<div style="width:60px; height:60px; background:#0b0e11; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="stepMinas(this)">?</div>').join('')}
-            </div>`;
-        } else if(currentG === 'CRASH') {
-            display.innerHTML = `<div id="crash-v" style="font-size:4rem; font-family:'Orbitron'; color:var(--accent);">1.00x</div>`;
-        } else {
-            display.innerHTML = `<div style="font-size:3rem;">🎰</div>`;
-        }
-    }
+    function startGameLogic() {
+        let bet = parseFloat(document.getElementById('game-bet').value);
+        if(state.free <= 0 && state.bal < bet) return alert("Sin tokens suficientes");
 
-    function playGame() {
-        let bet = parseFloat(document.getElementById('bet-amt').value);
-        if(state.free <= 0 && state.bal < bet) return alert("Saldo insuficiente");
-
-        if(state.free > 0) {
-            state.free--;
-        } else {
-            state.bal -= bet;
-        }
-
-        activeBet = bet;
-        multiplier = 1.0;
-        document.getElementById('btn-start').disabled = true;
+        if(state.free > 0) state.free--;
+        else state.bal -= bet;
+        
+        gameActive = true;
+        currentMult = 1.0;
+        document.getElementById('btn-play').disabled = true;
+        document.getElementById('btn-cash').style.display = 'block';
         refreshUI();
-
-        if(currentG === 'CRASH') startCrash();
-        else if(currentG === 'MINAS') document.getElementById('g-msg').innerText = "Busca los diamantes...";
-        else playQuick();
     }
 
-    // --- LOGICA CRASH ---
-    let crashInterval;
-    function startCrash() {
-        document.getElementById('btn-cash').style.display = "block";
-        let crashPoint = (Math.random() * 4) + 1.1;
-        crashInterval = setInterval(() => {
-            multiplier += 0.05;
-            document.getElementById('crash-v').innerText = multiplier.toFixed(2) + "x";
-            if(multiplier >= crashPoint) {
-                clearInterval(crashInterval);
-                document.getElementById('crash-v').style.color = "var(--red)";
-                document.getElementById('g-msg').innerText = "¡CRASHED! Perdiste la apuesta.";
-                setTimeout(exitGame, 2000);
-            }
-        }, 100);
+    function clickMine(el) {
+        if(!gameActive) return;
+        let isBomb = Math.random() < 0.15; // 15% probabilidad bomba
+        if(isBomb) {
+            el.innerHTML = "💣"; el.style.background = "var(--red)";
+            alert("¡BOOM! Perdiste la apuesta.");
+            resetGame();
+        } else {
+            el.innerHTML = "💎"; el.style.background = "var(--accent)";
+            currentMult += 0.4;
+            document.getElementById('btn-cash').innerText = `RETIRAR (${(document.getElementById('game-bet').value * currentMult).toFixed(2)})`;
+        }
     }
 
     function cashout() {
-        clearInterval(crashInterval);
-        let win = activeBet * multiplier;
+        let win = document.getElementById('game-bet').value * currentMult;
         state.bal += win;
         confetti();
-        alert("¡Cobraste " + win.toFixed(2) + " Tokens!");
-        exitGame();
+        alert(`¡Ganaste ${win.toFixed(2)} tokens!`);
+        resetGame();
         refreshUI();
     }
 
-    // --- LOGICA MINAS ---
-    let minesInGame = [0,0,1]; // 1 es bomba
-    function stepMinas(el) {
-        if(el.innerText !== "?") return;
-        let isBomb = Math.random() > 0.7;
-        if(isBomb) {
-            el.innerHTML = "💣"; el.style.background = "var(--red)";
-            alert("BOOM! Perdiste.");
-            exitGame();
-        } else {
-            el.innerHTML = "💎"; el.style.background = "var(--accent)";
-            multiplier += 0.5;
-            document.getElementById('btn-cash').style.display = "block";
-            document.getElementById('btn-cash').innerText = `RETIRAR (${(activeBet * multiplier).toFixed(2)})`;
-        }
+    function resetGame() {
+        gameActive = false;
+        document.getElementById('btn-play').disabled = false;
+        document.getElementById('btn-cash').style.display = 'none';
+        if(activeGame === 'MINAS') renderMinesGrid();
     }
 
-    function playQuick() {
-        let win = Math.random() > 0.6;
-        if(win) {
-            state.bal += activeBet * 2;
-            confetti();
-            document.getElementById('g-msg').innerText = "¡GANASTE EL DOBLE!";
-        } else {
-            document.getElementById('g-msg').innerText = "Perdiste. Sigue intentando.";
-        }
-        setTimeout(exitGame, 2000);
+    function closeGame() {
+        document.getElementById('game-list').style.display = 'grid';
+        document.getElementById('game-interface').style.display = 'none';
+    }
+
+    // --- PANEL MAESTRO (ADMIN) ---
+    function adminAddProduct() {
+        let n = document.getElementById('adm-p-name').value;
+        let c = document.getElementById('adm-p-cost').value;
+        if(!n || !c) return;
+        state.shop.push({n, p: parseInt(c)});
         refreshUI();
+        alert("Premio añadido a la tienda global.");
     }
 
-    function exitGame() {
-        clearInterval(crashInterval);
-        document.getElementById('game-selection').style.display = 'grid';
-        document.getElementById('game-engine').style.display = 'none';
-        document.getElementById('btn-start').disabled = false;
-        document.getElementById('btn-cash').style.display = "none";
-        document.getElementById('btn-cash').innerText = "RETIRAR";
-    }
-
-    // --- SOCIAL ---
-    function addFriend() {
-        let f = document.getElementById('friend-name').value;
-        if(f) {
-            state.friends.push(f);
-            alert("Solicitud enviada a " + f);
-            refreshUI();
-        }
-    }
-
-    function sendTrade() {
-        let u = document.getElementById('trade-user').value;
-        let a = parseFloat(document.getElementById('trade-amt').value);
-        if(state.bal >= a) {
-            state.bal -= a;
-            alert(`Enviaste 🪙${a} a ${u} correctamente.`);
-            refreshUI();
-        } else { alert("Saldo insuficiente"); }
-    }
-
-    function renderFriends() {
-        const c = document.getElementById('friend-list');
+    function renderShop() {
+        const c = document.getElementById('shop-items-container');
         c.innerHTML = "";
-        state.friends.forEach(f => {
-            c.innerHTML += `<div class="trade-box">👤 ${f} <span style="color:var(--accent); font-size:0.7rem;">• EN LÍNEA</span></div>`;
+        state.shop.forEach(i => {
+            c.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; background:#161a1f; padding:10px; border-radius:8px;">
+                <span>${i.n}</span>
+                <button class="btn-main" style="width:auto; padding:5px 15px;" onclick="buyItem('${i.n}', ${i.p})">${i.p} TKN</button>
+            </div>`;
         });
     }
 
-    // --- LIDERES ---
-    function renderLeaders() {
-        const tbody = document.querySelector('#leader-table tbody');
-        tbody.innerHTML = "";
-        state.leaderboard.sort((a,b) => b.b - a.b).forEach((u, i) => {
-            tbody.innerHTML += `<tr><td>#${i+1}</td><td class="${i===0?'rank-gold':''}">${u.n}</td><td>🪙 ${u.b}</td></tr>`;
-        });
-    }
-
-    // --- ADMIN ---
-    function admAdd() {
-        let a = parseFloat(document.getElementById('adm-amt').value);
-        state.bal += a;
+    function buyItem(name, price) {
+        if(state.bal < price) return alert("Tokens insuficientes");
+        state.bal -= price;
+        state.inv.push(name);
         refreshUI();
+        alert("¡Compra exitosa! Revisa tu inventario.");
     }
 
     function renderInv() {
-        const c = document.getElementById('inv-grid');
-        c.innerHTML = state.inv.length === 0 ? "Vacío" : "";
+        const c = document.getElementById('inv-container');
+        c.innerHTML = "";
         state.inv.forEach((item, idx) => {
-            c.innerHTML += `<div class="game-card"><h3>${item}</h3><button class="btn-play" style="width:100%" onclick="claim('${item}', ${idx})">RECLAMAR</button></div>`;
+            c.innerHTML += `<div class="game-card"><h3>${item}</h3><button class="btn-main" onclick="claim('${item}', ${idx})">RECLAMAR</button></div>`;
         });
     }
 
     function claim(item, idx) {
-        window.open(`https://wa.me/593987749885?text=RECLAMO PREMIO: ${item}`);
+        window.open(`https://wa.me/593987749885?text=Soy ${state.user}, reclamo mi premio: ${item}`);
         state.inv.splice(idx, 1);
         refreshUI();
     }
 
+    // --- CANVAS ANIMACIÓN ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let particles = Array(60).fill().map(() => ({
+        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+        v: Math.random() * 0.5 + 0.2
+    }));
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(0, 255, 89, 0.3)";
+        particles.forEach(p => {
+            p.y -= p.v; if(p.y < 0) p.y = canvas.height;
+            ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI*2); ctx.fill();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
 </script>
 </body>
 </html>
