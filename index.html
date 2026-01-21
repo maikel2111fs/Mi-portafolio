@@ -2,232 +2,230 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Casino Smal | Pro Stake Edition</title>
+    <title>Casino Smal | Sistema Integrado</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { 
             --bg-main: #0f212e; --bg-sidebar: #1a2c38; --bg-card: #213743;
             --accent: #00e701; --text: #b1bad3; --white: #ffffff; --lose: #ff3366;
         }
-        * { box-sizing: border-box; font-family: 'Rajdhani', sans-serif; transition: 0.2s; }
+        * { box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
         body { background: var(--bg-main); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        /* --- SIDEBAR ESTILO STAKE (FOTO 1 y 2) --- */
-        .sidebar { width: 260px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid #2f4553; z-index: 100; }
-        .logo-area { padding: 25px; font-family: 'Orbitron'; color: var(--white); font-size: 1.8rem; letter-spacing: 2px; border-bottom: 1px solid #2f4553; }
-        .nav-group { padding: 20px 0; overflow-y: auto; flex: 1; }
-        .nav-item { padding: 12px 25px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--text); }
-        .nav-item:hover { background: var(--bg-card); color: var(--white); }
-        .nav-item.active { border-left: 4px solid var(--accent); background: rgba(0,231,1,0.05); color: var(--white); }
-        .nav-title { padding: 10px 25px; font-size: 0.75rem; color: #557086; text-transform: uppercase; letter-spacing: 1px; }
+        /* --- MENÚ LATERAL INTERACTIVO --- */
+        .sidebar { width: 260px; background: var(--bg-sidebar); border-right: 1px solid #2f4553; display: flex; flex-direction: column; }
+        .logo-area { padding: 25px; font-family: 'Orbitron'; color: var(--white); font-size: 1.5rem; border-bottom: 1px solid #2f4553; }
+        .nav-group { padding: 20px 0; flex: 1; overflow-y: auto; }
+        .nav-item { padding: 12px 25px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; }
+        .nav-item:hover, .nav-item.active { background: var(--bg-card); color: var(--white); }
+        .nav-title { padding: 10px 25px; font-size: 0.75rem; color: #557086; text-transform: uppercase; }
 
-        /* --- CONTENIDO PRINCIPAL --- */
+        /* --- ÁREA DE CONTENIDO --- */
         .main { flex: 1; display: flex; flex-direction: column; position: relative; }
         .top-bar { height: 70px; background: var(--bg-main); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; border-bottom: 1px solid #2f4553; }
-        
-        .wallet-container { display: flex; align-items: center; gap: 2px; }
-        .balance-display { background: var(--bg-sidebar); padding: 10px 20px; border-radius: 5px 0 0 5px; color: var(--white); font-weight: bold; border: 1px solid #2f4553; display: flex; align-items: center; gap: 8px; }
-        .btn-monedero { background: #2f4553; color: var(--white); border: none; padding: 11px 15px; border-radius: 0 5px 5px 0; cursor: pointer; font-weight: bold; }
-        .btn-monedero:hover { background: #3d5a6d; }
+        .wallet-display { background: var(--bg-sidebar); padding: 10px 20px; border-radius: 5px; color: var(--white); font-weight: bold; border: 1px solid #2f4553; display: flex; gap: 10px; }
 
-        /* --- INTERFAZ DE JUEGO (COMO LA FOTO 3 y 4) --- */
-        .game-viewport { flex: 1; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
-        .game-wrapper { background: var(--bg-sidebar); border-radius: 10px; display: flex; width: 100%; max-width: 1000px; height: 600px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden; }
-        
-        .bet-controls { width: 320px; background: var(--bg-sidebar); padding: 25px; border-right: 1px solid #2f4553; display: flex; flex-direction: column; }
-        .grid-visual { flex: 1; background: var(--bg-main); display: flex; align-items: center; justify-content: center; position: relative; }
+        /* --- SISTEMA DE VISTAS (Lobby vs Juegos) --- */
+        .view { display: none; padding: 40px; flex: 1; overflow-y: auto; }
+        .view.active { display: block; }
 
+        /* --- ESTILO DE LOS JUEGOS --- */
+        .game-wrapper { background: var(--bg-sidebar); border-radius: 10px; display: flex; width: 100%; max-width: 950px; height: 550px; margin: auto; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .bet-side { width: 300px; padding: 25px; border-right: 1px solid #2f4553; }
+        .visual-side { flex: 1; background: var(--bg-main); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        
+        /* Grid de Minas */
         .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-        .cell { width: 85px; height: 85px; background: var(--bg-card); border-radius: 6px; cursor: pointer; border-bottom: 5px solid #101e26; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
-        .cell:hover { background: #2f4553; transform: scale(1.02); }
-        .cell.revealed { background: #07141d; border-bottom: none; }
-
-        /* --- BOTONES Y ENTRADAS --- */
-        .input-box { background: var(--bg-main); border: 2px solid #2f4553; color: white; width: 100%; padding: 12px; border-radius: 5px; margin: 8px 0 20px; outline: none; }
-        .btn-primary { background: var(--accent); color: #01080e; width: 100%; padding: 18px; border: none; border-radius: 5px; font-weight: 800; cursor: pointer; font-family: 'Orbitron'; font-size: 1rem; }
-        .btn-primary:disabled { background: #2f4553; color: #557086; cursor: not-allowed; }
-
-        /* --- BLOQUEO POR TRIPLE REFREZCO / SIN SALDO --- */
-        #anti-cheat { position: fixed; inset: 0; background: rgba(15, 33, 46, 0.98); z-index: 2000; display: none; align-items: center; justify-content: center; text-align: center; }
-        .lock-card { background: var(--bg-sidebar); padding: 50px; border-radius: 20px; border: 2px solid var(--lose); max-width: 450px; }
-
-        /* --- CHAT LATERAL --- */
-        .chat-sidebar { width: 300px; background: var(--bg-sidebar); border-left: 1px solid #2f4553; display: flex; flex-direction: column; }
-        .chat-content { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.9rem; }
-        .chat-msg { background: var(--bg-main); padding: 10px; border-radius: 5px; margin-bottom: 8px; border-left: 3px solid var(--accent); }
+        .cell { width: 75px; height: 75px; background: var(--bg-card); border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 2rem; border-bottom: 4px solid #101e26; }
+        
+        /* Bloqueo Anti-Trampa */
+        #anti-cheat { position: fixed; inset: 0; background: rgba(15,33,46,0.98); z-index: 9999; display: none; align-items: center; justify-content: center; text-align: center; }
+        
+        .btn-bet { background: var(--accent); color: #01080e; width: 100%; padding: 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; margin-top: 10px; }
+        .input-dark { background: var(--bg-main); border: 2px solid #2f4553; color: white; width: 100%; padding: 12px; border-radius: 5px; margin-bottom: 15px; outline: none; }
     </style>
 </head>
 <body>
 
 <div id="anti-cheat">
-    <div class="lock-card">
-        <h1 style="color:var(--lose); font-family:'Orbitron';">TIRADAS AGOTADAS</h1>
-        <p>Has consumido tus 3 intentos de cortesía en <b>Casino Smal</b>.</p>
-        <p>Para retirar tus premios o seguir jugando, realiza un depósito mínimo de <b>$1.00</b>.</p>
-        <button class="btn-primary" onclick="window.open('https://wa.me/593987749885')">PAGAR POR WHATSAPP</button>
+    <div style="background:var(--bg-sidebar); padding:50px; border-radius:20px; border:2px solid var(--lose);">
+        <h1 style="color:var(--lose)">TIRADAS AGOTADAS</h1>
+        <p>Has usado tus 3 intentos gratis. Deposita para continuar.</p>
+        <button class="btn-bet" onclick="window.open('https://wa.me/593987749885')">RECARGAR POR WHATSAPP</button>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div class="logo-area">STAKE <small style="font-size: 0.5rem; vertical-align: middle;">BY SMAL</small></div>
+    <div class="logo-area">SMAL STAKE</div>
     <div class="nav-group">
-        <div class="nav-item active">🏠 Lobby</div>
-        <div class="nav-item">⭐ Favoritos</div>
-        <div class="nav-item">🕒 Reciente</div>
-        <div class="nav-item">🏔️ Desafíos</div>
-        <div class="nav-group">
-            <div class="nav-title">Juegos</div>
-            <div class="nav-item">🎯 Originales de Smal</div>
-            <div class="nav-item">🎰 Slots</div>
-            <div class="nav-item">🃏 Casino en Vivo</div>
-            <div class="nav-item" onclick="openAdmin()" style="margin-top:20px; color:var(--owner);">🔑 Panel Dueño</div>
-        </div>
+        <div class="nav-item active" onclick="showView('lobby')">🏠 Lobby</div>
+        <div class="nav-title">Juegos Originales</div>
+        <div class="nav-item" onclick="showView('mines')">💣 Minas</div>
+        <div class="nav-item" onclick="showView('crash')">🚀 Crash</div>
+        <div class="nav-item" onclick="showView('tower')">🏰 Tower</div>
+        <div class="nav-item" onclick="showView('slots')">🎰 Slots</div>
+        <div class="nav-item" onclick="resetAdmin()" style="margin-top:20px; color:var(--accent)">🔑 Reset (Admin)</div>
     </div>
 </aside>
 
 <main class="main">
     <div class="top-bar">
-        <div style="font-weight: bold; color:white; font-size: 1.2rem;">MINAS</div>
-        <div class="wallet-container">
-            <div class="balance-display">🪙 <span id="balance">15.00000000</span></div>
-            <button class="btn-monedero" onclick="window.open('https://wa.me/593987749885')">Monedero</button>
+        <div id="current-title" style="color:white; font-weight:bold; font-size:1.2rem;">LOBBY</div>
+        <div class="wallet-display">🪙 <span id="balance">15.00</span></div>
+    </div>
+
+    <div id="view-lobby" class="view active">
+        <h2>Bienvenido, elige un juego:</h2>
+        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:20px;">
+            <div style="background:var(--bg-sidebar); padding:30px; border-radius:15px; text-align:center; cursor:pointer;" onclick="showView('mines')">💣<br>MINAS</div>
+            <div style="background:var(--bg-sidebar); padding:30px; border-radius:15px; text-align:center; cursor:pointer;" onclick="showView('crash')">🚀<br>CRASH</div>
         </div>
     </div>
 
-    <div class="game-viewport">
+    <div id="view-mines" class="view">
         <div class="game-wrapper">
-            <div class="bet-controls">
-                <div style="display:flex; background:var(--bg-main); border-radius:30px; padding:5px; margin-bottom:20px;">
-                    <button style="flex:1; background:var(--bg-card); color:white; border:none; border-radius:30px; padding:8px;">Manual</button>
-                    <button style="flex:1; background:transparent; color:var(--text); border:none; padding:8px;">Automático</button>
-                </div>
-                
+            <div class="bet-side">
                 <label>Monto de Apuesta</label>
-                <input type="text" class="input-box" value="5.00">
-                
-                <label>Minas</label>
-                <select class="input-box" id="mine-select">
-                    <option value="1">1</option>
-                    <option value="3" selected>3</option>
-                    <option value="10">10</option>
-                    <option value="24">24</option>
-                </select>
-
-                <button class="btn-primary" id="btn-play" onclick="initGame()">Apostar</button>
-                <button class="btn-primary" id="btn-cash" style="display:none; background:#ffcc00;" onclick="cashout()">Retirar</button>
+                <input type="number" class="input-dark" value="5">
+                <label>Minas (1-24)</label>
+                <input type="number" id="mine-count" class="input-dark" value="3">
+                <button class="btn-bet" id="btn-mines-start" onclick="startMines()">APOSTAR</button>
+                <button class="btn-bet" id="btn-mines-cash" style="display:none; background:#ffcc00;" onclick="cashoutMines()">RETIRAR</button>
             </div>
+            <div class="visual-side">
+                <div class="mines-grid" id="mines-grid"></div>
+            </div>
+        </div>
+    </div>
 
-            <div class="grid-visual">
-                <div class="mines-grid" id="grid">
-                    </div>
+    <div id="view-crash" class="view">
+        <div class="game-wrapper">
+            <div class="bet-side">
+                <label>Monto de Apuesta</label>
+                <input type="number" class="input-dark" value="5">
+                <button class="btn-bet" id="btn-crash-start" onclick="startCrash()">APOSTAR</button>
+                <button class="btn-bet" id="btn-crash-cash" style="display:none; background:#ffcc00;" onclick="cashoutCrash()">RETIRAR</button>
+            </div>
+            <div class="visual-side" id="crash-screen">
+                <h1 style="font-size:5rem; color:var(--accent)" id="crash-mult">1.00x</h1>
+                <p>🚀 EL COHETE ESTÁ VOLANDO...</p>
             </div>
         </div>
     </div>
 </main>
 
-<aside class="chat-sidebar">
-    <div style="padding:20px; font-weight:bold; border-bottom:1px solid #2f4553;">CHAT EN VIVO</div>
-    <div class="chat-content" id="chat-box">
-        <div class="chat-msg"><b>Sistema:</b> ¡Bienvenido a Casino Smal!</div>
-    </div>
-    <div style="padding:15px;"><input type="text" id="chat-in" placeholder="Escribe un mensaje..." style="width:100%; padding:10px; background:var(--bg-main); border:1px solid #2f4553; color:white; border-radius:5px;"></div>
-</aside>
-
 <script>
-    // --- LÓGICA DE PERSISTENCIA REAL ---
-    let balance = localStorage.getItem('smal_balance');
-    if (balance === null) {
-        balance = 15.0; // Bono inicial
-        localStorage.setItem('smal_balance', balance);
-    } else {
-        balance = parseFloat(balance);
+    let balance = localStorage.getItem('smal_bal') ? parseFloat(localStorage.getItem('smal_bal')) : 15.0;
+    let playing = false;
+    let minesArr = [];
+    let crashInt;
+    let currentMult = 1.0;
+
+    function updateUI() {
+        document.getElementById('balance').innerText = balance.toFixed(2);
+        localStorage.setItem('smal_bal', balance);
+        if(balance < 5 && !playing) document.getElementById('anti-cheat').style.display = 'flex';
     }
 
-    let isPlaying = false;
-    let minesLocation = [];
-
-    function updateBalance() {
-        document.getElementById('balance').innerText = balance.toFixed(8);
-        localStorage.setItem('smal_balance', balance);
-        if (balance < 5 && !isPlaying) {
-            document.getElementById('anti-cheat').style.display = 'flex';
-        }
+    function showView(viewName) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-' + viewName).classList.add('active');
+        document.getElementById('current-title').innerText = viewName.toUpperCase();
+        if(viewName === 'mines') createMinesGrid();
     }
 
-    function createGrid() {
-        const grid = document.getElementById('grid');
+    /* --- LÓGICA MINAS --- */
+    function createMinesGrid() {
+        const grid = document.getElementById('mines-grid');
         grid.innerHTML = '';
         for(let i=0; i<25; i++) {
             let c = document.createElement('div');
             c.className = 'cell';
-            c.onclick = () => handleReveal(c, i);
+            c.onclick = () => revealMine(c, i);
             grid.appendChild(c);
         }
     }
 
-    function initGame() {
+    function startMines() {
         if(balance < 5) return;
-        balance -= 5;
-        updateBalance();
-        isPlaying = true;
-        minesLocation = [];
-        let count = parseInt(document.getElementById('mine-select').value);
-        while(minesLocation.length < count) {
+        balance -= 5; updateUI();
+        playing = true;
+        minesArr = [];
+        let count = document.getElementById('mine-count').value;
+        while(minesArr.length < count) {
             let r = Math.floor(Math.random() * 25);
-            if(!minesLocation.includes(r)) minesLocation.push(r);
+            if(!minesArr.includes(r)) minesArr.push(r);
         }
-        document.getElementById('btn-play').style.display = 'none';
-        document.getElementById('btn-cash').style.display = 'block';
-        createGrid();
+        document.getElementById('btn-mines-start').style.display = 'none';
+        document.getElementById('btn-mines-cash').style.display = 'block';
+        createMinesGrid();
     }
 
-    function handleReveal(el, i) {
-        if(!isPlaying || el.classList.contains('revealed')) return;
-        el.classList.add('revealed');
-        if(minesLocation.includes(i)) {
-            el.innerHTML = '💣';
-            el.style.background = 'var(--lose)';
-            isPlaying = false;
-            setTimeout(() => { alert("BOOM! Perdiste."); resetGame(); }, 500);
+    function revealMine(el, i) {
+        if(!playing || el.innerHTML !== '') return;
+        if(minesArr.includes(i)) {
+            el.innerHTML = '💣'; el.style.background = 'var(--lose)';
+            playing = false; setTimeout(() => { alert("BOOM!"); resetMines(); }, 500);
         } else {
-            el.innerHTML = '💎';
-            el.style.background = 'var(--accent)';
+            el.innerHTML = '💎'; el.style.background = 'var(--accent)';
         }
     }
 
-    function cashout() {
-        if(!isPlaying) return;
-        balance += 12.5; // Multiplicador base
-        alert("💰 ¡Ganaste 12.5 tokens!");
-        resetGame();
+    function cashoutMines() {
+        balance += 12; alert("💰 Ganaste 12 Tokens"); resetMines();
     }
 
-    function resetGame() {
-        isPlaying = false;
-        document.getElementById('btn-play').style.display = 'block';
-        document.getElementById('btn-cash').style.display = 'none';
-        updateBalance();
+    function resetMines() {
+        playing = false;
+        document.getElementById('btn-mines-start').style.display = 'block';
+        document.getElementById('btn-mines-cash').style.display = 'none';
+        updateUI();
     }
 
-    function openAdmin() {
-        if(prompt("Clave Dueño:") === "admin123") {
-            balance = 1000;
-            updateBalance();
-        }
+    /* --- LÓGICA CRASH --- */
+    function startCrash() {
+        if(balance < 5) return;
+        balance -= 5; updateUI();
+        playing = true; currentMult = 1.0;
+        document.getElementById('btn-crash-start').style.display = 'none';
+        document.getElementById('btn-crash-cash').style.display = 'block';
+        
+        crashInt = setInterval(() => {
+            currentMult += 0.05;
+            document.getElementById('crash-mult').innerText = currentMult.toFixed(2) + "x";
+            if(Math.random() < 0.03) {
+                clearInterval(crashInt);
+                document.getElementById('crash-mult').style.color = 'var(--lose)';
+                document.getElementById('crash-mult').innerText = "EXPLOTÓ!";
+                playing = false;
+                setTimeout(() => { resetCrash(); }, 1500);
+            }
+        }, 100);
     }
 
-    // Chat
-    document.getElementById('chat-in').addEventListener('keypress', (e) => {
-        if(e.key === 'Enter') {
-            const b = document.getElementById('chat-box');
-            b.innerHTML += `<div class="chat-msg"><b>Tú:</b> ${e.target.value}</div>`;
-            e.target.value = "";
-            b.scrollTop = b.scrollHeight;
-        }
-    });
+    function cashoutCrash() {
+        if(!playing) return;
+        clearInterval(crashInt);
+        let win = 5 * currentMult;
+        balance += win;
+        alert("💰 Retiraste " + win.toFixed(2));
+        resetCrash();
+    }
 
-    createGrid();
-    updateBalance();
+    function resetCrash() {
+        playing = false;
+        document.getElementById('btn-crash-start').style.display = 'block';
+        document.getElementById('btn-crash-cash').style.display = 'none';
+        document.getElementById('crash-mult').style.color = 'var(--accent)';
+        updateUI();
+    }
+
+    function resetAdmin() {
+        localStorage.clear();
+        location.reload();
+    }
+
+    updateUI();
 </script>
 </body>
 </html>
