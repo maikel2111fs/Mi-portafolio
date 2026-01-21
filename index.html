@@ -2,301 +2,304 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Smal Casino | Elite System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smal Casino | Master System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0b0e11; --side: #15191c; --card: #21262b; --accent: #00e701; --gold: #f5d547; --lose: #ff3366; --text: #b1bad3; }
-        * { box-sizing: border-box; font-family: 'Rajdhani', sans-serif; transition: 0.2s; }
-        body { background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        :root {
+            --bg-body: #0f212e; --bg-side: #1a2c38; --bg-card: #213743;
+            --accent: #00e701; --text: #b1bad3; --white: #ffffff; 
+            --gold: #ffcc00; --lose: #ff3366; --border: #2f4553;
+        }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.2s; }
+        body { background: var(--bg-body); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        /* SIDEBAR */
-        .sidebar { width: 280px; background: var(--side); border-right: 1px solid #2f373d; display: flex; flex-direction: column; }
-        .nav-item { padding: 15px 25px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 12px; border-left: 4px solid transparent; }
-        .nav-item:hover, .nav-item.active { background: var(--card); color: white; border-left-color: var(--accent); }
+        /* --- SISTEMA DE LOGIN DUAL --- */
+        #auth-screen { position: fixed; inset: 0; background: var(--bg-body); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .auth-box { background: var(--bg-side); padding: 40px; border-radius: 8px; width: 400px; border: 1px solid var(--border); text-align: center; }
+        .auth-logo { font-family: 'Orbitron'; color: var(--white); font-size: 2.2rem; margin-bottom: 25px; letter-spacing: 5px; }
+        
+        /* --- SIDEBAR & NAV --- */
+        .sidebar { width: 240px; background: var(--bg-side); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        .nav-link { padding: 15px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.9rem; border-right: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: var(--bg-card); color: var(--white); border-right-color: var(--accent); }
 
-        /* HEADER */
-        .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: radial-gradient(circle at top, #1a2c38 0%, #0b0e11 100%); }
-        .header { height: 70px; padding: 0 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2f373d; background: rgba(0,0,0,0.3); }
-        .balance-pill { background: #1a2127; padding: 8px 15px; border-radius: 5px; border: 1px solid var(--accent); color: white; display: flex; gap: 10px; align-items: center; }
+        .main-content { flex: 1; display: flex; flex-direction: column; position: relative; }
+        .navbar { height: 60px; background: var(--bg-side); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 25px; }
 
-        /* VISTAS */
-        .view { padding: 40px; display: none; animation: fadeIn 0.3s; }
-        .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- MONEDERO --- */
+        .wallet-pill { background: var(--bg-body); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; }
+        .bal-val { padding: 8px 15px; color: var(--white); font-weight: 800; font-size: 0.9rem; }
+        .btn-deposit { background: var(--bg-card); color: var(--white); border: none; padding: 8px 15px; cursor: pointer; border-left: 1px solid var(--border); font-weight: bold; }
 
-        /* MINAS JUEGO */
-        .game-container { display: flex; background: var(--side); border-radius: 15px; max-width: 950px; margin: auto; height: 550px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .controls { width: 300px; padding: 30px; border-right: 1px solid #2f373d; background: #1a2127; }
-        .grid-space { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #071620; }
-        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-        .cell { width: 70px; height: 70px; background: var(--card); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 2rem; border-bottom: 4px solid #101e26; }
-        .cell.revealed { cursor: default; background: #2f373d; }
+        /* --- JUEGO MINAS (ESTILO STAKE) --- */
+        .game-view { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .stake-box { background: var(--bg-side); width: 100%; max-width: 950px; height: 580px; border-radius: 8px; display: flex; overflow: hidden; border: 1px solid var(--border); }
+        .stake-sidebar { width: 300px; padding: 25px; border-right: 2px solid var(--bg-body); background: var(--bg-side); }
+        .grid-container { flex: 1; background: var(--bg-body); display: flex; align-items: center; justify-content: center; }
+        
+        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 450px; height: 450px; }
+        .tile { background: var(--bg-card); border-radius: 4px; cursor: pointer; border-bottom: 4px solid #101e26; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
+        .tile:hover { background: #2f4553; }
+        .tile.revealed { background: var(--bg-body); border-bottom: none; }
 
-        /* BOTONES */
-        .btn-play { background: var(--accent); color: black; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; font-family: 'Orbitron'; }
-        .btn-cash { background: var(--gold); color: black; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; display: none; }
-        input, select { background: #0b0e11; border: 1px solid #2f373d; color: white; padding: 12px; width: 100%; border-radius: 5px; margin-bottom: 15px; }
+        /* --- BOTONES --- */
+        .btn-bet { background: var(--accent); color: #000; border: none; padding: 18px; border-radius: 4px; font-weight: 800; cursor: pointer; width: 100%; font-size: 1rem; margin-top: 10px; }
+        .btn-bet:disabled { background: #2f4553; color: #557086; cursor: not-allowed; }
+        .btn-cash { background: var(--gold); color: #000; border: none; padding: 18px; border-radius: 4px; font-weight: 800; cursor: pointer; width: 100%; display: none; margin-top: 10px; }
 
-        /* LOGIN OVERLAY */
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .auth-card { background: var(--side); padding: 40px; border-radius: 20px; border: 1px solid var(--accent); width: 380px; text-align: center; }
+        input, select { background: var(--bg-body); border: 2px solid var(--border); color: var(--white); padding: 12px; width: 100%; border-radius: 4px; margin-bottom: 12px; font-weight: bold; outline: none; }
+        
+        /* --- PANEL ADMIN OCULTO --- */
+        #admin-panel { display: none; padding: 40px; background: var(--bg-body); position: absolute; inset: 0; z-index: 50; overflow-y: auto; }
+        .admin-card { background: var(--bg-side); padding: 25px; border-radius: 8px; border: 1px dashed var(--gold); margin-bottom: 20px; }
 
-        /* FREE SPINS TAG */
-        .free-tag { background: var(--lose); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
+        .terms { font-size: 0.7rem; color: #557086; margin-top: 15px; text-align: left; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px; }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
-    <div class="auth-card">
-        <h1 style="font-family:'Orbitron'; color:white; letter-spacing: 5px;">SMAL</h1>
-        <p>Regístrate y recibe <b>3 TIROS GRATIS</b></p>
-        <input type="text" id="auth-user" placeholder="Nombre de usuario">
-        <input type="password" id="auth-pass" placeholder="Contraseña">
-        <button class="btn-play" onclick="handleLogin()">ENTRAR AL IMPERIO</button>
+    <div class="auth-box">
+        <div class="auth-logo">SMAL</div>
+        <p style="font-size: 0.9rem;">Acceso al Imperio Smal</p>
+        <input type="text" id="user-in" placeholder="Usuario">
+        <input type="password" id="pass-in" placeholder="Contraseña o Master Key">
+        
+        <div class="terms">
+            <input type="checkbox" id="terms-check"> Acepto que <b>no hay reembolsos</b>. Entiendo que el saldo es digital y los premios se reclaman vía WhatsApp.
+        </div>
+        
+        <button class="btn-bet" onclick="initSession()">ENTRAR</button>
+        <p style="font-size: 0.7rem; margin-top: 15px;">Admin Key: <b>admin123</b> (Cambiar en el código)</p>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div style="padding:30px; text-align:center; border-bottom:1px solid #2f373d;">
-        <div id="p-avatar" style="width:60px; height:60px; background:var(--accent); border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:black; font-weight:bold; font-size:1.5rem;">?</div>
-        <div id="p-name" style="color:white; font-weight:bold;">Usuario</div>
-        <div id="p-rank" style="color:var(--gold); font-size:0.8rem; font-weight:bold;">RANGO: NOVATO</div>
-    </div>
-    <div class="nav-group">
-        <div class="nav-item active" onclick="tab('lobby')">🏠 Inicio / Tiros <span class="free-tag" id="p-spins">0</span></div>
-        <div class="nav-item" onclick="tab('mines')">💣 Minas Pro</div>
-        <div class="nav-item" onclick="tab('inv')">🎒 Mi Inventario</div>
-        <div class="nav-item" onclick="tab('admin')" style="color:var(--gold); margin-top:20px;">🛠 Panel Dueño</div>
-    </div>
+    <div style="padding: 25px; font-family: 'Orbitron'; color: white; font-size: 1.5rem;">STAKE</div>
+    <div class="nav-link active" onclick="showView('game')">🎰 Casino Original</div>
+    <div class="nav-link" onclick="showView('inv')">🎒 Mi Inventario</div>
+    <div class="nav-link" onclick="window.open('https://wa.me/593987749885')">💬 Soporte WhatsApp</div>
+    <div id="admin-btn" class="nav-link" style="color:var(--gold); display:none; margin-top: auto;" onclick="showView('admin')">🛠 PANEL MAESTRO</div>
 </aside>
 
-<main class="main">
-    <div class="header">
-        <div id="header-title" style="font-weight:bold; color:white; font-family:'Orbitron';">LOBBY</div>
-        <div class="balance-pill">🪙 <span id="p-bal">0.00</span></div>
-    </div>
-
-    <div id="v-lobby" class="view active">
-        <h1>Bienvenido al Casino Smal</h1>
-        <p>Tu monedero y progreso se guardan automáticamente. No pierdas tu contraseña.</p>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-            <div style="background:var(--card); padding:20px; border-radius:10px;">
-                <h3>Bonos Activos</h3>
-                <p id="bonus-info">Tienes 3 Tiros Gratis para usar en Minas.</p>
-            </div>
-            <div style="background:var(--card); padding:20px; border-radius:10px; border:1px solid var(--gold);">
-                <h3>Recargar Tokens</h3>
-                <p>Mínimo $80 para nivel VIP.</p>
-                <button class="btn-play" style="background:var(--gold)" onclick="window.open('https://wa.me/593987749885')">WHATSAPP</button>
-            </div>
+<main class="main-content">
+    <nav class="navbar">
+        <div style="font-size: 0.75rem; font-weight: bold;">SMAL CASINO | ELITE PARTNER</div>
+        <div class="wallet-pill">
+            <div class="bal-val">🪙 <span id="u-bal">0.00000000</span></div>
+            <button class="btn-deposit" onclick="window.open('https://wa.me/593987749885')">Depositar</button>
         </div>
-    </div>
+    </nav>
 
-    <div id="v-mines" class="view">
-        <div class="game-container">
-            <div class="controls">
-                <label>Monto de Apuesta</label>
-                <input type="number" id="m-bet" value="5">
-                <label>Número de Minas</label>
-                <select id="m-count">
-                    <option value="3">3 Minas (Fácil)</option>
-                    <option value="10">10 Minas (Difícil)</option>
-                    <option value="20">20 Minas (Extremo)</option>
-                </select>
-                <button class="btn-play" id="m-start" onclick="startMines()">APOSTAR</button>
-                <button class="btn-cash" id="m-cash" onclick="cashout()">RETIRAR GANANCIA</button>
-                <div style="margin-top:30px; text-align:center;">
-                    <div id="m-mult" style="font-size:3rem; color:var(--accent); font-family:'Orbitron';">1.00x</div>
-                    <div id="m-profit">Ganancia: 0.00</div>
+    <div id="v-game" class="view">
+        <div class="game-view">
+            <div class="stake-box">
+                <div class="stake-sidebar">
+                    <label style="font-size: 0.7rem; font-weight: bold;">Monto de Apuesta</label>
+                    <input type="number" id="m-bet" value="10.00">
+                    
+                    <label style="font-size: 0.7rem; font-weight: bold;">Minas</label>
+                    <select id="m-count">
+                        <option value="1">1 Mina</option>
+                        <option value="3" selected>3 Minas</option>
+                        <option value="10">10 Minas</option>
+                        <option value="24">24 Minas</option>
+                    </select>
+
+                    <p style="font-size: 0.8rem;">Tiros Gratis: <b id="u-spins" style="color:var(--accent)">0</b></p>
+
+                    <button class="btn-bet" id="btn-play" onclick="startMines()">Apostar</button>
+                    <button class="btn-cash" id="btn-cash" onclick="cashout()">Retirar</button>
+
+                    <div style="text-align: center; margin-top: 50px;">
+                        <div id="m-mult" style="font-size: 2.5rem; color: white; font-weight: 800;">1.00x</div>
+                        <div id="m-profit" style="color: var(--accent); font-weight: bold;">0.00 US$</div>
+                    </div>
+                </div>
+                <div class="grid-container">
+                    <div class="mines-grid" id="grid"></div>
                 </div>
             </div>
-            <div class="grid-space">
-                <div class="mines-grid" id="m-grid"></div>
-            </div>
         </div>
     </div>
 
-    <div id="v-inv" class="view">
-        <h2>🎒 Inventario de Premios Reales</h2>
-        <div id="inv-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap:20px;"></div>
+    <div id="v-inv" class="view" style="display:none; padding: 40px;">
+        <h2>🎒 Premios y Rangos Ganados</h2>
+        <div id="inv-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;"></div>
     </div>
 
-    <div id="v-admin" class="view">
-        <h1 style="color:var(--gold)">PANEL MAESTRO</h1>
-        <div style="background:var(--card); padding:25px; border-radius:10px;">
-            <h3>🛠 Configurar Probabilidades</h3>
-            <p>Añade items que los usuarios ganarán si llegan a 2x en las Minas.</p>
-            <input type="text" id="adm-item" placeholder="Nombre del Premio (Ej: Tarjeta $10)">
+    <div id="v-admin" class="view" style="display:none; padding: 40px;">
+        <h1 style="color:var(--gold)">STUDIO DE CONFIGURACIÓN</h1>
+        <div class="admin-card">
+            <h3>🎁 Crear Item de Botín (Premios Reales)</h3>
+            <p>Estos items aparecerán en el inventario del usuario si gana con multiplicador > 2x.</p>
+            <input type="text" id="adm-name" placeholder="Ej: Rango VIP, Tarjeta $20, Skin Rare">
             <input type="number" id="adm-prob" placeholder="Probabilidad (1-100)%">
-            <button class="btn-play" onclick="addItem()">GUARDAR ITEM EN EL SISTEMA</button>
+            <button class="btn-bet" onclick="addPoolItem()">AÑADIR AL SISTEMA</button>
         </div>
-        <button onclick="data.balance+=500; update();" style="margin-top:20px;" class="btn-play">Darse 500 Tokens</button>
+        <div class="admin-card">
+            <h3>💰 Control de Economía</h3>
+            <button class="btn-bet" style="background:var(--white)" onclick="stats.balance += 1000; update();">Darse 1000 Tokens</button>
+            <button class="btn-bet" style="background:var(--lose); color:white; margin-top:10px;" onclick="localStorage.clear(); location.reload();">RESETEAR TODO EL CASINO</button>
+        </div>
     </div>
 </main>
 
 <script>
-    // --- SEGURIDAD Y DATOS ---
-    let data = {
-        user: "", balance: 20.0, spins: 3, inv: [], xp: 0,
-        pool: [{n: "Rango VIP", p: 5}, {n: "Bono $5", p: 15}]
+    // --- NÚCLEO Y SEGURIDAD ---
+    let stats = {
+        user: "", balance: 25.0, spins: 3, inv: [], 
+        isAdmin: false,
+        pool: [{n: "Rango Bronce", p: 20}, {n: "Bono $10", p: 5}]
     };
 
-    let isPlaying = false;
-    let mines = [];
-    let mult = 1.0;
-    let currentBet = 0;
+    let playing = false;
+    let minesArr = [];
+    let curMult = 1.0;
+    let curBet = 0;
 
-    function save() { localStorage.setItem('smal_vault_' + data.user, JSON.stringify(data)); }
-
-    function handleLogin() {
-        let u = document.getElementById('auth-user').value;
-        if(!u) return alert("Ingresa usuario");
-        
-        let saved = localStorage.getItem('smal_vault_' + u);
-        if(saved) data = JSON.parse(saved);
-        else data.user = u;
-        
-        document.getElementById('auth-screen').style.display = 'none';
+    function save() { 
+        localStorage.setItem('smal_master_' + stats.user, JSON.stringify(stats)); 
         update();
     }
 
     function update() {
-        document.getElementById('p-bal').innerText = data.balance.toFixed(2);
-        document.getElementById('p-name').innerText = data.user;
-        document.getElementById('p-spins').innerText = data.spins;
-        document.getElementById('p-avatar').innerText = data.user[0].toUpperCase();
-        
-        // Rango por experiencia
-        if(data.xp > 500) document.getElementById('p-rank').innerText = "RANGO: ELITE";
-        if(data.xp > 2000) document.getElementById('p-rank').innerText = "RANGO: LEYENDA";
-
-        save();
+        document.getElementById('u-bal').innerText = stats.balance.toFixed(8);
+        document.getElementById('u-spins').innerText = stats.spins;
+        if(stats.isAdmin) document.getElementById('admin-btn').style.display = 'flex';
         renderInv();
     }
 
-    function tab(v) {
-        document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
-        document.getElementById('v-' + v).classList.add('active');
-        document.getElementById('header-title').innerText = v.toUpperCase();
-        if(v === 'mines') buildGrid();
+    function initSession() {
+        let u = document.getElementById('user-in').value;
+        let p = document.getElementById('pass-in').value;
+        if(!u || !document.getElementById('terms-check').checked) return alert("Acepta términos");
+
+        let saved = localStorage.getItem('smal_master_' + u);
+        if(saved) stats = JSON.parse(saved);
+        else stats.user = u;
+
+        // LLAVE MAESTRA ADMIN
+        if(p === "admin123") stats.isAdmin = true; // Aquí cambias tu clave admin
+
+        document.getElementById('auth-screen').style.display = 'none';
+        save();
+        buildGrid();
     }
 
-    // --- LÓGICA DE JUEGO SEGURA ---
+    function showView(v) {
+        document.querySelectorAll('.view').forEach(x => x.style.display = 'none');
+        document.getElementById('v-' + v).style.display = 'block';
+        document.querySelectorAll('.nav-link').forEach(x => x.classList.remove('active'));
+    }
+
+    // --- LÓGICA MINAS (COPIA STAKE) ---
     function buildGrid() {
-        const g = document.getElementById('m-grid'); g.innerHTML = '';
+        const g = document.getElementById('grid'); g.innerHTML = '';
         for(let i=0; i<25; i++) {
-            let c = document.createElement('div');
-            c.className = 'cell';
-            c.onclick = () => reveal(c, i);
-            g.appendChild(c);
+            let t = document.createElement('div');
+            t.className = 'tile';
+            t.onclick = () => reveal(t, i);
+            g.appendChild(t);
         }
     }
 
     function startMines() {
-        let betInput = parseFloat(document.getElementById('m-bet').value);
+        let b = parseFloat(document.getElementById('m-bet').value);
         
-        // Sistema de Tiros Gratis
-        if(data.spins > 0) {
-            if(confirm("¿Usar 1 de tus 3 tiros gratis?")) {
-                data.spins--;
-                currentBet = betInput; // Apuesta ficticia para el cálculo
-            } else {
-                if(data.balance < betInput) return alert("Saldo insuficiente.");
-                data.balance -= betInput;
-                currentBet = betInput;
-            }
+        // Seguridad: El dinero se resta al inicio
+        if(stats.spins > 0) {
+            if(confirm("¿Gastar 1 Tiro Gratis?")) { stats.spins--; curBet = b; }
+            else { if(stats.balance < b) return; stats.balance -= b; curBet = b; }
         } else {
-            if(data.balance < betInput) return alert("Saldo insuficiente.");
-            data.balance -= betInput;
-            currentBet = betInput;
+            if(stats.balance < b) return alert("Saldo insuficiente.");
+            stats.balance -= b; curBet = b;
         }
 
-        isPlaying = true; mult = 1.0; mines = [];
-        let mTotal = document.getElementById('m-count').value;
-        while(mines.length < mTotal) {
+        playing = true; curMult = 1.0; minesArr = [];
+        let mCount = document.getElementById('m-count').value;
+        while(minesArr.length < mCount) {
             let r = Math.floor(Math.random()*25);
-            if(!mines.includes(r)) mines.push(r);
+            if(!minesArr.includes(r)) minesArr.push(r);
         }
 
-        document.getElementById('m-start').disabled = true;
-        document.getElementById('m-cash').style.display = 'block';
+        document.getElementById('btn-play').disabled = true;
+        document.getElementById('btn-cash').style.display = 'block';
         buildGrid();
-        update();
+        save();
     }
 
     function reveal(el, i) {
-        if(!isPlaying || el.innerHTML !== '') return;
-        
-        if(mines.includes(i)) {
-            el.innerHTML = '💣'; el.style.background = var(--lose);
-            isPlaying = false;
-            alert("¡BOOM! Perdiste.");
-            resetMines();
+        if(!playing || el.classList.contains('revealed')) return;
+        el.classList.add('revealed');
+
+        if(minesArr.includes(i)) {
+            el.innerHTML = '💣'; el.style.background = 'var(--lose)';
+            playing = false;
+            setTimeout(() => { alert("BOOM! Perdiste."); reset(); }, 100);
         } else {
-            el.innerHTML = '💎'; el.style.background = var(--accent);
-            let step = (25 / (25 - mines.length)) * 0.3;
-            mult += step;
-            document.getElementById('m-mult').innerText = mult.toFixed(2) + "x";
-            document.getElementById('m-profit').innerText = "Ganancia: " + (currentBet * mult).toFixed(2);
+            el.innerHTML = '💎'; el.style.background = 'var(--accent)';
+            let step = (25 / (25 - minesArr.length)) * 0.25;
+            curMult += step;
+            document.getElementById('m-mult').innerText = curMult.toFixed(2) + "x";
+            document.getElementById('m-profit').innerText = (curBet * curMult).toFixed(2) + " US$";
         }
     }
 
     function cashout() {
-        if(!isPlaying) return;
-        let win = currentBet * mult;
-        data.balance += win;
-        data.xp += 20;
+        let win = curBet * curMult;
+        stats.balance += win;
 
-        // Probabilidad de Items (Solo si el mult es > 2x)
-        if(mult > 2.0) {
-            data.pool.forEach(item => {
+        // SISTEMA DE DROPS DE ITEMS (ADMIN POOL)
+        if(curMult > 2.0) {
+            stats.pool.forEach(item => {
                 if(Math.random()*100 < item.p) {
-                    data.inv.push({n: item.n, d: new Date().toLocaleDateString()});
-                    alert("🎁 ¡HAS GANADO UN ITEM REAL!: " + item.n);
+                    stats.inv.push({n: item.n, d: new Date().toLocaleDateString()});
+                    alert("🎁 DROP ESPECIAL: " + item.n);
                 }
             });
         }
-
-        alert("💰 Retirado: " + win.toFixed(2));
-        resetMines();
-        update();
+        alert("💰 Retiraste " + win.toFixed(2));
+        reset();
+        save();
     }
 
-    function resetMines() {
-        isPlaying = false;
-        document.getElementById('m-start').disabled = false;
-        document.getElementById('m-cash').style.display = 'none';
+    function reset() {
+        playing = false;
+        document.getElementById('btn-play').disabled = false;
+        document.getElementById('btn-cash').style.display = 'none';
         document.getElementById('m-mult').innerText = "1.00x";
+        document.getElementById('m-profit').innerText = "0.00 US$";
     }
 
     // --- INVENTARIO Y ADMIN ---
     function renderInv() {
-        const container = document.getElementById('inv-list');
-        container.innerHTML = data.inv.length ? '' : '<p>No tienes premios.</p>';
-        data.inv.forEach((it, idx) => {
-            container.innerHTML += `
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid var(--accent); text-align:center;">
+        const list = document.getElementById('inv-list');
+        list.innerHTML = stats.inv.length ? '' : '<p>No tienes premios.</p>';
+        stats.inv.forEach((it, idx) => {
+            list.innerHTML += `
+                <div style="background:var(--bg-side); padding:20px; border-radius:8px; border:1px solid var(--accent); text-align:center;">
                     <b>${it.n}</b><br><small>${it.d}</small><br>
-                    <button class="btn-play" style="padding:5px; margin-top:10px; font-size:0.7rem;" onclick="claim('${it.n}', ${idx})">RECLAMAR AL DUEÑO</button>
+                    <button class="btn-bet" style="padding:5px; font-size:0.7rem;" onclick="claim('${it.n}', ${idx})">RECLAMAR</button>
                 </div>
             `;
         });
     }
 
     function claim(name, idx) {
-        window.open(`https://wa.me/593987749885?text=Hola Smal, soy ${data.user} y quiero mi premio: ${name}`);
-        data.inv.splice(idx, 1);
-        update();
+        window.open(`https://wa.me/593987749885?text=Hola Smal, soy ${stats.user} y gané: ${name}`);
+        stats.inv.splice(idx, 1);
+        save();
     }
 
-    function addItem() {
-        let n = document.getElementById('adm-item').value;
+    function addPoolItem() {
+        let n = document.getElementById('adm-name').value;
         let p = document.getElementById('adm-prob').value;
         if(!n || !p) return;
-        data.pool.push({n: n, p: parseInt(p)});
-        alert("Item guardado en la base de datos de premios.");
-        update();
+        stats.pool.push({n: n, p: parseInt(p)});
+        alert("Item añadido a la base de datos.");
+        save();
     }
 </script>
 </body>
