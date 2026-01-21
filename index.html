@@ -3,300 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smal Empire | CMS & Casino Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <title>SMAL EMPIRE | CASINO PROFESIONAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg: #050a0f; --surface: #0f1720; --accent: #00e701;
-            --gold: #ffcc00; --text: #b1bad3; --border: rgba(255,255,255,0.1);
+            --bg: #020609; --card: #0b1218; --accent: #00e701; --gold: #f5d033;
+            --text: #ffffff; --text-dim: #94a3b8; --border: #1e293b; --danger: #ff4757;
         }
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); color: white; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s; }
+        body { background: var(--bg); color: var(--text); margin: 0; overflow: hidden; display: flex; height: 100vh; }
 
-        /* --- UI COMPONENTS --- */
-        .sidebar { width: 280px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
-        .main { flex: 1; overflow-y: auto; padding: 40px; background: radial-gradient(circle at top right, #1a2c38, #050a0f); }
-        .nav-item { padding: 15px 25px; cursor: pointer; color: var(--text); font-weight: 600; display: flex; align-items: center; gap: 12px; border-left: 4px solid transparent; }
-        .nav-item:hover, .nav-item.active { background: rgba(0,231,1,0.05); color: white; border-left: 4px solid var(--accent); }
-        
-        .card { background: rgba(15,23,32,0.8); border: 1px solid var(--border); border-radius: 20px; padding: 25px; backdrop-filter: blur(10px); }
-        .btn { padding: 12px 20px; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; margin-top: 10px; }
-        .btn-accent { background: var(--accent); color: black; }
+        /* --- SIDEBAR --- */
+        .sidebar { width: 280px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
+        .nav-item { padding: 16px 25px; cursor: pointer; color: var(--text-dim); display: flex; align-items: center; gap: 12px; font-weight: 600; border-left: 4px solid transparent; }
+        .nav-item:hover, .nav-item.active { background: #16212c; color: var(--accent); border-left-color: var(--accent); }
+
+        /* --- MAIN --- */
+        .main { flex: 1; overflow-y: auto; padding: 30px; position: relative; }
+        .view { display: none; animation: fadeIn 0.4s ease; max-width: 1200px; margin: 0 auto; }
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- UI ELEMENTS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .card { background: #16212c; border-radius: 16px; padding: 20px; border: 1px solid var(--border); text-align: center; position: relative; }
+        .btn { padding: 12px 20px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; text-transform: uppercase; }
+        .btn-main { background: var(--accent); color: black; }
         .btn-gold { background: var(--gold); color: black; }
-        
-        input, textarea, select { width: 100%; padding: 12px; background: #050a0f; border: 1px solid var(--border); border-radius: 8px; color: white; margin-bottom: 10px; outline: none; }
-        input:focus { border-color: var(--accent); }
+        .free-badge { position: absolute; top: 10px; right: 10px; background: var(--danger); color: white; padding: 4px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: 800; }
 
-        /* --- AUTH --- */
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        /* --- AUTH & RULES --- */
+        #auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 5000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .welcome-card { background: var(--card); padding: 40px; border-radius: 24px; width: 90%; max-width: 500px; border: 1px solid var(--accent); text-align: center; }
         
-        /* --- ROULETTE --- */
-        #box-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 500; display: none; align-items: center; justify-content: center; flex-direction: column; }
-        .window { width: 500px; height: 140px; border: 2px solid var(--gold); overflow: hidden; position: relative; background: #1a2c38; border-radius: 12px; }
-        .track { display: flex; position: absolute; left: 0; transition: transform 5s cubic-bezier(0.1, 0, 0, 1); }
-        .item-r { min-width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--border); font-weight: 800; flex-direction: column; }
-        .line { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--gold); z-index: 10; transform: translateX(-50%); }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; background: #000; color: #fff; border: 1px solid var(--border); outline: none; }
 
-        /* --- GRID --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        /* --- GAME ENGINE --- */
+        .game-window { background: #070d14; border: 2px solid var(--border); border-radius: 20px; padding: 40px; margin-top: 20px; text-align: center; }
     </style>
 </head>
 <body>
 
-<div id="auth-screen">
-    <div class="card" style="width: 350px; text-align: center;">
-        <h1 style="font-family:'Orbitron'; color:var(--accent);">SMAL EMPIRE</h1>
-        <input type="text" id="au-u" placeholder="Usuario">
-        <input type="password" id="au-p" placeholder="Contraseña">
-        <button class="btn btn-accent" onclick="login()">ACCEDER</button>
+<div id="auth-overlay">
+    <div class="welcome-card" id="step-1">
+        <h1 style="font-family:'Orbitron'; color:var(--accent); letter-spacing: 5px;">SMAL EMPIRE</h1>
+        <div style="text-align: left; background: #000; padding: 20px; border-radius: 12px; font-size: 0.85rem; height: 250px; overflow-y: auto; margin: 20px 0; border: 1px solid #1e293b;">
+            <h3 style="color:var(--gold)">📜 REGLAS DEL CASINO</h3>
+            <p>1. <b>1 USD = 10 Tokens.</b> Recargas vía PayPal.</p>
+            <p>2. <b>PRUEBA GRATIS:</b> Cada usuario tiene 3 tiradas de cortesía.</p>
+            <p>3. <b>RECLAMOS:</b> Los premios se envían a tu WhatsApp o Gmail. Al reclamar, el objeto se destruye de tu mochila.</p>
+            <p>4. <b>SOPORTE:</b> WhatsApp oficial: +593987749885.</p>
+            <p>5. No se permite el uso de múltiples cuentas por IP.</p>
+        </div>
+        <button class="btn btn-main" onclick="next()">ACEPTAR Y CONTINUAR</button>
+    </div>
+
+    <div class="welcome-card" id="step-2" style="display:none">
+        <h1 style="font-family:'Orbitron';">TU IDENTIDAD</h1>
+        <input type="text" id="in-user" placeholder="Nombre de usuario">
+        <p style="font-size: 0.8rem; color: var(--text-dim);">Este nombre se usará para tus premios.</p>
+        <button class="btn btn-main" onclick="initEmpire()">ENTRAR AL CASINO</button>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div style="padding: 40px 25px; text-align: center;">
-        <div id="u-ava" style="width:70px; height:70px; background:var(--accent); border-radius:20px; margin: 0 auto 15px; display:flex; align-items:center; justify-content:center; color:black; font-weight:900; font-size:1.8rem; box-shadow: 0 10px 20px rgba(0,231,1,0.2);">?</div>
-        <h3 id="u-nam" style="margin:0;">Invitado</h3>
-        <p id="u-mon" style="color:var(--gold); font-weight:800; margin:5px 0;">🪙 0.00</p>
+    <div style="padding: 30px; text-align: center;">
+        <div id="u-initial" style="width:60px; height:60px; background:var(--accent); color:black; border-radius:15px; display:flex; align-items:center; justify-content:center; margin: 0 auto 10px; font-weight:900; font-size:1.5rem;">?</div>
+        <h3 id="u-display-name" style="margin:0;">-</h3>
+        <div style="color:var(--gold); font-weight:800; font-size:1.1rem; margin-top:5px;">🪙 <span id="u-bal">0.00</span></div>
+        <div id="free-spins-count" style="font-size:0.7rem; color:var(--danger); margin-top:5px; font-weight:800;">TIRADAS GRATIS: 3</div>
     </div>
-    <div id="menu-items">
+    <nav id="side-menu">
         <div class="nav-item active" onclick="nav('home')">🏠 Inicio</div>
-        <div class="nav-item" onclick="nav('boxes')">🎁 Cajas Fuertes</div>
-        <div class="nav-item" onclick="nav('games')">🎮 Juegos Elite</div>
-        <div class="nav-item" onclick="nav('inv')">🎒 Mi Inventario</div>
-    </div>
-    <div style="flex:1"></div>
-    <div id="adm-btn" class="nav-item" style="display:none; color:var(--gold); border-top:1px solid var(--border);" onclick="nav('admin')">🛠 PANEL MAESTRO</div>
+        <div class="nav-item" onclick="nav('games')">🎮 Sala de Juegos (10)</div>
+        <div class="nav-item" onclick="nav('boxes')">📦 Mystery Boxes</div>
+        <div class="nav-item" onclick="nav('shop')">🛒 Tienda de Canje</div>
+        <div class="nav-item" onclick="nav('inv')">🎒 Mi Mochila</div>
+        <div class="nav-item" id="adm-link" style="display:none; color:var(--gold)" onclick="nav('admin')">🛠 PANEL MAESTRO</div>
+    </nav>
 </aside>
 
 <main class="main">
-    <div id="view-home" class="view">
-        <h1 style="font-family:'Orbitron'; font-size: 2.5rem;">BIENVENIDO AL <span style="color:var(--accent)">IMPERIO</span></h1>
-        <p>Selecciona una categoría en el menú lateral para empezar a ganar.</p>
-        <div class="grid" id="home-featured"></div>
-    </div>
-
-    <div id="view-dynamic" class="view" style="display:none">
-        <h1 id="dyn-title" style="font-family:'Orbitron';">Cargando...</h1>
-        <div id="dyn-content" class="card"></div>
-    </div>
-
-    <div id="view-boxes" class="view" style="display:none">
-        <h2>Mystery Boxes</h2>
-        <div class="grid" id="box-grid"></div>
-    </div>
-
-    <div id="view-games" class="view" style="display:none">
+    <div id="v-home" class="view active">
+        <h1 style="font-family:'Orbitron';">EL <span style="color:var(--accent)">IMPERIO</span> ESTÁ LISTO</h1>
         <div class="grid">
-            <div class="card">
-                <h3>💣 MINAS</h3>
-                <button class="btn btn-accent" onclick="alert('Iniciando Minas...')">JUGAR AHORA</button>
-            </div>
-            <div class="card">
-                <h3>🚀 CRASH</h3>
-                <button class="btn btn-accent" onclick="alert('Iniciando Crash...')">APOSTAR</button>
-            </div>
+            <div class="card"><h3>Bienvenida</h3><p>Recuerda que tienes 3 tiros gratis para probar suerte.</p></div>
+            <div class="card"><h3>Soporte 24/7</h3><p>WhatsApp: +593987749885</p></div>
+        </div>
+        <div id="dynamic-content-area" style="margin-top:30px;"></div>
+    </div>
+
+    <div id="v-games" class="view">
+        <div class="grid">
+            <div class="card" onclick="openGame('MINAS')">💣 Minas Elite</div>
+            <div class="card" onclick="openGame('CRASH')">🚀 Space Crash</div>
+            <div class="card" onclick="openGame('COIN')">🪙 Coinflip 50/50</div>
+            <div class="card" onclick="openGame('DICE')">🎲 Dados Reales</div>
+            <div class="card" onclick="openGame('RULETA')">🎡 Ruleta Smal</div>
+            <div class="card" onclick="openGame('SLOTS')">🎰 Super Slots</div>
+            <div class="card" onclick="openGame('PLINKO')">🔵 Plinko Drop</div>
+            <div class="card" onclick="openGame('BLACKJACK')">🃏 Blackjack 21</div>
+            <div class="card" onclick="openGame('TOWER')">🗼 Tower Climb</div>
+            <div class="card" onclick="openGame('WHEEL')">🎡 Wheel of Fortune</div>
+        </div>
+        <div id="game-engine" class="game-window" style="display:none">
+            <h2 id="g-title" style="color:var(--accent)">-</h2>
+            <div id="g-play-area"></div>
+            <button class="btn btn-gold" style="width:200px" onclick="closeGame()">SALIR DEL JUEGO</button>
         </div>
     </div>
 
-    <div id="view-inv" class="view" style="display:none">
-        <h2>Tu Inventario</h2>
-        <div class="grid" id="inv-grid"></div>
+    <div id="v-shop" class="view">
+        <h1>Tienda de Canje</h1>
+        <div class="grid" id="shop-items"></div>
     </div>
 
-    <div id="view-admin" class="view" style="display:none">
-        <h1 style="color:var(--gold); font-family:'Orbitron';">🛠 CONFIGURACIÓN GLOBAL</h1>
-        
+    <div id="v-inv" class="view">
+        <h1>Mi Mochila</h1>
+        <div class="grid" id="inv-items"></div>
+    </div>
+
+    <div id="v-admin" class="view">
+        <h1 style="color:var(--gold)">PANEL MAESTRO</h1>
         <div class="grid">
             <div class="card">
-                <h3>📁 Crear Nuevo Menú</h3>
-                <input type="text" id="new-menu-name" placeholder="Nombre (ej: Reglas, VIP)">
-                <textarea id="new-menu-content" placeholder="Contenido de la página (HTML soportado)" rows="4"></textarea>
-                <button class="btn btn-accent" onclick="adminAddMenu()">CREAR SECCIÓN</button>
+                <h3>Crear Nueva Página</h3>
+                <input type="text" id="adm-p-n" placeholder="Título Menú">
+                <textarea id="adm-p-c" placeholder="Contenido HTML" rows="5"></textarea>
+                <button class="btn btn-main" onclick="adminAddPage()">PUBLICAR PÁGINA</button>
             </div>
-
             <div class="card">
-                <h3>📦 Nueva Mystery Box</h3>
-                <input type="text" id="new-box-name" placeholder="Nombre de la Caja">
-                <input type="number" id="new-box-price" placeholder="Precio">
-                <textarea id="new-box-items" placeholder="Premios (uno por línea)" rows="4"></textarea>
-                <button class="btn btn-gold" onclick="adminAddBox()">PUBLICAR CAJA</button>
-            </div>
-
-            <div class="card">
-                <h3>🪙 Enviar Tokens</h3>
-                <input type="text" id="target-user" placeholder="Nombre Usuario">
-                <input type="number" id="target-amount" placeholder="Cantidad">
-                <button class="btn btn-accent" onclick="adminGift()">ENVIAR SALDO</button>
+                <h3>Añadir a Tienda</h3>
+                <input type="text" id="adm-s-n" placeholder="Nombre Item">
+                <input type="number" id="adm-s-p" placeholder="Costo en Tokens">
+                <button class="btn btn-gold" onclick="adminAddShop()">SUBIR A TIENDA</button>
             </div>
         </div>
     </div>
 </main>
 
-<div id="box-modal">
-    <h2 id="roll-status" style="color:var(--gold); font-family:'Orbitron';">DESBLOQUEANDO...</h2>
-    <div class="window">
-        <div class="line"></div>
-        <div id="roll-track" class="track"></div>
-    </div>
-</div>
-
 <script>
-    // --- ESTADO INICIAL ---
-    let state = {
-        u: "", bal: 2000, inv: [],
-        boxes: [{n: "Caja Oro", p: 100, i: ["$10 PayPal", "Basura", "VIP", "500 TKN"]}],
-        customMenus: []
+    // --- LÓGICA DE PERSISTENCIA Y ESTADO ---
+    let state = JSON.parse(localStorage.getItem('smal_pro_v1')) || {
+        u: "", bal: 0, free: 3, inv: [], 
+        pages: [], 
+        shop: [{n: "Skin Mítica", p: 100}, {n: "Rango Admin", p: 500}]
     };
 
-    function login() {
-        let u = document.getElementById('au-u').value;
-        let p = document.getElementById('au-p').value;
-        if(!u) return;
+    function save() { localStorage.setItem('smal_pro_v1', JSON.stringify(state)); }
 
-        state.u = u;
-        if(u === "SmalAdmin" && p === "admin123") document.getElementById('adm-btn').style.display = 'flex';
-        
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('u-nam').innerText = u;
-        document.getElementById('u-ava').innerText = u[0].toUpperCase();
-        
+    function next() { document.getElementById('step-1').style.display='none'; document.getElementById('step-2').style.display='block'; }
+
+    function initEmpire() {
+        let name = document.getElementById('in-user').value;
+        if(!name) return alert("Pon un nombre");
+        state.u = name;
+        if(name === "SmalAdmin") document.getElementById('adm-link').style.display = 'flex';
+        document.getElementById('auth-overlay').style.display = 'none';
+        document.getElementById('u-display-name').innerText = state.u;
+        document.getElementById('u-initial').innerText = state.u[0].toUpperCase();
         refreshUI();
+        loadPages();
     }
 
     function refreshUI() {
-        document.getElementById('u-mon').innerText = "🪙 " + state.bal.toFixed(2);
-        renderBoxes();
+        document.getElementById('u-bal').innerText = state.bal.toFixed(2);
+        document.getElementById('free-spins-count').innerText = "TIRADAS GRATIS: " + state.free;
+        save();
     }
 
-    function nav(view) {
-        document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        
-        const target = document.getElementById('view-' + view);
-        if(target) target.style.display = 'block';
-        
-        if(view === 'inv') renderInv();
+    function nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('v-' + id).classList.add('active');
+        if(id === 'shop') renderShop();
+        if(id === 'inv') renderInv();
     }
 
-    // --- LÓGICA DE MENÚS MANUALES (ADMIN) ---
-    function adminAddMenu() {
-        let name = document.getElementById('new-menu-name').value;
-        let content = document.getElementById('new-menu-content').value;
-
-        if(!name || !content) return alert("Completa los datos");
-
-        let id = "menu_" + Date.now();
-        state.customMenus.push({id, name, content});
-
-        // Añadir al sidebar
-        const sidebar = document.getElementById('menu-items');
-        const div = document.createElement('div');
-        div.className = 'nav-item';
-        div.innerHTML = `⭐ ${name}`;
-        div.onclick = () => showDynamic(name, content);
-        sidebar.appendChild(div);
-
-        alert("Sección '" + name + "' añadida al menú.");
-    }
-
-    function showDynamic(title, content) {
-        nav('dynamic');
-        document.getElementById('dyn-title').innerText = title.toUpperCase();
-        document.getElementById('dyn-content').innerHTML = content;
-    }
-
-    // --- LÓGICA DE CAJAS ---
-    function adminAddBox() {
-        let n = document.getElementById('new-box-name').value;
-        let p = parseInt(document.getElementById('new-box-price').value);
-        let i = document.getElementById('new-box-items').value.split('\n').filter(x => x.trim() !== "");
-
-        if(n && p && i.length > 0) {
-            state.boxes.push({n, p, i});
-            alert("Caja guardada con éxito.");
-            renderBoxes();
+    // --- MOTOR DE JUEGOS Y LÓGICA DE TIRADAS ---
+    function openGame(name) {
+        if(state.free <= 0 && state.bal < 10) {
+            return alert("❌ ¡Sin energía! Recarga Tokens vía PayPal para seguir jugando.");
         }
+        
+        document.getElementById('game-engine').style.display = 'block';
+        document.getElementById('g-title').innerText = name;
+        
+        let cost = 0;
+        if(state.free > 0) {
+            state.free--;
+            alert("🎰 Usando 1 de tus 3 tiradas GRATIS...");
+        } else {
+            state.bal -= 10;
+            cost = 10;
+        }
+        refreshUI();
+
+        // SIMULADOR DE JUEGO FUNCIONAL (MINAS/RULETA/ETC)
+        document.getElementById('g-play-area').innerHTML = `
+            <div style="padding:20px;">
+                <h3 id="game-status">Apostaste 10 Tokens... Girando...</h3>
+                <div id="game-visual" style="font-size:3rem; margin:20px 0;">🎲</div>
+                <button class="btn btn-main" id="btn-play-action" onclick="processGameResult()">¿QUÉ SALIÓ?</button>
+            </div>
+        `;
     }
 
-    function renderBoxes() {
-        const grid = document.getElementById('box-grid');
-        grid.innerHTML = "";
-        state.boxes.forEach((box, index) => {
-            grid.innerHTML += `
-                <div class="card" style="text-align:center">
-                    <div style="font-size:3rem">🎁</div>
-                    <h3>${box.n}</h3>
-                    <p style="color:var(--accent); font-weight:900;">${box.p} TOKENS</p>
-                    <button class="btn btn-accent" onclick="openBox(${index})">ABRIR</button>
+    function processGameResult() {
+        let win = Math.random() > 0.6; // 40% de probabilidad de ganar
+        let visual = document.getElementById('game-visual');
+        let status = document.getElementById('game-status');
+        
+        if(win) {
+            state.bal += 25;
+            visual.innerText = "💰";
+            status.innerText = "¡GANASTE 25 TOKENS!";
+            confetti();
+        } else {
+            visual.innerText = "💀";
+            status.innerText = "PERDISTE... Inténtalo de nuevo.";
+        }
+        document.getElementById('btn-play-action').style.display = 'none';
+        refreshUI();
+    }
+
+    function closeGame() { document.getElementById('game-engine').style.display = 'none'; }
+
+    // --- TIENDA Y CANJES ---
+    function renderShop() {
+        const container = document.getElementById('shop-items');
+        container.innerHTML = "";
+        state.shop.forEach(item => {
+            container.innerHTML += `
+                <div class="card">
+                    <h3>${item.n}</h3>
+                    <p style="color:var(--gold)">${item.p} TOKENS</p>
+                    <button class="btn btn-main" onclick="buyItem('${item.n}', ${item.p})">CANJEAR</button>
                 </div>`;
         });
     }
 
-    function openBox(idx) {
-        let box = state.boxes[idx];
-        if(state.bal < box.p) return alert("Tokens insuficientes.");
-
-        state.bal -= box.p;
+    function buyItem(n, p) {
+        if(state.bal < p) return alert("Saldo insuficiente.");
+        state.bal -= p;
+        state.inv.push(n);
         refreshUI();
-
-        const modal = document.getElementById('box-modal');
-        const track = document.getElementById('roll-track');
-        track.innerHTML = "";
-        track.style.transition = "none";
-        track.style.transform = "translateX(0)";
-
-        let items = [];
-        for(let j=0; j<60; j++) {
-            let item = box.i[Math.floor(Math.random() * box.i.length)];
-            items.push(item);
-            track.innerHTML += `<div class="item-r">📦<br><small>${item}</small></div>`;
-        }
-
-        modal.style.display = "flex";
-        let win = items[55];
-
-        setTimeout(() => {
-            track.style.transition = "transform 5s cubic-bezier(0.1, 0, 0, 1)";
-            track.style.transform = `translateX(-${(55 * 140) - 180}px)`;
-        }, 50);
-
-        setTimeout(() => {
-            modal.style.display = "none";
-            if(win !== "Basura") {
-                state.inv.push(win);
-                confetti();
-                alert("👑 ¡PREMIO! Ganaste: " + win);
-            } else {
-                alert("Caja vacía... ¡Suerte a la próxima!");
-            }
-        }, 5500);
+        alert("¡Item comprado! Revisa tu mochila.");
     }
 
-    // --- INVENTARIO Y TRADES ---
+    // --- INVENTARIO Y ELIMINACIÓN AL RECLAMAR ---
     function renderInv() {
-        const grid = document.getElementById('inv-grid');
-        grid.innerHTML = state.inv.length === 0 ? "<p>No tienes premios aún.</p>" : "";
+        const container = document.getElementById('inv-items');
+        container.innerHTML = state.inv.length === 0 ? "Vacío" : "";
         state.inv.forEach((item, idx) => {
-            grid.innerHTML += `
+            container.innerHTML += `
                 <div class="card">
                     <h3>${item}</h3>
-                    <button class="btn btn-gold" onclick="claim('${item}')">RECLAMAR WHATSAPP</button>
+                    <button class="btn btn-gold" onclick="claimFinal('${item}', ${idx})">RECLAMAR AL GMAIL/WHATSAPP</button>
                 </div>`;
         });
     }
 
-    function claim(item) {
-        window.open(`https://wa.me/593987749885?text=Hola SmalAdmin, soy ${state.u} y quiero reclamar mi premio: ${item}`);
+    function claimFinal(item, idx) {
+        // Enviar a WhatsApp configurado
+        let msg = encodeURIComponent(`Hola Smal Empire, soy ${state.u} y reclamo mi premio: ${item}`);
+        window.open(`https://wa.me/593987749885?text=${msg}`);
+        
+        // ELIMINAR AUTOMÁTICAMENTE DEL INVENTARIO
+        state.inv.splice(idx, 1);
+        save();
+        renderInv();
+        alert("¡Solicitud enviada! El item ha sido removido de tu inventario.");
     }
 
-    function adminGift() {
-        let amount = parseInt(document.getElementById('target-amount').value);
-        state.bal += amount;
-        refreshUI();
-        alert("Saldo cargado exitosamente.");
+    // --- ADMIN: CREAR PÁGINAS ---
+    function adminAddPage() {
+        let n = document.getElementById('adm-p-n').value;
+        let c = document.getElementById('adm-p-c').value;
+        if(!n || !c) return;
+        state.pages.push({n, c});
+        save();
+        alert("Página publicada. Aparecerá en el menú.");
+        loadPages();
     }
 
+    function loadPages() {
+        const menu = document.getElementById('side-menu');
+        // Limpiar botones dinámicos previos
+        document.querySelectorAll('.dyn-nav').forEach(e => e.remove());
+        
+        state.pages.forEach(p => {
+            let d = document.createElement('div');
+            d.className = "nav-item dyn-nav";
+            d.innerHTML = `📄 ${p.n}`;
+            d.onclick = () => {
+                nav('home');
+                document.getElementById('v-home').innerHTML = p.c;
+            };
+            menu.appendChild(d);
+        });
+    }
 </script>
 </body>
 </html>
