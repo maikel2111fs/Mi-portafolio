@@ -3,178 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK DEV | OFFICIAL CATALOG 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Shark Casino Premium</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .bg-stars { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #111 0%, #000 100%); }
+        :root { --neon: #00ffcc; --dark: #0a0a0b; --accent: #ff0055; }
+        body { background: var(--dark); color: white; font-family: 'Poppins', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        .navbar { background: #151517; width: 100%; padding: 15px; display: flex; justify-content: center; gap: 20px; border-bottom: 2px solid var(--neon); }
+        .container { max-width: 800px; width: 90%; margin-top: 30px; text-align: center; }
+        .token-card { background: linear-gradient(145deg, #1a1a1d, #111); padding: 20px; border-radius: 20px; border: 1px solid var(--neon); box-shadow: 0 0 20px rgba(0, 255, 204, 0.2); margin-bottom: 30px; }
+        .token-display { font-size: 3rem; color: var(--neon); text-shadow: 0 0 10px var(--neon); }
+        .game-area { background: #151517; border-radius: 20px; padding: 30px; display: none; border: 1px solid #333; }
+        .active { display: block; animation: fadeIn 0.5s; }
+        button { background: var(--neon); color: black; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; margin: 5px; }
+        button:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--neon); }
+        .nav-btn { background: transparent; color: white; border: 1px solid #444; }
+        .nav-btn.active-nav { border-color: var(--neon); color: var(--neon); }
+        input { background: #222; border: 1px solid #444; color: white; padding: 12px; border-radius: 8px; width: 80%; margin-bottom: 20px; text-align: center; }
         
-        /* BOTONES FLOTANTES */
-        .ws-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: #fff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; z-index: 9999; border: 3px solid #fff; box-shadow: 0 0 20px #25d366; text-decoration: none; }
-        .nav-buttons { position: fixed; bottom: 30px; right: 30px; display: none; flex-direction: column; gap: 12px; z-index: 8000; }
-        .btn-nav { background: #facc15; color: #000; padding: 15px 25px; border-radius: 15px; font-weight: 900; cursor: pointer; border: 2px solid #fff; text-transform: uppercase; font-size: 11px; text-align: center; }
+        /* Estilo Ruleta Horizontal */
+        .ruleta-container { position: relative; width: 100%; height: 80px; background: #222; border: 2px solid gold; overflow: hidden; display: flex; align-items: center; border-radius: 10px; margin: 20px 0; }
+        .marker { position: absolute; left: 50%; width: 4px; height: 100%; background: red; z-index: 10; }
+        
+        /* Buscaminas */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 180px; margin: auto; }
+        .cell { width: 55px; height: 55px; background: #333; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: 0.2s; }
+        .cell:hover { background: #444; }
 
-        /* OVERLAY MENÚ */
-        .full-overlay { position: fixed; inset: 0; background: #000; z-index: 9500; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .full-overlay.active { display: flex; }
-        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; max-width: 1000px; }
-        .menu-card { background: #0a0a0a; border: 1px solid #222; padding: 30px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .menu-card:hover { border-color: #facc15; background: #111; }
-
-        /* PLANES */
-        .section-container { display: none; padding: 80px 20px; max-width: 1400px; margin: 0 auto; }
-        .section-container.active { display: block; animation: fadeInUp 0.4s ease; }
-        .plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .plan-card { background: #080808; border: 1px solid #1a1a1a; border-radius: 35px; padding: 35px; display: flex; flex-direction: column; }
-        .price-tag { font-size: 55px; font-weight: 900; color: #facc15; font-style: italic; }
-        .feature { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; border-bottom: 1px solid #111; padding: 8px 0; display: flex; align-items: center; gap: 10px; }
-
-        .main-menu-btn { background: #facc15; color: #000; padding: 20px 50px; border-radius: 20px; font-weight: 900; font-size: 24px; cursor: pointer; border: 4px solid #fff; text-transform: uppercase; text-align: center; }
-        .form-input { width: 100%; background: #111; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; }
-        .form-input:focus { border-color: #facc15; }
-
-        /* SELECTOR DE PAGO */
-        .payment-option { border: 2px solid #222; border-radius: 15px; padding: 15px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px; background: #0a0a0a; }
-        .payment-option.selected { border-color: #facc15; background: #1a1500; }
-        .info-card { background: rgba(255,255,255,0.03); border: 1px solid #222; padding: 15px; border-radius: 20px; margin-top: 10px; }
-
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="bg-stars"></div>
+<div class="navbar">
+    <button class="nav-btn active-nav" onclick="showGame('home')">INICIO</button>
+    <button class="nav-btn" onclick="showGame('ruleta')">RULETA</button>
+    <button class="nav-btn" onclick="showGame('minas')">BUSCAMINAS</button>
+</div>
 
-    <a href="https://wa.me/593987749885" target="_blank" class="ws-float"><i class="fab fa-whatsapp"></i></a>
-
-    <div id="navGroup" class="nav-buttons">
-        <div class="btn-nav" onclick="toggleMenu()">MENÚ</div>
-        <div class="btn-nav" style="background: #fff;" onclick="goHome()">INICIO</div>
+<div class="container">
+    <div class="token-card">
+        <h1>SHARK CASINO 🦈</h1>
+        <div class="token-display" id="balance">0</div>
+        <p>Tokens Disponibles</p>
+        <div id="paypal-button-container"></div>
     </div>
 
-    <div id="home" class="h-screen flex flex-col items-center justify-center text-center px-4">
-        <h1 class="text-8xl md:text-9xl font-black italic uppercase leading-none">MAIK <span class="text-yellow-400">DEV</span></h1>
-        <p class="mt-6 text-gray-500 font-bold uppercase tracking-[0.4em] text-sm">Professional Game Developer & Designer</p>
-        <div class="mt-14 main-menu-btn" onclick="toggleMenu()">ENTRAR AL CATÁLOGO</div>
+    <input type="text" id="username" placeholder="Tu Usuario (Minecraft / Discord)">
+
+    <div id="game-home" class="game-area active">
+        <h2>Bienvenido al Casino</h2>
+        <p>Selecciona un juego en el menú superior para empezar.</p>
+        <p><b>Probabilidad de ganar: 25%</b></p>
+        <ul style="text-align: left; display: inline-block;">
+            <li>💎 <b>Rangos:</b> VIP hasta Shark+ y Prime</li>
+            <li>⚔️ <b>Kits:</b> 1ero, 2do y 3er nivel</li>
+            <li>🎁 <b>Especiales:</b> Robux y Discord Nitro</li>
+        </ul>
     </div>
 
-    <div id="fullMenu" class="full-overlay">
-        <div class="absolute top-10 right-10 text-5xl cursor-pointer text-yellow-400" onclick="closeOverlay()">×</div>
-        <h2 class="text-3xl font-black text-white uppercase mb-12 italic">MENÚ DE <span class="text-yellow-400">SERVICIOS</span></h2>
-        <div class="menu-grid">
-            <div class="menu-card" onclick="openSection('boxpvp')"><i class="fas fa-box text-yellow-400 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">BoxPvP</p></div>
-            <div class="menu-card" onclick="openSection('survival')"><i class="fas fa-tree text-green-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Survival</p></div>
-            <div class="menu-card" onclick="openSection('lobby')"><i class="fas fa-door-open text-blue-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Lobby</p></div>
-            <div class="menu-card" onclick="openSection('opti')"><i class="fas fa-bolt text-orange-400 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Optimización</p></div>
-            <div class="menu-card" onclick="openSection('soporte')"><i class="fas fa-headset text-red-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Soporte</p></div>
-            <div class="menu-card" onclick="openSection('diseno')"><i class="fas fa-paint-brush text-purple-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Diseño</p></div>
-            <div class="menu-card" onclick="openSection('promo')"><i class="fas fa-fire text-pink-500 mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Promos</p></div>
-            <div class="menu-card" onclick="openSection('otros')"><i class="fas fa-ticket-alt text-white mb-2 text-3xl"></i><p class="text-[10px] font-black uppercase">Ticket</p></div>
+    <div id="game-ruleta" class="game-area">
+        <h3>Ruleta de Premios (5 Tokens)</h3>
+        <div class="ruleta-container">
+            <div class="marker"></div>
+            <div id="ruleta-text" style="width: 100%; font-size: 1.2rem; font-weight: bold; color: gold;">????</div>
+        </div>
+        <button onclick="jugarRuleta()">GIRAR AHORA</button>
+    </div>
+
+    <div id="game-minas" class="game-area">
+        <h3>Buscaminas Explosivo (5 Tokens)</h3>
+        <p>¡Elige una casilla! Si hay premio ganas, si hay bomba pierdes.</p>
+        <div class="grid" id="mines-grid">
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
+            <div class="cell" onclick="checkMine()">?</div>
         </div>
     </div>
 
-    <section id="sec-boxpvp" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-yellow-400 italic">BOXPVP PLANS</h2><div class="plan-grid" id="grid-boxpvp"></div></section>
-    <section id="sec-survival" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-green-500 italic">SURVIVAL PLANS</h2><div class="plan-grid" id="grid-survival"></div></section>
-    <section id="sec-lobby" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-blue-500 italic">LOBBY PLANS</h2><div class="plan-grid" id="grid-lobby"></div></section>
-    <section id="sec-soporte" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-red-500 italic">SUPPORT PLANS</h2><div class="plan-grid" id="grid-soporte"></div></section>
-    <section id="sec-diseno" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-purple-500 italic">DESIGN PLANS</h2><div class="plan-grid" id="grid-diseno"></div></section>
-    <section id="sec-promo" class="section-container"><h2 class="text-5xl font-black text-center mb-16 text-pink-500 italic">PROMO PACKS (12)</h2><div class="plan-grid" id="grid-promo"></div></section>
+    <h2 id="status"></h2>
+</div>
 
-    <section id="sec-opti" class="section-container">
-        <h2 class="text-5xl font-black text-center mb-16 text-orange-400 italic">OPTIMIZACIÓN</h2>
-        <div class="plan-grid">
-            <div class="plan-card"><div class="price-tag">$5</div><h4 class="font-black text-white mt-4 uppercase">Básica</h4><div class="feature"><i class="fas fa-check"></i> Paper/Spigot Optm.</div><div class="feature"><i class="fas fa-check"></i> Entity Cleaner</div><button class="main-menu-btn mt-10 py-2 text-sm" onclick="buy('OPTIMIZACION BÁSICA', 5)">COMPRAR</button></div>
-            <div class="plan-card"><div class="price-tag">$10</div><h4 class="font-black text-white mt-4 uppercase">Media</h4><div class="feature"><i class="fas fa-check"></i> JVM Flags Setup</div><div class="feature"><i class="fas fa-check"></i> Pre-Generado 10k</div><button class="main-menu-btn mt-10 py-2 text-sm" onclick="buy('OPTIMIZACION MEDIA', 10)">COMPRAR</button></div>
-            <div class="plan-card border-orange-500"><div class="price-tag text-orange-500">$15</div><h4 class="font-black text-white mt-4 uppercase italic">Extrema</h4><div class="feature text-orange-400 font-black"><i class="fas fa-star text-white"></i> 20 TIPS EXCLUSIVOS</div><div class="feature"><i class="fas fa-check"></i> Linux Tuning</div><button class="main-menu-btn mt-10 py-2 text-sm bg-orange-500" onclick="buy('OPTIMIZACION EXTREMA', 15)">COMPRAR</button></div>
-        </div>
-    </section>
+<script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD"></script>
 
-    <section id="sec-otros" class="section-container">
-        <div class="max-w-2xl mx-auto bg-zinc-900 p-12 rounded-[40px] text-center border-2 border-dashed border-zinc-700">
-            <h2 class="text-3xl font-black mb-8 italic uppercase text-yellow-400">Ticket Personalizado</h2>
-            <input type="text" id="otherName" placeholder="TU NOMBRE / DISCORD" class="form-input">
-            <textarea id="otherMsg" placeholder="DESCRIBE TU PROYECTO..." class="form-input h-48"></textarea>
-            <button class="main-menu-btn w-full" onclick="sendTicket()">ENVIAR TICKET</button>
-        </div>
-    </section>
+<script>
+    // CONFIGURACIÓN INICIAL
+    emailjs.init("TU_USER_ID_EMAILJS"); // RECUERDA CAMBIAR ESTO
+    let tokens = 0;
+    const premios = [
+        "Rango VIP", "Rango VIP+", "Rango MASTER", "Rango LEGEND", "Rango LEGEND+", "Rango SHARK", "Rango SHARK+", "Rango PRIME",
+        "MEJOR KIT (OP)", "2do MEJOR KIT", "3er MEJOR KIT",
+        "100 ROBUX", "DISCORD NITRO (1 MES)", "PACK DE RECURSOS LEGENDARIO", "LLAVE KEY MYSTIC"
+    ];
 
-    <div id="buyModal" class="fixed inset-0 bg-black/98 z-[10000] hidden items-center justify-center p-6 text-center">
-        <div class="bg-zinc-900 border-2 border-yellow-400 p-8 rounded-[40px] max-w-2xl w-full overflow-y-auto max-h-[90vh]">
-            <h3 id="planName" class="text-xl font-black text-yellow-400 uppercase italic"></h3>
-            <p id="planPrice" class="text-6xl font-black my-4 text-white"></p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <input type="text" id="custName" placeholder="TU NOMBRE REAL" class="form-input mb-0">
-                <input type="text" id="custDiscord" placeholder="TU USER DE DISCORD" class="form-input mb-0">
-            </div>
-
-            <p class="text-xs font-black text-gray-500 uppercase mb-4">Selecciona Método de Pago:</p>
-            <div class="flex flex-col gap-3 mb-6">
-                <div class="payment-option" id="pay-pp" onclick="selectPay('paypal')">
-                    <i class="fab fa-paypal text-blue-400 text-xl"></i>
-                    <span class="text-sm font-bold">PayPal (Pago con tu cuenta personal)</span>
-                </div>
-                <div class="payment-option" id="pay-ws" onclick="selectPay('whatsapp')">
-                    <i class="fab fa-whatsapp text-green-500 text-xl"></i>
-                    <span class="text-sm font-bold">WhatsApp (Binance / Transferencia / Ecuador)</span>
-                </div>
-            </div>
-
-            <div class="info-card text-left">
-                <p class="text-[9px] font-black text-white mb-2 uppercase italic"><i class="fas fa-certificate text-yellow-500 mr-1"></i> Condiciones y Licencia MaikDev</p>
-                <p class="text-[8px] text-gray-500 font-bold leading-relaxed">Cada compra incluye una licencia de uso profesional única. No se realizan reembolsos tras la entrega del servicio. Soporte garantizado por 7 días.</p>
-            </div>
-
-            <button class="main-menu-btn w-full mt-6 py-4" onclick="checkout()">FINALIZAR Y PAGAR</button>
-            <p class="mt-4 text-red-500 cursor-pointer text-[10px] font-black uppercase" onclick="document.getElementById('buyModal').style.display='none'">[ CANCELAR ]</p>
-        </div>
-    </div>
-
-    <script>
-        const specs = {
-            boxpvp: ["WorldGuard", "Minas A/B", "Kits", "Scoreboard", "ResetLite", "ZNPCs", "CombatLogX", "Hologramas", "Rankup", "Cristales", "Crates", "Tablist", "Minas Evento", "Anti-Farm", "DeluxeMenus", "TPS Fix", "Vouchers", "Anuncios", "Vault", "Soporte", "AntiCheat", "Skins", "AuthMe", "Tebex Setup"],
-            survival: ["Claims", "Essentials", "Warps", "Shop", "Auction", "Clanes", "Quests", "McMMO", "Skills", "Packs", "Chunky", "Mascotas", "Jobs", "Backups", "MySQL", "Tebex", "WebSync", "GriefFix", "JoinMsg", "Vanish", "Discord", "RamFix", "Security", "Chat Formato"],
-            lobby: ["Spawn", "Join Msg", "Selector", "Velocity", "Skins", "AuthMe", "Gadgets", "Parkour", "Pets", "Trampolin", "AntiBot", "Ads", "Proxy Protect", "Title HD", "Bossbar", "NPCs", "Texture", "BungeeGuard", "Tablist", "Portals", "Lobby Music", "Score", "Anim", "Rules"],
-            soporte: ["Java Fix", "Console Clean", "LuckPerms", "Groups", "Backups", "MySQL", "L7 Protect", "Files", "JVM Tuning", "TPS Fix", "Audit", "Pterodactyl", "Update", "Discord Link", "Tebex Pro", "Web", "OldFix", "Spanish", "Logs", "Scripts", "Crash Fix", "Exploit Fix", "Linux", "VIP Support"],
-            diseno: ["Logo PNG", "Icono", "Banner Discord", "Banner Web", "Tebex UI", "Menús UI", "Web BG", "Animated Sign", "Rank Icons", "HTML Base", "MC SEO", "Hosting Set", "Animated Logo", "YT Banner", "Custom Skin", "Resource Pack", "GUI Textures", "Tags", "CSS Custom", "Portfolio", "Social Set", "Ad Template", "Wiki Setup", "Panel Skin"],
-            promo: ["Combo: Box + Logo", "Soporte 24h", "Combo: Survival + AH", "Tienda Setup", "Combo: Lobby + Skins", "Join Title", "Combo: Box + Minas", "Rank Vouchers", "Combo: Survi + Clanes", "Chat VIP", "Combo: Logo + Banner", "Firma Animada", "Combo: Opti + Soporte", "Backups", "Combo: Network Full", "AntiBot Setup", "Combo: Web + Hosting", "Wiki Set", "Combo: VIP Full Pack", "Discord Bot", "Combo: Setup Tebex", "Logo GIF", "Combo: Maik Dev VIP", "Soporte 30 días"]
-        };
-
-        function build() {
-            Object.keys(specs).forEach(sec => {
-                const grid = document.getElementById('grid-' + sec);
-                if(!grid) return;
-                for(let i=0; i<12; i++) {
-                    let p = (i === 0) ? 5 : Math.min(10 + (i*6.5), 80);
-                    grid.innerHTML += `<div class="plan-card"><div class="price-tag">$${Math.floor(p)}</div><h4 class="font-black text-yellow-500 text-[10px] mb-6 uppercase tracking-widest">NIVEL ${i+1}</h4><div class="flex-grow">${specs[sec].slice(0, (i+1)*2).map(f => `<div class="feature"><i class="fas fa-check-circle text-yellow-400"></i> ${f}</div>`).join('')}</div><button class="main-menu-btn w-full mt-8 py-2 text-xs" onclick="buy('${sec.toUpperCase()} NVL ${i+1}', ${Math.floor(p)})">ADQUIRIR</button></div>`;
-                }
+    // LÓGICA PAYPAL
+    paypal.Buttons({
+        createOrder: (data, actions) => { return actions.order.create({ purchase_units: [{ amount: { value: '1.00' } }] }); },
+        onApprove: (data, actions) => {
+            return actions.order.capture().then(() => {
+                tokens += 10;
+                updateUI();
+                alert("¡Pago de $1 procesado! +10 Tokens añadidos.");
             });
         }
+    }).render('#paypal-button-container');
 
-        let curP, curPr, payM = 'paypal';
-        function buy(n, p) { curP=n; curPr=p; document.getElementById('planName').innerText=n; document.getElementById('planPrice').innerText="$"+p; document.getElementById('buyModal').style.display='flex'; selectPay('paypal'); }
-        function selectPay(m) { payM = m; document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected')); document.getElementById('pay-' + (m === 'paypal' ? 'pp' : 'ws')).classList.add('selected'); }
-        function toggleMenu() { document.getElementById('fullMenu').classList.add('active'); }
-        function closeOverlay() { document.getElementById('fullMenu').classList.remove('active'); }
-        function goHome() { document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); document.getElementById('home').style.display = 'flex'; document.getElementById('navGroup').style.display = 'none'; }
-        function openSection(id) { document.querySelectorAll('.section-container').forEach(s => s.classList.remove('active')); document.getElementById('home').style.display = 'none'; document.getElementById('sec-' + id).classList.add('active'); document.getElementById('navGroup').style.display = 'flex'; closeOverlay(); window.scrollTo(0,0); }
+    function showGame(game) {
+        document.querySelectorAll('.game-area').forEach(g => g.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
+        document.getElementById('game-' + game).classList.add('active');
+        event.currentTarget.classList.add('active-nav');
+    }
+
+    function jugarRuleta() {
+        if (!checkUser() || !payTokens(5)) return;
+        let ruleta = document.getElementById("ruleta-text");
+        ruleta.innerText = "Girando...";
         
-        function checkout() { 
-            const n = document.getElementById('custName').value;
-            const d = document.getElementById('custDiscord').value;
-            if(!n || !d) return alert("Por favor pon tu Nombre y Discord");
-            
-            if(payM === 'paypal') {
-                window.open(`https://paypal.me/chimbayuliana/${curPr}`);
-            } else {
-                window.open(`https://wa.me/593987749885?text=Maik,%20soy%20${n}%20(Discord:%20${d}),%20quiero%20el%20plan%20${curP}%20de%20$${curPr}.%20Dime%20los%20datos%20de%20pago%20(Binance/Banco).`); 
-            }
+        setTimeout(() => {
+            procesarResultado();
+        }, 1500);
+    }
+
+    function checkMine() {
+        if (!checkUser() || !payTokens(5)) return;
+        procesarResultado();
+    }
+
+    function procesarResultado() {
+        let win = Math.random() < 0.25; // 25% GANAR
+        let status = document.getElementById("status");
+        
+        if (win) {
+            let p = premios[Math.floor(Math.random() * premios.length)];
+            status.innerHTML = `<span style="color:var(--neon)">¡GANASTE: ${p}!</span>`;
+            enviarAlGmail(p);
+        } else {
+            status.innerHTML = `<span style="color:var(--accent)">PERDISTE. Intenta otra vez.</span>`;
         }
-        build();
-    </script>
+    }
+
+    function checkUser() {
+        if (document.getElementById("username").value.length < 3) {
+            alert("Escribe tu usuario para saber a quién dar el premio.");
+            return false;
+        }
+        return true;
+    }
+
+    function payTokens(cant) {
+        if (tokens < cant) { alert("No tienes tokens. Compra con PayPal."); return false; }
+        tokens -= cant;
+        updateUI();
+        return true;
+    }
+
+    function updateUI() { document.getElementById("balance").innerText = tokens; }
+
+    function enviarAlGmail(premio) {
+        let user = document.getElementById("username").value;
+        emailjs.send("TU_SERVICE_ID", "TU_TEMPLATE_ID", {
+            from_name: user,
+            message: "¡GANADOR! Usuario: " + user + " ha ganado: " + premio
+        });
+    }
+</script>
 </body>
 </html>
