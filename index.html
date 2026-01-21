@@ -3,335 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMAL EMPIRE | ELITE CASINO 2026</title>
+    <title>SMAL EMPIRE V17 | ENGINE EDITION</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD"></script>
     <style>
-        :root { 
-            --bg: #05070a; --card: #0f1218; --accent: #00ff59; --gold: #f5d033; 
-            --red: #eb4b4b; --purple: #a34cff; --blue: #4b69ff; --border: #1f2630; 
-        }
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
-        body { background: var(--bg); color: white; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        :root { --bg: #020408; --card: #0b0f15; --accent: #00ff88; --gold: #ffcc00; --red: #ff3333; --border: #1e2530; }
+        body { background: var(--bg); color: white; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* SIDEBAR PROFESIONAL */
+        .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 20px; }
+        .nav-btn { padding: 15px; cursor: pointer; border-radius: 10px; margin-bottom: 5px; font-weight: 700; color: #8b949e; display: flex; align-items: center; gap: 10px; }
+        .nav-btn:hover, .nav-btn.active { background: #161b22; color: var(--accent); }
 
-        /* SIDEBAR */
-        .sidebar { width: 260px; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; }
-        .nav-item { padding: 15px 25px; cursor: pointer; color: #8b949e; font-weight: 800; border-left: 4px solid transparent; display: flex; align-items: center; gap: 10px; }
-        .nav-item:hover, .nav-item.active { background: #161b22; color: var(--accent); border-left-color: var(--accent); }
-
-        /* MAIN AREA */
-        .main { flex: 1; padding: 30px; overflow-y: auto; background: radial-gradient(circle at top right, #0d1a12, #05070a); position: relative; }
-        .view { display: none; animation: fadeIn 0.4s ease; }
+        /* MAIN CONTENT */
+        .main { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
+        .view { display: none; animation: slideIn 0.3s ease; }
         .view.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* UI ELEMENTS */
-        .glass { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; padding: 20px; backdrop-filter: blur(10px); }
-        .btn { background: var(--accent); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; width: 100%; transition: 0.3s; }
-        .btn:hover { transform: scale(1.02); filter: brightness(1.2); }
-        .input-pro { background: #000; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; outline: none; text-align: center; }
+        /* GAME ENGINE UI */
+        .game-screen { background: #000; border: 2px solid var(--accent); border-radius: 20px; padding: 40px; text-align: center; position: relative; min-height: 400px; display: flex; flex-direction: column; justify-content: center; }
+        .slot-machine { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
+        .reel { width: 80px; height: 100px; background: #111; border: 2px solid var(--border); border-radius: 10px; font-size: 3rem; line-height: 100px; }
+        
+        /* CARDS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 15px; padding: 15px; text-align: center; transition: 0.3s; }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .card img { width: 100%; border-radius: 10px; height: 120px; object-fit: cover; }
 
-        /* JUEGOS GRID */
-        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .game-card { background: #151921; border-radius: 15px; overflow: hidden; border: 1px solid var(--border); text-align: center; padding-bottom: 15px; }
-        .game-img { width: 100%; height: 120px; object-fit: cover; opacity: 0.7; }
-
-        /* CASE OPENING CS:GO STYLE */
-        .case-container { width: 100%; height: 160px; background: #000; border: 2px solid var(--border); position: relative; overflow: hidden; border-radius: 12px; margin: 20px 0; }
-        .case-reel { display: flex; position: absolute; left: 0; top: 0; height: 100%; transition: transform 5s cubic-bezier(0.1, 0, 0.1, 1); }
-        .case-item { min-width: 140px; border-right: 1px solid #111; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; }
-        .pointer { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--accent); z-index: 10; box-shadow: 0 0 15px var(--accent); }
-
-        /* CHAT */
-        .chat-box { width: 300px; background: var(--card); border-left: 1px solid var(--border); display: flex; flex-direction: column; }
-        #chat-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.85rem; }
-        .msg { margin-bottom: 8px; border-bottom: 1px solid #1c232e; padding-bottom: 4px; }
-        .msg b { color: var(--accent); }
-
-        /* LOGIN */
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* ADMIN "CANVA" STYLE */
+        .admin-panel { background: #111; padding: 25px; border-radius: 20px; border: 1px dashed var(--gold); }
+        .btn { background: var(--accent); color: #000; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; }
+        .input { background: #000; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; }
+        
+        #overlay { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-<div id="auth-screen">
-    <div class="glass" style="width: 380px; text-align: center; border: 1px solid var(--accent);">
-        <h1 style="font-family:'Orbitron'; color:var(--accent); margin:0;">SMAL EMPIRE</h1>
-        <p style="font-size: 0.7rem; color: #8b949e; letter-spacing: 2px;">ELITE GAMBLING PLATFORM</p>
-        <div id="auth-form" style="margin-top:20px;">
-            <input type="text" id="l-u" class="input-pro" placeholder="Usuario">
-            <input type="password" id="l-p" class="input-pro" placeholder="Contraseña">
-            <button class="btn" onclick="logic.auth()">INGRESAR AL SISTEMA</button>
-            <p style="font-size: 0.7rem; margin-top: 15px;">Al entrar aceptas los términos de servicio 2026.</p>
-        </div>
+<div id="overlay">
+    <div class="card" style="width: 350px; border: 2px solid var(--accent);">
+        <h1 style="font-family: 'Orbitron'; color: var(--accent);">SMAL EMPIRE</h1>
+        <input type="text" id="user-in" class="input" placeholder="Usuario">
+        <input type="password" id="pass-in" class="input" placeholder="Contraseña">
+        <button class="btn" onclick="app.login()">ENTRAR AL IMPERIO</button>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div style="padding:30px 20px; text-align:center; border-bottom: 1px solid var(--border);">
-        <h3 style="font-family:'Orbitron'; color:var(--accent); margin:0;">IMPERIO</h3>
-        <div style="margin-top:15px; background:#000; padding:10px; border-radius:12px; border: 1px solid var(--gold);">
-            <div style="font-size: 0.6rem; color: #8b949e;">BALANCE</div>
-            <span style="color:var(--gold); font-weight:900; font-size: 1.3rem;">🪙 <span id="u-bal">0</span></span>
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="font-family: 'Orbitron'; color: var(--accent);">V17 PRO</h2>
+        <div style="background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--gold);">
+            <small style="color: #8b949e;">SALDO</small><br>
+            <span style="font-size: 1.5rem; color: var(--gold); font-weight: 800;">🪙 <span id="u-bal">0</span></span>
         </div>
     </div>
-    <nav style="flex:1">
-        <div class="nav-item active" onclick="ui.nav('lobby')">🏠 LOBBY</div>
-        <div class="nav-item" onclick="ui.nav('games')">🎰 10 JUEGOS PRO</div>
-        <div class="nav-item" onclick="ui.nav('cases')">📦 CAJAS SKINS</div>
-        <div class="nav-item" onclick="ui.nav('inv')">🎒 INVENTARIO</div>
-        <div class="nav-item" onclick="ui.nav('shop')">💰 COMPRAR TOKENS</div>
-        <div id="adm-tab" class="nav-item" style="display:none; color:var(--gold)" onclick="ui.nav('admin')">🛠 PANEL MAESTRO</div>
-    </nav>
-    <div class="nav-item" style="color:var(--red); border-top:1px solid var(--border)" onclick="location.reload()">🚪 SALIR</div>
+    <div class="nav-btn active" onclick="ui.view('lobby')">🏠 Lobby</div>
+    <div class="nav-btn" onclick="ui.view('games')">🎰 Juegos</div>
+    <div class="nav-btn" onclick="ui.view('cases')">📦 Cajas</div>
+    <div class="nav-btn" onclick="ui.view('shop')">💰 Tienda</div>
+    <div class="nav-btn" onclick="ui.view('inv')">🎒 Inventario</div>
+    <div id="adm-nav" class="nav-btn" style="display:none; color: var(--gold);" onclick="ui.view('admin')">🛠 Panel Maestro</div>
+    <div class="nav-btn" style="margin-top: auto; color: var(--red);" onclick="location.reload()">🚪 Salir</div>
 </aside>
 
 <main class="main">
     <div id="v-lobby" class="view active">
-        <h1 style="font-family:'Orbitron';">BIENVENIDO, <span id="u-display" style="color:var(--accent)">-</span></h1>
-        <div class="glass">
-            <h3>Estado del Servidor: <span style="color:var(--accent)">ONLINE</span></h3>
-            <p>1 USD = 10 Tokens. Soporte WhatsApp: <a href="https://wa.me/593987749885" style="color:var(--accent)">+593987749885</a></p>
+        <h1>Bienvenido, <span id="u-name" style="color: var(--accent);">---</span></h1>
+        <div class="grid">
+            <div class="card"><h3>Usuarios</h3><h2>2,501</h2></div>
+            <div class="card"><h3>Pagos Hoy</h3><h2>$4,200</h2></div>
         </div>
-        <div style="margin-top:20px;" class="game-grid">
-            <div class="glass" style="text-align:center;">
-                <h4 style="color:var(--gold)">PREMIO MAYOR HOY</h4>
-                <h2 style="margin:0;">15,000 🪙</h2>
-            </div>
-            <div class="glass" style="text-align:center;">
-                <h4 style="color:var(--accent)">JUGADORES ACTIVOS</h4>
-                <h2 style="margin:0;">2,541</h2>
-            </div>
+        <div class="card" style="margin-top: 20px; text-align: left;">
+            <h3>Soporte Directo</h3>
+            <p>WhatsApp: <a href="https://wa.me/593987749885" style="color: var(--accent);">+593987749885</a></p>
         </div>
     </div>
 
     <div id="v-games" class="view">
-        <h1>JUEGOS DEL IMPERIO</h1>
-        <div class="game-grid" id="game-list"></div>
-    </div>
-
-    <div id="v-cases" class="view">
-        <h1>CASE OPENING ELITE</h1>
-        <div class="glass" style="text-align:center;">
-            <h2 id="case-name">Caja de Operación: SMAL 1</h2>
-            <div class="case-container">
-                <div class="pointer"></div>
-                <div class="case-reel" id="case-reel"></div>
-            </div>
-            <button class="btn" style="max-width:300px;" onclick="logic.openCase()">ABRIR CAJA (150 TOKENS)</button>
+        <div id="games-menu">
+            <h1>SALA DE JUEGOS</h1>
+            <div class="grid" id="game-list"></div>
+        </div>
+        <div id="game-engine" style="display: none;">
+            <button onclick="ui.view('games')" style="background: none; border: 1px solid white; color: white; cursor: pointer; padding: 5px 15px; border-radius: 5px; margin-bottom: 15px;">← Volver</button>
+            <div class="game-screen" id="game-canvas">
+                </div>
         </div>
     </div>
 
-    <div id="v-inv" class="view">
-        <h1>TU INVENTARIO VIP</h1>
-        <div class="game-grid" id="inv-grid"></div>
-    </div>
-
     <div id="v-shop" class="view">
-        <h1>CARGAR TOKENS (SISTEMA SEGURO)</h1>
-        <div class="glass" style="max-width:500px; margin:0 auto; text-align:center;">
-            <p>Mínimo de compra sugerido: $80 USD (800 Tokens)</p>
-            <input type="number" id="coin-input" class="input-pro" value="800" oninput="ui.calc()">
-            <div style="font-size:2.5rem; color:var(--gold); margin:20px 0;">$ <span id="price-val">80.00</span></div>
-            <div id="paypal-button-container"></div>
+        <h1>TIENDA DE TOKENS</h1>
+        <div class="card" style="max-width: 450px; margin: 0 auto;">
+            <p>1 USD = 10 Tokens</p>
+            <input type="number" id="buy-amt" class="input" value="800" oninput="ui.calc()">
+            <h2 style="color: var(--gold);">$ <span id="buy-price">80.00</span> USD</h2>
+            <div id="paypal-btn"></div>
         </div>
     </div>
 
     <div id="v-admin" class="view">
-        <h1>🛠 PANEL DE CONTROL DUEÑO</h1>
-        <div class="glass">
-            <h3>Modificar Balance de Usuario</h3>
-            <input type="text" id="adm-target" class="input-pro" placeholder="Nombre de Usuario">
-            <input type="number" id="adm-amount" class="input-pro" placeholder="Nueva cantidad de Tokens">
-            <button class="btn" onclick="admin.setBal()">ACTUALIZAR SALDO</button>
+        <h1>CONSTRUCTOR DEL IMPERIO</h1>
+        <div class="admin-panel">
+            <h3>🔨 Creador de Juegos Dinámicos</h3>
+            <input type="text" id="new-g-name" class="input" placeholder="Nombre del Juego">
+            <input type="text" id="new-g-img" class="input" placeholder="URL de Imagen (Unsplash)">
+            <input type="number" id="new-g-mult" class="input" placeholder="Multiplicador (ej: 2.5)">
+            <button class="btn" onclick="app.createGame()">PUBLICAR JUEGO</button>
         </div>
-        <div class="glass" style="margin-top:20px;">
-            <h3>Configuración de Probabilidades</h3>
-            <label>Win Rate del Casino (%):</label>
-            <input type="range" min="1" max="95" value="45" style="width:100%" oninput="admin.setRate(this.value)">
-            <span id="rate-val">45%</span>
+        <div class="admin-panel" style="margin-top: 20px;">
+            <h3>👥 Gestionar Usuario</h3>
+            <input type="text" id="adm-u" class="input" placeholder="Nombre de usuario">
+            <input type="number" id="adm-b" class="input" placeholder="Nuevo Saldo">
+            <button class="btn" style="background: var(--gold);" onclick="app.setBal()">MODIFICAR SALDO</button>
         </div>
     </div>
+
+    <div id="v-cases" class="view"><h1>CAJAS PRÓXIMAMENTE</h1></div>
+    <div id="v-inv" class="view"><h1>MI INVENTARIO</h1></div>
 </main>
 
-<aside class="chat-box">
-    <div style="padding:15px; border-bottom:1px solid var(--border); font-weight:800;">💬 CHAT GLOBAL</div>
-    <div id="chat-messages"></div>
-    <div style="padding:10px;">
-        <input type="text" id="chat-in" class="input-pro" style="margin:0; font-size:0.8rem;" placeholder="Escribe un mensaje..." onkeypress="if(event.key==='Enter') logic.sendChat()">
-    </div>
-</aside>
-
 <script>
-// --- LÓGICA DE DATOS Y PERSISTENCIA ---
-const logic = {
-    db: JSON.parse(localStorage.getItem('smal_pro_v16')) || {
-        users: [{u:'maestro', p:'Elite2026', bal:10000, admin:true, inv:[]}],
-        items: [
-            {n:'Karambit Doppler', r:'gold', img:'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJf1fLEcjVL49KJlZG0k_b5MqjSg3hu-NVasODComplex...'},
-            {n:'AWP Asiimov', r:'red'}, {n:'AK-47 Vulcan', r:'purple'}, {n:'Glock Water', r:'blue'}
-        ],
-        chat: [{u:'System', m:'Bienvenido al Imperio Smal.'}],
-        settings: {rate: 45}
+// --- MOTOR LÓGICO ---
+const app = {
+    db: JSON.parse(localStorage.getItem('smal_v17')) || {
+        users: [{u:'maestro', p:'Elite2026', bal:10000, admin:true}],
+        games: [
+            {n: 'Diamond Slots', i: 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=300', m: 3},
+            {n: 'Cyber Roulette', i: 'https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=300', m: 2}
+        ]
     },
     user: null,
 
-    auth() {
-        const u = document.getElementById('l-u').value.toLowerCase();
-        const p = document.getElementById('l-p').value;
-        if(!u || !p) return;
-        let user = this.db.users.find(x => x.u === u);
-        if(!user) {
-            user = {u, p, bal:200, admin:false, inv:[]};
-            this.db.users.push(user);
+    login() {
+        const u = document.getElementById('user-in').value.toLowerCase();
+        const p = document.getElementById('pass-in').value;
+        let found = this.db.users.find(x => x.u === u);
+        if(!found) {
+            found = {u, p, bal: 500, admin: false, inv: []};
+            this.db.users.push(found);
         }
-        if(user.p === p) {
-            this.user = user;
-            document.getElementById('auth-screen').style.display='none';
-            if(user.admin) document.getElementById('adm-tab').style.display='flex';
-            document.getElementById('u-display').innerText = u.toUpperCase();
+        if(found.p === p) {
+            this.user = found;
+            document.getElementById('overlay').style.display = 'none';
+            if(found.admin) document.getElementById('adm-nav').style.display = 'flex';
+            document.getElementById('u-name').innerText = u.toUpperCase();
             this.update();
-            this.loadChat();
             ui.renderGames();
             ui.initPaypal();
-        } else { alert("Clave incorrecta"); }
+        }
     },
 
     update() {
         document.getElementById('u-bal').innerText = Math.floor(this.user.bal);
-        localStorage.setItem('smal_pro_v16', JSON.stringify(this.db));
+        localStorage.setItem('smal_v17', JSON.stringify(this.db));
     },
 
-    sendChat() {
-        const m = document.getElementById('chat-in').value;
-        if(!m) return;
-        this.db.chat.push({u: this.user.u, m: m});
-        if(this.db.chat.length > 20) this.db.chat.shift();
-        document.getElementById('chat-in').value = '';
-        this.loadChat();
-        this.update();
-    },
-
-    loadChat() {
-        const box = document.getElementById('chat-messages');
-        box.innerHTML = this.db.chat.map(c => `<div class="msg"><b>${c.u}:</b> ${c.m}</div>`).join('');
-        box.scrollTop = box.scrollHeight;
-    },
-
-    openCase() {
-        if(this.user.bal < 150) return alert("Faltan Tokens");
-        this.user.bal -= 150;
-        this.update();
-
-        const reel = document.getElementById('case-reel');
-        reel.style.transition = 'none'; reel.style.transform = 'translateX(0)';
-        
-        let pool = [];
-        let html = '';
-        for(let i=0; i<60; i++) {
-            const r = Math.random()*100;
-            let it = r > 98 ? this.db.items[0] : r > 85 ? this.db.items[1] : r > 60 ? this.db.items[2] : this.db.items[3];
-            pool.push(it);
-            html += `<div class="case-item" style="border-bottom: 4px solid var(--${it.r === 'gold' ? 'gold' : it.r === 'red' ? 'red' : 'blue'})">
-                        <div style="font-size:2rem">📦</div>
-                        <span style="font-size:0.7rem">${it.n}</span>
-                     </div>`;
-        }
-        reel.innerHTML = html;
-
-        setTimeout(() => {
-            reel.style.transition = 'transform 5s cubic-bezier(0.1, 0, 0.1, 1)';
-            reel.style.transform = 'translateX(-' + (43 * 140 + Math.random()*50) + 'px)';
-        }, 50);
-
-        setTimeout(() => {
-            const win = pool[46];
-            alert("¡TE TOCÓ: " + win.n + "!");
-            this.user.inv.push(win);
-            if(win.r === 'gold') confetti();
+    createGame() {
+        const n = document.getElementById('new-g-name').value;
+        const i = document.getElementById('new-g-img').value;
+        const m = document.getElementById('new-g-mult').value;
+        if(n && i && m) {
+            this.db.games.push({n, i, m: parseFloat(m)});
             this.update();
-        }, 5500);
+            ui.renderGames();
+            alert("Juego Publicado con Éxito");
+        }
     },
 
-    claim(name) {
-        const body = `Usuario ${this.user.u} reclama: ${name}`;
-        window.open(`mailto:gancinomaikel@gmail.com?subject=RECLAMO IMPERIO&body=${body}`);
-        this.user.inv = this.user.inv.filter(x => x.n !== name);
-        this.update();
-        ui.renderInv();
+    setBal() {
+        const u = document.getElementById('adm-u').value.toLowerCase();
+        const b = parseInt(document.getElementById('adm-b').value);
+        const target = this.db.users.find(x => x.u === u);
+        if(target) { target.bal = b; this.update(); alert("Saldo actualizado"); }
     }
 };
 
-// --- INTERFAZ ---
+// --- INTERFAZ DINÁMICA ---
 const ui = {
-    nav(id) {
+    view(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById('v-'+id).classList.add('active');
-        if(id === 'inv') this.renderInv();
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if(id === 'games') {
+            document.getElementById('games-menu').style.display = 'block';
+            document.getElementById('game-engine').style.display = 'none';
+        }
     },
+
     calc() {
-        const val = document.getElementById('coin-input').value;
-        document.getElementById('price-val').innerText = (val / 10).toFixed(2);
+        const amt = document.getElementById('buy-amt').value;
+        document.getElementById('buy-price').innerText = (amt / 10).toFixed(2);
     },
+
     renderGames() {
-        const games = ["SLOTS", "RULETA", "MINAS", "CRASH", "DADOS", "CARTAS", "PLINKO", "TORRE", "RUEDA", "POKER"];
-        document.getElementById('game-list').innerHTML = games.map(g => `
-            <div class="game-card">
-                <img src="https://images.unsplash.com/photo-1596838132731-dd967be659ef?auto=format&fit=crop&w=300" class="game-img">
-                <h4>${g} ELITE</h4>
-                <p>Costo: 50 🪙</p>
-                <button class="btn" style="width:80%" onclick="game.play('${g}')">JUGAR</button>
+        const list = document.getElementById('game-list');
+        list.innerHTML = app.db.games.map((g, idx) => `
+            <div class="card">
+                <img src="${g.i}">
+                <h4>${g.n}</h4>
+                <button class="btn" onclick="ui.launchGame(${idx})">JUGAR AHORA</button>
             </div>
         `).join('');
     },
-    renderInv() {
-        document.getElementById('inv-grid').innerHTML = logic.user.inv.map(it => `
-            <div class="glass" style="text-align:center;">
-                <div style="font-size:2rem">🎁</div>
-                <b>${it.n}</b>
-                <button class="btn" style="margin-top:10px; font-size:0.7rem;" onclick="logic.claim('${it.n}')">RECLAMAR</button>
+
+    launchGame(idx) {
+        const game = app.db.games[idx];
+        document.getElementById('games-menu').style.display = 'none';
+        document.getElementById('game-engine').style.display = 'block';
+        
+        const canvas = document.getElementById('game-canvas');
+        canvas.innerHTML = `
+            <h1 style="color:var(--gold)">${game.n}</h1>
+            <p>Costo por tirada: 50 Tokens | Multiplicador: x${game.m}</p>
+            <div class="slot-machine">
+                <div id="r1" class="reel">?</div>
+                <div id="r2" class="reel">?</div>
+                <div id="r3" class="reel">?</div>
             </div>
-        `).join('');
+            <button class="btn" style="max-width:300px; margin:0 auto;" onclick="ui.runLogic(${game.m})">APRESTAR GATILLO</button>
+        `;
     },
+
+    runLogic(mult) {
+        if(app.user.bal < 50) return alert("No tienes saldo");
+        app.user.bal -= 50;
+        
+        const symbols = ['💎', '💰', '7️⃣', '🔥', '🍒'];
+        const res = [symbols[Math.floor(Math.random()*5)], symbols[Math.floor(Math.random()*5)], symbols[Math.floor(Math.random()*5)]];
+        
+        document.getElementById('r1').innerText = res[0];
+        document.getElementById('r2').innerText = res[1];
+        document.getElementById('r3').innerText = res[2];
+
+        if(res[0] === res[1] && res[1] === res[2]) {
+            const win = 50 * mult;
+            app.user.bal += win;
+            confetti();
+            alert("¡GANASTE " + win + " TOKENS!");
+        }
+        app.update();
+    },
+
     initPaypal() {
         paypal.Buttons({
-            createOrder: (d, a) => a.order.create({ purchase_units: [{ amount: { value: document.getElementById('price-val').innerText } }] }),
-            onApprove: (d, a) => a.order.capture().then(() => {
-                logic.user.bal += parseInt(document.getElementById('coin-input').value);
-                logic.update();
-                alert("PAGO COMPLETADO");
-            })
-        }).render('#paypal-button-container');
-    }
-};
-
-// --- LÓGICA DE JUEGOS ---
-const game = {
-    play(n) {
-        if(logic.user.bal < 50) return alert("Sin tokens");
-        logic.user.bal -= 50;
-        const win = Math.random() < (logic.db.settings.rate / 100);
-        if(win) {
-            const p = 150; logic.user.bal += p;
-            confetti(); alert(`GANASTE EN ${n}: +${p} Tokens`);
-        } else { alert(`Perdiste en ${n}`); }
-        logic.update();
-    }
-};
-
-// --- ADMIN ---
-const admin = {
-    setBal() {
-        const u = document.getElementById('adm-target').value.toLowerCase();
-        const b = parseInt(document.getElementById('adm-amount').value);
-        const t = logic.db.users.find(x => x.u === u);
-        if(t) { t.bal = b; logic.update(); alert("Saldo modificado"); }
-    },
-    setRate(v) {
-        logic.db.settings.rate = v;
-        document.getElementById('rate-val').innerText = v + "%";
-        logic.update();
+            createOrder: (data, actions) => {
+                return actions.order.create({ purchase_units: [{ amount: { value: document.getElementById('buy-price').innerText } }] });
+            },
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(() => {
+                    app.user.bal += parseInt(document.getElementById('buy-amt').value);
+                    app.update();
+                    alert("Compra exitosa");
+                });
+            }
+        }).render('#paypal-btn');
     }
 };
 </script>
