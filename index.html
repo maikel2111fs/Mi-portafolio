@@ -3,47 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketplace Express</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-
-    <nav class="bg-blue-600 p-4 text-white shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Mi Tienda Online</h1>
-            <a href="https://wa.me/593987749885?text=Hola, quiero vender un producto" 
-               class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-bold transition">
-               + Vender algo
-            </a>
-        </div>
-    </nav>
-
-    <main class="container mx-auto p-6">
-        <h2 class="text-xl font-semibold mb-6 text-gray-700">Productos Disponibles</h2>
+    <title>SMAL STORE | MC Network</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=AY9cjKW9uJqtsEJeZ6VyY6S-feyCF_30R-DFGd3FH-Ccznh8IXE9lek4MlUTIVWKMkrt0l7-TEgUMYJa&currency=USD&components=buttons,funding-eligibility"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #00ff88; --bg: #0d0d0d; --card: #161b22; --gold: #f1c40f; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; margin: 0; overflow-x: hidden; }
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                <img class="h-48 w-full object-cover" src="https://via.placeholder.com/300" alt="Producto">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg text-gray-800">Nombre del Producto</h3>
-                    <p class="text-gray-600 text-sm">Descripción breve de lo que vendes aquí.</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-blue-600 font-bold text-xl">$10.00</span>
-                        <a href="https://wa.me/593987749885?text=Me interesa comprar el producto de $10" 
-                           class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition">
-                           Comprar
-                        </a>
-                    </div>
-                </div>
-            </div>
+        /* PANTALLA DE BIENVENIDA */
+        #welcome-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .welcome-content { animation: fadeIn 1.5s ease; }
+        .btn-enter { background: var(--accent); color: black; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 900; cursor: pointer; font-size: 1.2rem; transition: 0.3s; margin-top: 20px; }
+        .btn-enter:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--accent); }
 
-            </div>
-    </main>
+        /* HEADER */
+        .header { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://i.imgur.com/u7M7WlG.jpg'); background-size: cover; padding: 60px 20px; border-bottom: 3px solid var(--accent); }
+        .modality-box { background: var(--card); padding: 15px; border-radius: 12px; display: inline-block; margin-top: 20px; border: 1px solid #30363d; }
+        select { background: #000; color: var(--accent); border: 1px solid var(--accent); padding: 10px; border-radius: 8px; font-weight: bold; }
 
-    <footer class="mt-10 p-6 bg-gray-800 text-white text-center text-sm">
-        <p>© 2026 Tu Marketplace - Contacto: <a href="https://wa.me/593987749885" class="underline">+593987749885</a></p>
-    </footer>
+        /* GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; padding: 40px; max-width: 1200px; margin: auto; }
+        .card { background: var(--card); border-radius: 18px; padding: 30px; border: 1px solid #30363d; transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin: 15px 0; }
+        .btn-select { background: var(--accent); color: black; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: 800; cursor: pointer; }
+
+        /* PERSONALIZADOR DE PAQUETES */
+        .builder-container { background: #161b22; margin: 40px auto; padding: 40px; max-width: 900px; border-radius: 20px; border: 2px solid #333; }
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 20px; }
+        .item-btn { background: #000; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+        .item-btn:hover { border-color: var(--accent); }
+        .cart-summary { background: #000; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: left; }
+
+        /* MODALES */
+        #payment-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #161b22; padding: 40px; border-radius: 25px; z-index: 100; width: 90%; max-width: 400px; border: 2px solid var(--accent); }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 90; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div id="welcome-screen">
+    <div class="welcome-content">
+        <h1 style="font-size: 4rem; margin: 0; color: var(--accent);">SMAL EMPIRE</h1>
+        <p style="font-size: 1.5rem; color: #888;">Bienvenido a la tienda oficial de la Network</p>
+        <button class="btn-enter" onclick="enterStore()">ENTRAR A LA TIENDA</button>
+    </div>
+</div>
+
+<div class="header">
+    <h1>⚔️ TIENDA OFICIAL SMAL</h1>
+    <div class="modality-box">
+        <span>MODALIDAD ACTUAL:</span>
+        <select id="mod-select">
+            <option value="Clashbox">CLASHBOX</option>
+            <option value="BajoBox">BAJO BOX</option>
+            <option value="Andbox">ANDBOX</option>
+        </select>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="card"><h3>4to Mejor Kit</h3><div class="price-tag">$1.00</div><button class="btn-select" onclick="openPayment('4to Mejor Kit', 1.00)">Comprar</button></div>
+    <div class="card"><h3>3er Mejor Kit</h3><div class="price-tag">$1.25</div><button class="btn-select" onclick="openPayment('3er Mejor Kit', 1.25)">Comprar</button></div>
+    <div class="card"><h3>2do Mejor Kit</h3><div class="price-tag">$1.50</div><button class="btn-select" onclick="openPayment('2do Mejor Kit', 1.50)">Comprar</button></div>
+    <div class="card" style="border: 2px solid var(--accent);"><h3>🏆 1er Mejor Kit</h3><div class="price-tag">$2.00</div><button class="btn-select" onclick="openPayment('1er Mejor Kit', 2.00)">Comprar</button></div>
+</div>
+
+<div class="builder-container" id="customizer">
+    <h2 style="color: var(--accent); margin-top: 0;">🛠️ PERSONALIZAR MI PAQUETE</h2>
+    <p>Haz clic para añadir ítems a tu kit único:</p>
+    
+    <div class="item-grid">
+        <button class="item-btn" onclick="addItem('Espada Netherite F10', 1.50)">🗡️ Espada Neth F10 (+$1.50)</button>
+        <button class="item-btn" onclick="addItem('Pico Eficiencia 10', 1.00)">⛏️ Pico Efic. 10 (+$1.00)</button>
+        <button class="item-btn" onclick="addItem('Pack 64 Manzanas Notch', 2.00)">🍎 64 Notchs (+$2.00)</button>
+        <button class="item-btn" onclick="addItem('Set Armadura Prot 10', 3.00)">🛡️ Armadura P10 (+$3.00)</button>
+        <button class="item-btn" onclick="addItem('5x Llaves Legendarias', 1.00)">🔑 5x Llaves (+$1.00)</button>
+        <button class="item-btn" onclick="addItem('Rango VIP (30 días)', 5.00)">👑 VIP (+$5.00)</button>
+    </div>
+
+    <div class="cart-summary">
+        <strong>Tu Paquete:</strong> <span id="cart-items">Vacío</span><br><br>
+        <strong>Total Actual:</strong> <span id="total-val" style="color: var(--accent); font-size: 1.5rem;">$0.00</span>
+        <button class="btn-select" style="margin-top: 15px;" onclick="payCustomBuilder()">Pagar Paquete Creado</button>
+        <button onclick="clearCart()" style="background:none; border:none; color:#ff4757; cursor:pointer; font-size:12px;">Limpiar Todo</button>
+    </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeModal()"></div>
+<div id="payment-modal">
+    <h2 id="pay-title" style="color:var(--accent); margin-top:0;">Confirmar</h2>
+    <p id="pay-desc" style="margin-bottom:30px;"></p>
+    <div id="paypal-button-container"></div>
+    <button onclick="closeModal()" style="background:none; border:none; color:red; cursor:pointer; margin-top:15px;">Cancelar</button>
+</div>
+
+<script>
+    let cart = [];
+    let totalPrice = 0;
+    let payName = "";
+    let payAmount = 0;
+
+    function enterStore() {
+        document.getElementById('welcome-screen').style.display = 'none';
+    }
+
+    function addItem(name, price) {
+        cart.push(name);
+        totalPrice += price;
+        updateCartUI();
+    }
+
+    function clearCart() {
+        cart = [];
+        totalPrice = 0;
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        document.getElementById('cart-items').innerText = cart.length > 0 ? cart.join(', ') : "Vacío";
+        document.getElementById('total-val').innerText = `$${totalPrice.toFixed(2)}`;
+    }
+
+    function openPayment(name, price) {
+        const mod = document.getElementById('mod-select').value;
+        payName = `${name} [${mod}]`;
+        payAmount = price;
+        document.getElementById('pay-title').innerText = "Resumen de Compra";
+        document.getElementById('pay-desc').innerText = `${payName}\nTotal: $${price} USD`;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('payment-modal').style.display = 'block';
+        renderPaypal();
+    }
+
+    function payCustomBuilder() {
+        if(cart.length === 0) return alert("Agrega al menos un ítem a tu paquete.");
+        openPayment("Paquete Custom: " + cart.join(' + '), totalPrice);
+    }
+
+    function closeModal() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('payment-modal').style.display = 'none';
+    }
+
+    function renderPaypal() {
+        document.getElementById('paypal-button-container').innerHTML = "";
+        paypal.Buttons({
+            style: { layout: 'vertical', color: 'gold', shape: 'pill' },
+            createOrder: (data, actions) => { return actions.order.create({ purchase_units: [{ amount: { value: payAmount } }] }); },
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(details => {
+                    alert('¡Pago Recibido! Revisa tu correo.');
+                    window.location.href = `mailto:gancinomaikel@gmail.com?subject=COMPRA MINECRAFT&body=El usuario ${details.payer.name.given_name} compró: ${payName} por $${payAmount}. ID: ${details.id}`;
+                    closeModal();
+                });
+            }
+        }).render('#paypal-button-container');
+    }
+</script>
 
 </body>
 </html>
